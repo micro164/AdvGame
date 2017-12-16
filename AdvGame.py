@@ -5,7 +5,10 @@
 #This is a simple text based game created in the language of python
 
 #-----------------------IMPORTS-----------------------------
+
 from collections import namedtuple
+
+#-----------------------ITEMS-------------------------------
 
 Item = namedtuple('Item', ('attack', 'defence', 'price', 'Type', 'Pclass'))
 Items = {
@@ -65,7 +68,6 @@ def GameIntro():
         Player.hp = 100
         Player.MaxHP = 100
         EquipInsert('sword')
-        EquipInsert('wand')
         print("You have been given a " + Player.Equipment[0] + "\n")
     elif choice == "2":
         print("Welcome to the wizard class\n")
@@ -98,6 +100,15 @@ def Healer():
     choice = input("Y/N\n")
     if Player.hp != Player.MaxHP and choice == 'Y' or choice == 'y':
         Player.hp = Player.MaxHP
+
+#Displays the players stats
+def PlayerStats():
+    print("Name: " + Player.name)
+    print("Level: " + str(Player.lvl))
+    print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp))
+    print("Strength: " + str(Player.Strength))
+    print("Defense: " + str(Player.Defense))
+    print("Gold: " + str(Player.gold))
         
 #Exiting the game
 def Exit():
@@ -107,13 +118,15 @@ def Exit():
 def Choices():
     stop = False;
     while stop == False:
-        print("\n1.Forest \n2.Healer \n3.Exit")
+        print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Exit")
         choice = input()
         if choice == "1":
             print("Not ready yet")
         elif choice == "2":
             Healer()
         elif choice == "3":
+            PlayerStats()
+        elif choice == "4":
             stop = Exit()
         else:
             print("Wrong Choice")
