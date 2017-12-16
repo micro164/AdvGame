@@ -40,6 +40,8 @@ def EquipInsert(item_name):
     for key, value in list(Items.items()):
         if key == item_name:
             itemClass = value.Pclass
+            Player.Strength += value.attack
+            Player.Defense += value.defence
             Index = ItemsIndex
         ItemsIndex += 1
     
@@ -109,6 +111,15 @@ def PlayerStats():
     print("Strength: " + str(Player.Strength))
     print("Defense: " + str(Player.Defense))
     print("Gold: " + str(Player.gold))
+
+    print("\nEquipment:")
+    for i in range(len(Player.Equipment)):
+        if i%2 == 0:
+            print(Player.Equipment[i])
+
+def DisplayInventory():
+    for i in range(len(Player.Inventory)):
+        print(Player.Inventory[i])
         
 #Exiting the game
 def Exit():
@@ -118,7 +129,8 @@ def Exit():
 def Choices():
     stop = False;
     while stop == False:
-        print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Exit")
+        print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Inventory")
+        print("5.Exit")
         choice = input()
         if choice == "1":
             print("Not ready yet")
@@ -127,6 +139,8 @@ def Choices():
         elif choice == "3":
             PlayerStats()
         elif choice == "4":
+            DisplayInventory()
+        elif choice == "5":
             stop = Exit()
         else:
             print("Wrong Choice")
