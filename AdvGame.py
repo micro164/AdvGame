@@ -7,15 +7,22 @@
 #-----------------------IMPORTS-----------------------------
 
 from collections import namedtuple
+from collections import defaultdict
+from enum import IntEnum
 
 #-----------------------ITEMS-------------------------------
 
-Item = namedtuple('Item', ('attack', 'defence', 'price', 'Type', 'Pclass'))
+Item = namedtuple('Item', ('attack', 'defence', 'price', 'Type', 'Pclass', 'HP'))
 Items = {
-    'sword': Item(10,0,10,'weapon','swordsman'),
-    'wand': Item(5,0,2,'weapon', 'wizard'),
-    'dagger': Item(7,0,5,'weapon', 'rouge')
+    'sword': Item(10,0,10,'weapon','swordsman',0),
+    'wand': Item(5,0,2,'weapon', 'swordsman',0),
+    'dagger': Item(7,0,5,'weapon', 'rouge',0),
+    'potion': Item(0,0,20,'healer', 'none', 20)
 }
+
+Weapons = {'sword': list((10,0,10,'weapon', 'swordsman', 0)),
+           'wand': list((5,0,2,'weapon','wizard',0)),
+           'dagger': list((7,0,5,'weapon','rouge',0))}
 
 #------------------------CLASSES-----------------------------
 
@@ -29,8 +36,17 @@ class Player:
     gold = 0
     lvl = 1
     Pclass = ""
-    Inventory = {}
+    Inventory = dict()
     Equipment = dict()
+
+#Weapon Class
+class Weapon(IntEnum):
+    attack = 0
+    defense = 1
+    price = 2
+    Type = 3
+    Pclass = 4
+    HP = 5
 
 #-----------------------FUNCTIONS-----------------------------
 
@@ -49,6 +65,19 @@ def EquipInsert(item_name):
         if key == item_name and Player.Pclass == itemClass:
             Player.Equipment = list(Items.items())[Index]
             ItemsIndex += 1
+
+#Inserting Item into inventory
+def InvenInsert(item_name):
+    index = 0
+    firstItem = 0
+        
+    for key, value in list(Items.items()):
+        if key == item_name and firstItem > 0:
+            Player.Inventory[item_name] = list(Items.items())[index]
+        elif firstItem == 0:
+            Player.Inventory[0] = list(Items.items())[index]
+            firstItem += 1           
+        index += 1
         
 #Game Intro
 def GameIntro():
@@ -91,6 +120,14 @@ def GameIntro():
         print("You have been given a " + Player.Equipment[0] + "\n")
     else:
         print("Wrong choice")
+
+    InvenInsert('potion')
+    InvenInsert('wand')
+
+    for key, value in list(Weapons.items()):
+        print(key, value)
+        print(value[Weapon.Type])
+        print(type(value))
         
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
@@ -118,14 +155,16 @@ def PlayerStats():
             print(Player.Equipment[i])
 
 def DisplayInventory():
-    for i in range(len(Player.Inventory)):
-        print(Player.Inventory[i])
+##    for key, value in list(Player.Inventory):
+##        print(key + ": " + value.count)
+    print(Player.Inventory[0])
+    #print(Player.Equipment)
         
 #Exiting the game
 def Exit():
     return True
         
-#Choices
+  #Choices
 def Choices():
     stop = False;
     while stop == False:
