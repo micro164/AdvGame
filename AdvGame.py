@@ -139,10 +139,6 @@ def GameIntro():
         print("Wrong choice")
 
     InvenInsert('potion')
-    InvenInsert('wand')
-    InvenInsert('sword')
-    InvenInsert('potion')
-    EquipInsert('sword')
 
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
@@ -169,6 +165,21 @@ def PlayerStats():
     for key in Player.Equipment:
         print(key)
 
+#Display a stat of a selected items
+def ItemStats():
+    print("What item do you want to look up?")
+    item_lookup = input()
+
+    for key, value in list(Items.items()):
+        if key == item_lookup:
+            print("Name: " + key)
+            print("Attack: " + str(value[Item.attack]))
+            print("Defense: " + str(value[Item.defense]))
+            print("HP: " + str(value[Item.HP]))
+            print("Price: " + str(value[Item.price]))
+            print("Type: " + value[Item.Type])
+            print("Class: " + value[Item.Pclass])
+
 #Displays the players inventory
 def DisplayInventory():
     for key, value in list(Player.Inventory.items()):
@@ -183,7 +194,7 @@ def Choices():
     stop = False;
     while stop == False:
         print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Inventory")
-        print("5.Exit")
+        print("5.Item Stats \n6.Exit")
         choice = input()
         if choice == "1":
             print("Not ready yet")
@@ -194,6 +205,8 @@ def Choices():
         elif choice == "4":
             DisplayInventory()
         elif choice == "5":
+            ItemStats()
+        elif choice == "6":
             stop = Exit()
         else:
             print("Wrong Choice")
