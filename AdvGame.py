@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 #Author: Jonathon Bryant
-#Date: 9/22/17
+#Date Created: 9/22/17
+#Date Modified: 12/17/17
 #This is a simple text based game created in the language of python
 
 #-----------------------IMPORTS-----------------------------
@@ -14,6 +15,8 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0)),
          'wand': list((5,0,2,'weapon','wizard',0,0)),
          'dagger': list((7,0,5,'weapon','rouge',0,0)),
          'bronze armor': list((0,10,10,'armor','swordsman',0,0)),
+         'cloth armor': list((0,5,2,'armor','wizard',5,0)),
+         'hard cloth armor': list((0,7,5,'armor','rouge',0,0)),
          'potion': list((0,0,20,'healer', 'none', 20,0)),
          'test': list((0,0,0,'weapon','swordsman',0,0))}
 
@@ -50,6 +53,8 @@ def DeleteEquip(Etype):
         if value[Item.Type] == Etype and value[Item.count] != 0:
             Player.Strength -= value[Item.attack]
             Player.Defense -= value[Item.defense]
+            Player.MaxHP -= value[Item.HP]
+            #value[Item.count] -= 1
             del Player.Equipment[key]
 
 #Removing Equipment
@@ -59,33 +64,31 @@ def RemoveEquip(item_name):
             if key == item_name and Player.Pclass == value[Item.Pclass]:
                 if value[Item.Type] == 'weapon':
                     DeleteEquip('weapon')
-                if value[Item.Type] == 'armor':
+                elif value[Item.Type] == 'armor':
                     DeleteEquip('armor')
+                else:
+                    print("ERROR: can't remove equipment")
 
 #Inserting Item into equipment
 def EquipInsert(item_name):
     RemoveEquip(item_name)
 
-    ItemsIndex = 0
     for key, value in list(Items.items()):
-        if key == item_name:
-            itemClass = value[Item.Pclass]
-            Player.Strength += value[Item.attack]
-            Player.Defense += value[Item.defense]
-            Index = ItemsIndex
-        ItemsIndex += 1
-
-    for key in Items:
-        if key == item_name and Player.Pclass == itemClass:
+        if key == item_name and Player.Pclass == value[Item.Pclass]:
             Player.Equipment[item_name] = Items[item_name]
-            for key, value in list(Player.Equipment.items()):
-                if key == item_name:
-                    value[Item.count] += 1
-            ItemsIndex += 1
+            for key2, value2 in list(Player.Equipment.items()):
+                if key2 == item_name:
+                    Player.Strength += value2[Item.attack]
+                    Player.Defense += value2[Item.defense]
+                    Player.MaxHP += value2[Item.HP]
+                    value2[Item.count] += 1
 
 #Inserting Item into inventory
 def InvenInsert(item_name):
     Player.Inventory[item_name] = Items[item_name]
+    for key, value in list(Player.Inventory.items()):
+        if key == item_name:
+            value[Item.count] += 1
 
 #Game Intro
 def GameIntro():
@@ -107,7 +110,7 @@ def GameIntro():
         Player.hp = 100
         Player.MaxHP = 100
         EquipInsert('sword')
-        print("You have been given a " + list(Player.Equipment)[0] + "\n")
+        print("You have been given a " + list(Player.Equipment)[0])
         EquipInsert('bronze armor')
         print("You have been given a " + list(Player.Equipment)[1] + "\n")
     elif choice == "2":
@@ -118,7 +121,9 @@ def GameIntro():
         Player.hp = 50
         Player.MaxHP = 50
         EquipInsert('wand')
-        print("You have been given a " + list(Player.Equipment[0]) + "\n")
+        print("You have been given a " + list(Player.Equipment)[0])
+        EquipInsert('cloth armor')
+        print("You have been given a " + list(Player.Equipment)[1] + "\n")
     elif choice == "3":
         print("Welcome to the rogue class\n")
         Player.Pclass = 'rouge'
@@ -127,7 +132,9 @@ def GameIntro():
         Player.hp = 70
         Player.MaxHP = 70
         EquipInsert('dagger')
-        print("You have been given a " + list(Player.Equipment[0]) + "\n")
+        print("You have been given a " + list(Player.Equipment)[0])
+        EquipInsert('hard cloth armor')
+        print("You have been given a " + list(Player.Equipment)[1] + "\n")
     else:
         print("Wrong choice")
 
@@ -135,12 +142,14 @@ def GameIntro():
     InvenInsert('wand')
     InvenInsert('sword')
     InvenInsert('potion')
+    EquipInsert('sword')
 
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
 
 #def forest():
 
+#Function for healing facility for the game
 def Healer():
     print("Welcome to the healer.\Would you like to heal?")
     choice = input("Y/N\n")
@@ -162,14 +171,14 @@ def PlayerStats():
 
 #Displays the players inventory
 def DisplayInventory():
-    for key in Player.Inventory:
-        print(key)
+    for key, value in list(Player.Inventory.items()):
+        print(key + " X " + str(value[Item.count]))
 
 #Exiting the game
 def Exit():
     return True
 
-#Choices
+#Main menu for the game. The player can choose what to do and where to go.
 def Choices():
     stop = False;
     while stop == False:
