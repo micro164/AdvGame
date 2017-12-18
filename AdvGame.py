@@ -6,7 +6,6 @@
 
 #-----------------------IMPORTS-----------------------------
 
-from collections import defaultdict
 from enum import IntEnum
 
 #-----------------------ITEMS-------------------------------
@@ -14,6 +13,7 @@ from enum import IntEnum
 Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0)),
          'wand': list((5,0,2,'weapon','wizard',0,0)),
          'dagger': list((7,0,5,'weapon','rouge',0,0)),
+         'bronze armor': list((0,10,10,'armor','swordsman',0,0)),
          'potion': list((0,0,20,'healer', 'none', 20,0)),
          'test': list((0,0,0,'weapon','swordsman',0,0))}
 
@@ -47,7 +47,7 @@ class Item(IntEnum):
 #Delete Equipment item
 def DeleteEquip(Etype):
     for key, value in list(Player.Equipment.items()):
-        if value[Item.Type] == 'weapon' and value[Item.count] != 0:
+        if value[Item.Type] == Etype and value[Item.count] != 0:
             Player.Strength -= value[Item.attack]
             Player.Defense -= value[Item.defense]
             del Player.Equipment[key]
@@ -108,6 +108,8 @@ def GameIntro():
         Player.MaxHP = 100
         EquipInsert('sword')
         print("You have been given a " + list(Player.Equipment)[0] + "\n")
+        EquipInsert('bronze armor')
+        print("You have been given a " + list(Player.Equipment)[1] + "\n")
     elif choice == "2":
         print("Welcome to the wizard class\n")
         Player.Pclass = 'wizard'
@@ -133,7 +135,6 @@ def GameIntro():
     InvenInsert('wand')
     InvenInsert('sword')
     InvenInsert('potion')
-    EquipInsert('test')
 
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
