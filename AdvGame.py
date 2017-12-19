@@ -97,8 +97,15 @@ def EquipInsert(item_name):
 #Inserting Item into inventory
 def InvenInsert(item_name):
     Player.Inventory[item_name] = Items[item_name]
-    for key, value in list(Player.Inventory.items()):
+
+    Echeck = False
+
+    for key in Player.Equipment:
         if key == item_name:
+            Echeck = True
+
+    for key, value in list(Player.Inventory.items()):
+        if key == item_name and Echeck == False:
             value[Item.count] += 1
 
 #Game Intro
@@ -228,13 +235,9 @@ def Sell():
                 Player.gold += (value[Item.price] * .8)
                 value[Item.count] -= 1
             elif value[Item.count] == 1:
-                for key, value in list(Player.Equipment.items()):
-                    if key == sell:
-                        print("This item is equiped and can't be sold")
-                if key != sell:
-                    Player.gold += (value[Item.price] * .8)
-                    value[Item.count] -= 1
-                    del Player.Inventory[sell]
+                Player.gold += (value[Item.price] * .8)
+                value[Item.count] -= 1
+                del Player.Inventory[sell]
 
 #The store for the player
 def Store():

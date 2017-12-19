@@ -5,7 +5,6 @@ Some things that need to be added:
 1. A forest to explore
 2. Add enemies in the forest
 3. Quests & general story of the game
-4. Double check store and fix any issues 
 
 How to run game:
 1. Clone the repository
