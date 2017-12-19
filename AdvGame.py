@@ -8,6 +8,7 @@
 #-----------------------IMPORTS-----------------------------
 
 from enum import IntEnum
+import random
 
 #-----------------------ITEMS-------------------------------
 
@@ -17,12 +18,12 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
          'bronze armor': list((0,10,10,'armor','swordsman',0,0,1)),
          'cloth armor': list((0,5,2,'armor','wizard',5,0,1)),
          'hard cloth armor': list((0,7,5,'armor','rouge',0,0,1)),
-         'potion': list((0,0,20,'item', 'none', 20,0,1)),
-         'test': list((0,0,0,'weapon','swordsman',0,0,0))}
+         'potion': list((0,0,20,'item', 'none', 20,0,1))}
 
 #------------------------MONSTERS----------------------------
 
-Monsters = {'rat': list((50,5,2))}
+Monsters = {'rat': list((50,5,2,10,1)),
+            'goblin': list((100,10,5,50,5))}
 
 #------------------------CLASSES-----------------------------
 
@@ -34,6 +35,8 @@ class Player:
     Strength = 0
     Defense = 0
     gold = 0
+    MaxExp = 0
+    exp = 0
     lvl = 1
     Pclass = ""
     Inventory = dict()
@@ -44,6 +47,8 @@ class Monster(IntEnum):
     HP = 0
     attack = 1
     defense = 2
+    exp = 3
+    lvl = 4
 
 #Item Class
 class Item(IntEnum):
@@ -162,7 +167,57 @@ def GameIntro():
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
 
-#def forest():
+#Player encounters a random monster
+def fight():
+    temp = {}
+    for key, value in list(Monsters.items()):
+        if value[Monster.lvl] >= Player.lvl and value[Monster.lvl] <= (Player.lvl + 5):
+            temp[key] = Monsters[key]
+
+    random.seed()
+    key = random.choice(list(temp.items()))
+    value = key[1]
+    print("It's a " + key[0])
+
+    while Player.hp > 0 and value[Monster.HP] > 0:
+        Pdamage = 0
+        Edamage = 0
+
+        while Pdamage <= 0 and Edamage <= 0:
+            Pdamage = random.randrange(Player.Strength) - random.randrange(value[Monster.defense])
+            Edamage = random.randrange(value[Monster.attack]) - random.randrange(Player.Defense)
+            Pdamage = abs(Pdamage)
+            Edamage = abs(Edamage)
+
+        print("You hit the " + key[0] + " for " + str(Pdamage) + " damage")
+        value[Monster.HP] -= Pdamage
+        print(key[0] + " now has " + str(value[Monster.HP]) + " life left.")
+        print(key[0] + " hit you for " + str(Edamage) + " damage")
+        Player.hp -= Edamage
+        print("You have " + str(Player.hp) + " life left.")
+
+#For the player to explore
+def forest():
+    print("Welcome to the forest!")
+
+    choice = " "
+
+    random.seed()
+
+    while choice != "5":
+        print("1.up \n2.left \n3.right \n4.down \n5.exit")
+        choice = input()
+        if choice >= "1" and choice <= "4":
+            rand = random.randrange(0,2)
+            if rand == 0:
+                print("A group of trees")
+            elif rand == 1:
+                print("You encountered a monster")
+                fight()
+            else:
+                print("ERROR")
+        else:
+            print("Wrong Choice")
 
 #Function for healing facility for the game
 def Healer():
@@ -267,7 +322,7 @@ def Choices():
         print("5.Item Stats \n6.Store \n7.Exit")
         choice = input()
         if choice == "1":
-            print("Not ready yet")
+            forest()
         elif choice == "2":
             Healer()
         elif choice == "3":
