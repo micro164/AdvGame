@@ -22,8 +22,8 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
 
 #------------------------MONSTERS----------------------------
 
-Monsters = {'rat': list((50,5,2,10,1)),
-            'goblin': list((100,10,5,50,5))}
+Monsters = {'rat': list((50,5,2,10,1,50)),
+            'goblin': list((100,10,5,50,5,100))}
 
 #------------------------CLASSES-----------------------------
 
@@ -49,6 +49,7 @@ class Monster(IntEnum):
     defense = 2
     exp = 3
     lvl = 4
+    MaxHP = 5
 
 #Item Class
 class Item(IntEnum):
@@ -196,6 +197,12 @@ def fight():
         Player.hp -= Edamage
         print("You have " + str(Player.hp) + " life left.")
 
+    if value[Monster.HP] < value[Monster.MaxHP]:
+        value[Monster.HP] = value[Monster.MaxHP]
+
+    if Player.hp < 0:
+        Player.hp = 0
+
 #For the player to explore
 def forest():
     print("Welcome to the forest!")
@@ -216,8 +223,10 @@ def forest():
                 fight()
             else:
                 print("ERROR")
+        elif choice == "5":
+            print("Leaving forest")
         else:
-            print("Wrong Choice")
+            print("Wrong choice")
 
 #Function for healing facility for the game
 def Healer():
