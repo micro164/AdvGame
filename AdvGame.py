@@ -11,14 +11,18 @@ from enum import IntEnum
 
 #-----------------------ITEMS-------------------------------
 
-Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0)),
-         'wand': list((5,0,2,'weapon','wizard',0,0)),
-         'dagger': list((7,0,5,'weapon','rouge',0,0)),
-         'bronze armor': list((0,10,10,'armor','swordsman',0,0)),
-         'cloth armor': list((0,5,2,'armor','wizard',5,0)),
-         'hard cloth armor': list((0,7,5,'armor','rouge',0,0)),
-         'potion': list((0,0,20,'healer', 'none', 20,0)),
-         'test': list((0,0,0,'weapon','swordsman',0,0))}
+Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
+         'wand': list((5,0,2,'weapon','wizard',0,0,1)),
+         'dagger': list((7,0,5,'weapon','rouge',0,0,1)),
+         'bronze armor': list((0,10,10,'armor','swordsman',0,0,1)),
+         'cloth armor': list((0,5,2,'armor','wizard',5,0,1)),
+         'hard cloth armor': list((0,7,5,'armor','rouge',0,0,1)),
+         'potion': list((0,0,20,'item', 'none', 20,0,1)),
+         'test': list((0,0,0,'weapon','swordsman',0,0,0))}
+
+#------------------------MONSTERS----------------------------
+
+Monsters = {'rat': list((50,5,2))}
 
 #------------------------CLASSES-----------------------------
 
@@ -35,6 +39,12 @@ class Player:
     Inventory = dict()
     Equipment = dict()
 
+#Monster Class
+class Monster(IntEnum):
+    HP = 0
+    attack = 1
+    defense = 2
+
 #Item Class
 class Item(IntEnum):
     attack = 0
@@ -44,6 +54,7 @@ class Item(IntEnum):
     Pclass = 4
     HP = 5
     count = 6
+    lvl = 7
 
 #-----------------------FUNCTIONS-----------------------------
 
@@ -139,6 +150,7 @@ def GameIntro():
         print("Wrong choice")
 
     InvenInsert('potion')
+    InvenInsert('sword')
 
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
@@ -180,6 +192,61 @@ def ItemStats():
             print("Type: " + value[Item.Type])
             print("Class: " + value[Item.Pclass])
 
+#Printing out store items
+def PrintStore(Stype):
+    for key, value in list(Item.items()):
+        if value[Item.Pclass] == Player.Pclass and value[Item.Type] == Stype:
+            if value[Item.lvl] >= Player.lvl and value[Item.lvl] <= (Player.lvl + 5):
+                print(key + ": " + str(value[Item.price]))
+
+#Function for buying store items
+def Buy():
+    print("1.Weapon \n2.Armor \n3.Item")
+    buy = input()
+    if buy == "1":
+        PrintStore('weapon')
+        print("Type the name of the item you want to buy")
+        weapon = input()
+        Player.gold -= value[Item.price]
+        print("Do you want to equip the weapon")
+        choice = input()
+        if choice == 'yes':
+            EquipInsert(weapon)
+        elif choice == 'no':
+            InvenInsert(weapon)
+        else:
+            print("ERROR: Could not buy item")
+
+#Function for selling store items
+def Sell():
+    print("What item do you want to sell from your inventory?")
+    sell = input()
+
+    for key, value in list(Player.Inventory.items()):
+        if key == sell:
+            if value[Item.count] > 1:
+                Player.gold += (value[Item.price] * .8)
+                value[Item.count] -= 1
+            elif value[Item.count] == 1:
+                for key, value in list(Player.Equipment.items()):
+                    if key == sell:
+                        print("This item is equiped and can't be sold")
+                if key != sell:
+                    Player.gold += (value[Item.price] * .8)
+                    value[Item.count] -= 1
+                    del Player.Inventory[sell]
+
+#The store for the player
+def Store():
+    print("1.Buy \n2.Sell")
+    choice = input()
+    if choice == "1":
+        Buy()
+    elif choice == "2":
+        Sell()
+    else:
+        print("Wrong choice")
+
 #Displays the players inventory
 def DisplayInventory():
     for key, value in list(Player.Inventory.items()):
@@ -194,7 +261,7 @@ def Choices():
     stop = False;
     while stop == False:
         print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Inventory")
-        print("5.Item Stats \n6.Exit")
+        print("5.Item Stats \n6.Store \n7.Exit")
         choice = input()
         if choice == "1":
             print("Not ready yet")
@@ -207,6 +274,8 @@ def Choices():
         elif choice == "5":
             ItemStats()
         elif choice == "6":
+            Store()
+        elif choice == "7":
             stop = Exit()
         else:
             print("Wrong Choice")
