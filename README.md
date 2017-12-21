@@ -3,7 +3,7 @@ This is a simple text based game created using python. The two reasons for this 
 
 Some things that need to be added:
 1. Work on forest
-2. Word on fights with monsters
+2. Work on fights with monsters
 3. Figure out experience points
 4. Figure out level ups
 5. Quests & general story of the game
