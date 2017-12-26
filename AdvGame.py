@@ -197,23 +197,32 @@ def fight():
         Player.hp -= Edamage
         print("You have " + str(Player.hp) + " life left.")
 
+    print("")
+
     if value[Monster.HP] < value[Monster.MaxHP]:
         value[Monster.HP] = value[Monster.MaxHP]
 
     if Player.hp < 0:
         Player.hp = 0
+        print("YOU LOSE!!")
 
 #For the player to explore
 def forest():
-    print("Welcome to the forest!")
+    if Player.hp > 0:
+        print("Welcome to the forest!")
+    elif Player.hp <= 0:
+        print("You do not have enough hp to fight.")
+    else:
+        print("ERROR: Can't Access forest")
 
     choice = " "
 
     random.seed()
 
-    while choice != "5":
+    while choice != "5" and Player.hp != 0:
         print("1.up \n2.left \n3.right \n4.down \n5.exit")
         choice = input()
+        print("")
         if choice >= "1" and choice <= "4":
             rand = random.randrange(0,2)
             if rand == 0:
@@ -265,8 +274,8 @@ def ItemStats():
 
 #Printing out store items
 def PrintStore(Stype):
-    for key, value in list(Item.items()):
-        if value[Item.Pclass] == Player.Pclass and value[Item.Type] == Stype:
+    for key, value in list(Items.items()):
+        if (value[Item.Pclass] == Player.Pclass or  value[Item.Pclass] == 'none') and (value[Item.Type] == Stype):
             if value[Item.lvl] >= Player.lvl and value[Item.lvl] <= (Player.lvl + 5):
                 print(key + ": " + str(value[Item.price]))
 
@@ -274,19 +283,61 @@ def PrintStore(Stype):
 def Buy():
     print("1.Weapon \n2.Armor \n3.Item")
     buy = input()
-    if buy == "1":
+    if buy == '1':
         PrintStore('weapon')
-        print("Type the name of the item you want to buy")
+        print("Type the name of the weapon you want to buy or no to exit")
         weapon = input()
-        Player.gold -= value[Item.price]
-        print("Do you want to equip the weapon")
-        choice = input()
-        if choice == 'yes':
-            EquipInsert(weapon)
-        elif choice == 'no':
-            InvenInsert(weapon)
-        else:
-            print("ERROR: Could not buy item")
+        if weapon == 'no':
+            print("Thank you for shopping with us.")
+        elif weapon != 'no':
+            price = 0
+            for key, value in list(Items.items()):
+                if key == weapon:
+                    price = value[Item.price]
+            Player.gold -= price
+            print("Do you want to equip the weapon: yes/no")
+            choice = input()
+            if choice == 'yes':
+                EquipInsert(weapon)
+            elif choice == 'no':
+                InvenInsert(weapon)
+            else:
+                print("ERROR: Could not put away or equip weapon")
+    elif buy == '2':
+        PrintStore('armor')
+        print("Type the name of the armor you want to buy or no to exit")
+        armor = input()
+        if armor == 'no':
+            print("Thank you for shopping with us")
+        elif armor != 'no':
+            price = 0
+            for key, value in list(Items.items()):
+                if key == armor:
+                    price = value[Item.price]
+            Player.gold -= price
+            print("Do you want to equip the armor: yes/no")
+            choice = input()
+            if choice == 'yes':
+                EquipInsert(armor)
+            elif choice == 'no':
+                InvenInsert(armor)
+            else:
+                print("ERROR: Could not put away or equip armor")
+    elif buy == '3':
+        PrintStore('item')
+        print("Type the name of the item you want to buy or no to exit")
+        item_name = input()
+        if item_name == 'no':
+            print("Thank you for shopping with us")
+        elif item_name != 'no':
+            price = 0
+            for key, value in list(Items.items()):
+                if key == item_name:
+                    price = value[Item.price]
+            Player.gold -= price
+            InvenInsert(item_name)
+    else:
+        print("ERROR: could not buy item")
 
 #Function for selling store items
 def Sell():
@@ -330,6 +381,7 @@ def Choices():
         print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Inventory")
         print("5.Item Stats \n6.Store \n7.Exit")
         choice = input()
+        print("")
         if choice == "1":
             forest()
         elif choice == "2":
