@@ -249,6 +249,7 @@ def PlayerStats():
     print("Name: " + Player.name)
     print("Level: " + str(Player.lvl))
     print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp))
+    print("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp))
     print("Strength: " + str(Player.Strength))
     print("Defense: " + str(Player.Defense))
     print("Gold: " + str(Player.gold))
@@ -279,63 +280,49 @@ def PrintStore(Stype):
             if value[Item.lvl] >= Player.lvl and value[Item.lvl] <= (Player.lvl + 5):
                 print(key + ": " + str(value[Item.price]))
 
+#The main function for buying a weapon, armor, or item
+def Mbuy(Stype):
+    PrintStore(Stype)
+    print("Type the name of the " + Stype + " you want to buy or no to exit")
+    item_name = input()
+    if item_name == 'no':
+        print("Thank you for shopping with us.")
+    elif item_name != 'no':
+        price = 0
+        ItemType = ''
+        for key, value in list(Items.items()):
+            if key == item_name:
+                price = value[Item.price]
+                ItemType = value[Item.type]
+        if Player.gold >= price:
+            Player.gold -= price
+        else:
+            print("You do not have enough money")
+        if ItemType != 'item':
+            print("Do you want to equip the " + item_name + ": yes/no")
+            choice = input()
+            if choice == 'yes':
+                EquipInsert(item_name)
+            elif choice == 'no':
+                InvenInsert(item_name)
+            else:
+                print("ERROR: Could not put away or equip " + item_name)
+        elif ItemType == 'item':
+            print("Item put in your inventory.")
+            InvenInsert(item_name)
+        else:
+            print("ERROR: Something went wrong with buying item")
+
 #Function for buying store items
 def Buy():
     print("1.Weapon \n2.Armor \n3.Item")
     buy = input()
     if buy == '1':
-        PrintStore('weapon')
-        print("Type the name of the weapon you want to buy or no to exit")
-        weapon = input()
-        if weapon == 'no':
-            print("Thank you for shopping with us.")
-        elif weapon != 'no':
-            price = 0
-            for key, value in list(Items.items()):
-                if key == weapon:
-                    price = value[Item.price]
-            Player.gold -= price
-            print("Do you want to equip the weapon: yes/no")
-            choice = input()
-            if choice == 'yes':
-                EquipInsert(weapon)
-            elif choice == 'no':
-                InvenInsert(weapon)
-            else:
-                print("ERROR: Could not put away or equip weapon")
+        Mbuy('weapon')
     elif buy == '2':
-        PrintStore('armor')
-        print("Type the name of the armor you want to buy or no to exit")
-        armor = input()
-        if armor == 'no':
-            print("Thank you for shopping with us")
-        elif armor != 'no':
-            price = 0
-            for key, value in list(Items.items()):
-                if key == armor:
-                    price = value[Item.price]
-            Player.gold -= price
-            print("Do you want to equip the armor: yes/no")
-            choice = input()
-            if choice == 'yes':
-                EquipInsert(armor)
-            elif choice == 'no':
-                InvenInsert(armor)
-            else:
-                print("ERROR: Could not put away or equip armor")
+        Mbuy('armor')
     elif buy == '3':
-        PrintStore('item')
-        print("Type the name of the item you want to buy or no to exit")
-        item_name = input()
-        if item_name == 'no':
-            print("Thank you for shopping with us")
-        elif item_name != 'no':
-            price = 0
-            for key, value in list(Items.items()):
-                if key == item_name:
-                    price = value[Item.price]
-            Player.gold -= price
-            InvenInsert(item_name)
+        Mbuy('item')
     else:
         print("ERROR: could not buy item")
 
