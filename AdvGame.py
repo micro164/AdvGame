@@ -35,7 +35,7 @@ class Player:
     Strength = 0
     Defense = 0
     gold = 0
-    MaxExp = 0
+    MaxExp = 100
     exp = 0
     lvl = 1
     Pclass = ""
@@ -293,25 +293,25 @@ def Mbuy(Stype):
         for key, value in list(Items.items()):
             if key == item_name:
                 price = value[Item.price]
-                ItemType = value[Item.type]
+                ItemType = value[Item.Type]
         if Player.gold >= price:
             Player.gold -= price
-        else:
-            print("You do not have enough money")
-        if ItemType != 'item':
-            print("Do you want to equip the " + item_name + ": yes/no")
-            choice = input()
-            if choice == 'yes':
-                EquipInsert(item_name)
-            elif choice == 'no':
+            if ItemType != 'item':
+                print("Do you want to equip the " + item_name + ": yes/no")
+                choice = input()
+                if choice == 'yes':
+                    EquipInsert(item_name)
+                elif choice == 'no':
+                    InvenInsert(item_name)
+                else:
+                    print("ERROR: Could not put away or equip " + item_name)
+            elif ItemType == 'item':
+                print("Item put in your inventory.")
                 InvenInsert(item_name)
             else:
-                print("ERROR: Could not put away or equip " + item_name)
-        elif ItemType == 'item':
-            print("Item put in your inventory.")
-            InvenInsert(item_name)
+                print("ERROR: Something went wrong with buying item")
         else:
-            print("ERROR: Something went wrong with buying item")
+            print("You do not have enough money")
 
 #Function for buying store items
 def Buy():
