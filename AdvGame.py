@@ -165,7 +165,6 @@ def GameIntro():
         print("Wrong choice")
 
     InvenInsert('potion')
-    InvenInsert('sword')
 
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
@@ -213,6 +212,27 @@ def fight():
         Player.exp += value[Monster.exp]
         LevelUp()
         MonsterDrop(value[Monster.lvl])
+
+    if Player.hp == 0 and Player.gold == 0:
+        HealingItem = CheckHealing()
+        if bool(HealingItem) == False and Player.exp != 0:
+            print("Grim Reaper: 'You have no gold to heal yourself. Muhahaha'")
+            print("Grim Reaper: 'I will take some experience from you in order to restore your life.'")
+            Player.exp -= 10 * Player.lvl
+            Player.hp = Player.MaxHP
+        elif Player.exp == 0 and bool(HealingItem) == False:
+            print("Grim Reaper: 'You have nothing so I will add to your Max Exp. to restore your life.'")
+            Player.MaxExp += 10 * Player.lvl
+            Player.hp = Player.MaxHP
+
+def CheckHealing():
+    for key, value in list(Player.Inventory.items()):
+        if key == 'potion':
+            return True
+        elif key != 'potion':
+            return False
+        else:
+            print("ERROR: Can't determine if healing item is in inventory")
 
 def Drop(Stype):
     random.seed()
@@ -313,7 +333,11 @@ def Healer():
     print("Welcome to the healer.\Would you like to heal?")
     choice = input("Y/N\n")
     if Player.hp != Player.MaxHP and choice == 'Y' or choice == 'y':
-        Player.hp = Player.MaxHP
+        while Player.hp != Player.MaxHP and Player.gold != 0:
+            Player.hp += 1
+            Player.gold -= 1
+        if Player.gold == 0:
+            print("You do not have any gold to heal!")
 
 #Displays the players stats
 def PlayerStats():
@@ -427,6 +451,45 @@ def Store():
 def DisplayInventory():
     for key, value in list(Player.Inventory.items()):
         print(key + " X " + str(value[Item.count]))
+
+    print("1. Equip a weapon or armor")
+    print("2. Use an item")
+
+    choice = input()
+
+    if choice == '1':
+        print("Enter the name of the weapon/armor")
+        Equip = input()
+        CheckItem = ItemCheck(Equip)
+        if bool(CheckItem) == True:
+            EquipInsert(Equip)
+        elif bool(CheckItem) == False:
+            print("Weapon/armor not in inventory")
+        else:
+            print("ERROR: can not equip item from inventory")
+    elif choice == '2':
+        print("Enter the name of the item to use")
+        item_name = input()
+        CheckItem = ItemCheck(item_name)
+        if bool(CheckItem) == True:
+            for key, value in list(Player.Inventory.items()):
+                if key == item_name:
+                    Player.Strength += value[Item.attack]
+                    Player.Defense += value[Item.defense]
+                    if Player.hp < Player.MaxHP:
+                        Player.hp += value[Item.HP]
+                    if Player.hp > Player.MaxHP:
+                        Player.hp = Player.MaxHP
+                    del Player.Inventory[item_name]
+
+def ItemCheck(item_name):
+    for key, value in list(Player.Inventory.items()):
+        if key == item_name:
+            return True
+        elif key != item_name:
+            return False
+        else:
+            print("ERROR: could not check item.")
 
 #Exiting the game
 def Exit():

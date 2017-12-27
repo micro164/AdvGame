@@ -2,12 +2,12 @@
 This is a simple text based game created using python. The two reasons for this game are just to have fun and increase my knowledge of the python language.
 
 Some things that need to be added:
-1. Work on forest
-2. Work on fights with monsters
-3. Figure out experience points
-4. Figure out level ups
+1. Add more monsters
+2. Add more weapons
+3. Add more armors
+4. Add more items 
 5. Quests & general story of the game
-6. Add capability to use items from inventory
+
 
 How to run game:
 1. Clone the repository
