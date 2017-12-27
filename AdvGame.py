@@ -9,6 +9,8 @@
 
 from enum import IntEnum
 import random
+from math import ceil
+from math import floor
 
 #-----------------------ITEMS-------------------------------
 
@@ -22,8 +24,8 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
 
 #------------------------MONSTERS----------------------------
 
-Monsters = {'rat': list((50,5,2,10,1,50)),
-            'goblin': list((100,10,5,50,5,100))}
+Monsters = {'rat': list((50,5,2,70000000,1,50)),
+            'goblin': list((100,10,5,70000000,5,100))} 
 
 #------------------------CLASSES-----------------------------
 
@@ -202,9 +204,43 @@ def fight():
     if value[Monster.HP] < value[Monster.MaxHP]:
         value[Monster.HP] = value[Monster.MaxHP]
 
-    if Player.hp < 0:
+    if Player.hp <= 0:
         Player.hp = 0
         print("YOU LOSE!!")
+
+    if Player.hp > 0:
+        print("YOU WON!!!")
+        Player.exp += value[Monster.exp]
+        LevelUp()
+
+#Function for checking if the player can level up and to adjust the stats of the player
+def LevelUp():
+    while Player.exp >= Player.MaxExp and Player.lvl < 100:
+        print("YOU LEVELED UP!!!!!")
+        Player.lvl += 1
+        Player.MaxExp += floor((Player.lvl * Player.MaxExp) / 700)
+        if Player.lvl < 10:
+            Player.MaxExp += 50 * Player.lvl
+            Player.MaxHP += 5 * Player.lvl
+            Player.Strength += Player.lvl
+        elif Player.lvl > 10 and Player.lvl < 30:
+            Player.MaxExp += 50 * Player.lvl
+        if Player.Pclass == 'swordsman':
+            Player.MaxHP += ceil((Player.lvl / 7))
+            Player.Strength += ceil((Player.lvl / 5))
+            Player.Defense += ceil((Player.lvl / 10))
+        elif Player.Pclass == 'wizard':
+            Player.MaxHP += ceil((Player.lvl / 12))
+            Player.Strength += ceil((Player.lvl / 2))
+            Player.Defense += ceil((Player.lvl / 15))
+        elif Player.Pclass == 'rouge':
+            Player.MaxHP += ceil((Player.lvl / 10))
+            Player.Strength += ceil((Player.lvl / 7))
+            Player.Defense += ceil((Player.lvl / 12))
+        Player.hp = Player.MaxHP
+    if Player.lvl >= 100:
+        print("You are max level")
+        Player.exp = Player.MaxExp
 
 #For the player to explore
 def forest():
@@ -385,7 +421,6 @@ def Choices():
             stop = Exit()
         else:
             print("Wrong Choice")
-
 
 #Main game function
 def main():
