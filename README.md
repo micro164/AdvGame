@@ -5,9 +5,8 @@ Some things that need to be added:
 1. Add more monsters
 2. Add more weapons
 3. Add more armors
-4. Add more items 
+4. Add more items
 5. Quests & general story of the game
-
 
 How to run game:
 1. Clone the repository
