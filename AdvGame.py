@@ -126,6 +126,7 @@ def DeleteEquip(Etype):
             Player.Defense -= value[Item.defense]
             Player.MaxHP -= value[Item.HP]
             #value[Item.count] -= 1
+            InvenInsert(key)
             del Player.Equipment[key]
 
 #Removing Equipment
@@ -142,17 +143,25 @@ def RemoveEquip(item_name):
 
 #Inserting Item into equipment
 def EquipInsert(item_name):
-    RemoveEquip(item_name)
+    if value[Item.lvl] <= Player.lvl:
+        RemoveEquip(item_name)
 
-    for key, value in list(Items.items()):
-        if key == item_name and Player.Pclass == value[Item.Pclass]:
-            Player.Equipment[item_name] = Items[item_name]
-            for key2, value2 in list(Player.Equipment.items()):
-                if key2 == item_name:
-                    Player.Strength += value2[Item.attack]
-                    Player.Defense += value2[Item.defense]
-                    Player.MaxHP += value2[Item.HP]
-                    value2[Item.count] += 1
+        for key, value in list(Items.items()):
+            if key == item_name and Player.Pclass == value[Item.Pclass]:
+                Player.Equipment[item_name] = Items[item_name]
+                for key2, value2 in list(Player.Equipment.items()):
+                    if key2 == item_name:
+                        Player.Strength += value2[Item.attack]
+                        Player.Defense += value2[Item.defense]
+                        Player.MaxHP += value2[Item.HP]
+                        value2[Item.count] += 1
+                        
+    elif value[Item.lvl] > Player.lvl:
+        print("This item can not be equiped at this level")
+        InvenInsert(item_name)
+        print("The item has been put in your inventory")
+    else:
+        print("ERROR: Can't equip weapon")
 
 #Inserting Item into inventory
 def InvenInsert(item_name):
@@ -314,7 +323,7 @@ def Drop(Stype):
     temp = {}
     for key, value in list(Items.items()):
         if value[Item.Type] == Stype:
-            if value[Item.lvl] < (Player.lvl + 5):
+            if value[Item.lvl] <= (Player.lvl + 5):
                 temp[key] = Items[key]
 
     key = random.choice(list(temp.items()))
@@ -444,18 +453,22 @@ def PlayerStats():
 
 #Display a stat of a selected items
 def ItemStats():
-    print("What item do you want to look up?")
-    item_lookup = input()
+    item_lookup = ""
 
-    for key, value in list(Items.items()):
-        if key == item_lookup:
-            print("Name: " + key)
-            print("Attack: " + str(value[Item.attack]))
-            print("Defense: " + str(value[Item.defense]))
-            print("HP: " + str(value[Item.HP]))
-            print("Price: " + str(value[Item.price]))
-            print("Type: " + value[Item.Type])
-            print("Class: " + value[Item.Pclass])
+    while item_lookup != "exit":
+        print("What item do you want to look up?")
+        print("Type exit when done")
+        item_lookup = input()
+
+        for key, value in list(Items.items()):
+            if key == item_lookup:
+                print("Name: " + key)
+                print("Attack: " + str(value[Item.attack]))
+                print("Defense: " + str(value[Item.defense]))
+                print("HP: " + str(value[Item.HP]))
+                print("Price: " + str(value[Item.price]))
+                print("Type: " + value[Item.Type])
+                print("Class: " + value[Item.Pclass])
 
 #Printing out store items
 def PrintStore(Stype):
@@ -470,7 +483,7 @@ def Mbuy(Stype):
     print("Type the name of the " + Stype + " you want to buy or no to exit")
     item_name = input()
     if item_name == 'no':
-        print("")
+        print("Thank you for shopping with us")
     elif item_name != 'no':
         price = 0
         ItemType = ''
@@ -478,24 +491,29 @@ def Mbuy(Stype):
             if key == item_name:
                 price = value[Item.price]
                 ItemType = value[Item.Type]
-        if Player.gold >= price:
-            Player.gold -= price
-            if ItemType != 'item':
-                print("Do you want to equip the " + item_name + ": yes/no")
-                choice = input()
-                if choice == 'yes':
-                    EquipInsert(item_name)
-                elif choice == 'no':
+        if price != 0 and ItemType != '':
+            if Player.gold >= price:
+                Player.gold -= price
+                if ItemType != 'item':
+                    print("Do you want to equip the " + item_name + ": yes/no")
+                    choice = input()
+                    if choice == 'yes':
+                        EquipInsert(item_name)
+                    elif choice == 'no':
+                        InvenInsert(item_name)
+                    else:
+                        print("ERROR: Could not put away or equip " + item_name)
+                elif ItemType == 'item':
+                    print("Item put in your inventory.")
                     InvenInsert(item_name)
                 else:
-                    print("ERROR: Could not put away or equip " + item_name)
-            elif ItemType == 'item':
-                print("Item put in your inventory.")
-                InvenInsert(item_name)
+                    print("ERROR: Something went wrong with buying item")
             else:
-                print("ERROR: Something went wrong with buying item")
+                print("You do not have enough money")
+        elif price == 0 and ItemType != '':
+            print("Unidentified item")
         else:
-            print("You do not have enough money")
+            print("ERROR: can't buy item")
 
 #Function for buying store items
 def Buy():
@@ -518,23 +536,27 @@ def Buy():
 
 #Function for selling store items
 def Sell():
-    print("What item do you want to sell from your inventory?")
-    sell = input()
+    sell = ""
+    while sell != "exit":
+        print("What item do you want to sell from your inventory?")
+        print("Type exit to go back")
+        sell = input()
 
-    for key, value in list(Player.Inventory.items()):
-        if key == sell:
-            if value[Item.count] > 1:
-                Player.gold += (value[Item.price] * .8)
-                value[Item.count] -= 1
-                print(value[Item.count])
-                print("You gained " + str((value[Item.price] * .8)) + " gold.")
-            elif value[Item.count] == 1:
-                Player.gold += (value[Item.price] * .8)
-                value[Item.count] -= 1
-                print("You gained " + str((value[Item.price] * .8)) + " gold.")
-                del Player.Inventory[sell]
-            else:
-                print("ERROR: Can't sell item")
+        for key, value in list(Player.Inventory.items()):
+            if key == sell:
+                Igold = ceil((value[Item.price] * .8))
+                if value[Item.count] > 1:
+                    Player.gold += Igold
+                    value[Item.count] -= 1
+                    print(value[Item.count])
+                    print("You gained " + str(Igold) + " gold.")
+                elif value[Item.count] == 1:
+                    Player.gold += Igold
+                    value[Item.count] -= 1
+                    print("You gained " + str(Igold) + " gold.")
+                    del Player.Inventory[sell]
+                else:
+                    print("ERROR: Can't sell item")
 
 #The store for the player
 def Store():
