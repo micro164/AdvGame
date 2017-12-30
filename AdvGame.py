@@ -120,62 +120,79 @@ class Item(IntEnum):
 
 #Delete Equipment item
 def DeleteEquip(Etype):
-    for key, value in list(Player.Equipment.items()):
-        if value[Item.Type] == Etype and value[Item.count] > 0:
-            Player.Strength -= value[Item.attack]
-            Player.Defense -= value[Item.defense]
-            Player.MaxHP -= value[Item.HP]
-            #value[Item.count] -= 1
-            InvenInsert(key)
-            del Player.Equipment[key]
+    temp = EquipTypeCheck(Etype)
+    if temp == True:
+        item_name = ""
+        for key, value in list(Player.Equipment.items()):
+            if value[Item.Type] == Etype:
+                item_name = key
+
+        if Player.Equipment[item_name][Item.Type] == Etype and Player.Equipment[item_name][Item.count] > 0:
+            Player.Strength -= Player.Equipment[item_name][Item.attack]
+            Player.Defense -= Player.Equipment[item_name][Item.defense]
+            Player.MaxHP -= Player.Equipment[item_name][Item.HP]
+            InvenInsert(item_name)
+            del Player.Equipment[item_name]
+    elif temp == False:
+        print("Item not in equipment")
+    else:
+        print("ERROR: could not find item in equipment")
 
 #Removing Equipment
 def RemoveEquip(item_name):
     if bool(Player.Equipment) != False:
-        for key, value in list(Items.items()):
-            if key == item_name and Player.Pclass == value[Item.Pclass]:
-                if value[Item.Type] == 'weapon':
+        temp = ItemCheck(item_name)
+        if temp == True:
+            if Player.Pclass == Items[item_name][Item.Pclass]:
+                if Items[item_name][Item.Type] == 'weapon' and EquipTypeCheck('weapon') == True:
                     DeleteEquip('weapon')
-                elif value[Item.Type] == 'armor':
+                elif Items[item_name][Item.Type] == 'weapon' and EquipTypeCheck('weapon') == False:
+                    return
+
+                if Items[item_name][Item.Type] == 'armor' and EquipTypeCheck('armor') == True:
                     DeleteEquip('armor')
-                else:
-                    print("ERROR: can't remove equipment")
+                elif Items[item_name][Item.Type] == 'armor' and EquipTypeCheck('armor') == False:
+                    return
+            else:
+                print("ERROR: can't remove equipment")
+
+        elif temp == False:
+            print("This is not an item")
+        else:
+            print("ERROR: could not find item")
 
 #Inserting Item into equipment
 def EquipInsert(item_name):
-    if value[Item.lvl] <= Player.lvl:
-        RemoveEquip(item_name)
+    temp = ItemCheck(item_name)
 
-        for key, value in list(Items.items()):
-            if key == item_name and Player.Pclass == value[Item.Pclass]:
+    if temp == True:
+        if Items[item_name][Item.lvl] <= Player.lvl:
+            RemoveEquip(item_name)
+
+            if Player.Pclass == Items[item_name][Item.Pclass]:
                 Player.Equipment[item_name] = Items[item_name]
-                for key2, value2 in list(Player.Equipment.items()):
-                    if key2 == item_name:
-                        Player.Strength += value2[Item.attack]
-                        Player.Defense += value2[Item.defense]
-                        Player.MaxHP += value2[Item.HP]
-                        value2[Item.count] += 1
-                        
-    elif value[Item.lvl] > Player.lvl:
-        print("This item can not be equiped at this level")
-        InvenInsert(item_name)
-        print("The item has been put in your inventory")
+                Player.Strength += Player.Equipment[item_name][Item.attack]
+                Player.Defense += Player.Equipment[item_name][Item.defense]
+                Player.MaxHP += Player.Equipment[item_name][Item.HP]
+                Player.Equipment[item_name][Item.count] += 1
+
+        elif Items[item_name][Item.lvl] > Player.lvl:
+            print("This item can not be equiped at this level")
+            InvenInsert(item_name)
+            print("The item has been put in your inventory")
+        else:
+            print("ERROR: Can't equip weapon")
+    elif temp == False:
+        print("That is not an item")
     else:
-        print("ERROR: Can't equip weapon")
+        print("ERROR: Can't find item")
 
 #Inserting Item into inventory
 def InvenInsert(item_name):
     Player.Inventory[item_name] = Items[item_name]
-
-    Echeck = False
-
-    for key in Player.Equipment:
-        if key == item_name:
-            Echeck = True
-
-    for key, value in list(Player.Inventory.items()):
-        if key == item_name and Echeck == False:
-            value[Item.count] += 1
+    Echeck = EquipCheck(item_name)
+    if Echeck == False:
+        Player.Inventory[item_name][Item.count] += 1
 
 #Check if name is valid
 def NameCheck(name):
@@ -244,13 +261,17 @@ def Intro():
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
 
-#Player encounters a random monster
-def fight():
+#List of monsters that appear in the forest
+def MonsterList():
     temp = {}
     for key, value in list(Monsters.items()):
         if value[Monster.lvl] >= Player.lvl and value[Monster.lvl] <= (Player.lvl + 5):
             temp[key] = Monsters[key]
+    return temp
 
+#Player encounters a random monster
+def fight():
+    temp = MonsterList()
     random.seed()
     key = random.choice(list(temp.items()))
     value = key[1]
@@ -303,6 +324,8 @@ def Death():
             print("Grim Reaper: 'I will take some experience from you in order to restore your life.'")
             print("")
             Player.exp -= 10 * Player.lvl
+            if Player.exp < 0:
+                Player.exp = 0
             Player.hp = Player.MaxHP
         elif Player.exp == 0 and bool(HealingItem) == False:
             print("Grim Reaper: 'You have nothing so I will add to your Max Exp. to restore your life.'")
@@ -317,15 +340,19 @@ def CheckHealing():
             return True
     return False
 
-#Function for randomly droping items when monster dies
-def Drop(Stype):
-    random.seed()
+#List of items that monsters drop
+def ItemList(Stype):
     temp = {}
     for key, value in list(Items.items()):
         if value[Item.Type] == Stype:
             if value[Item.lvl] <= (Player.lvl + 5):
                 temp[key] = Items[key]
+    return temp
 
+#Function for randomly droping items when monster dies
+def Drop(Stype):
+    random.seed()
+    temp = ItemList(Stype)
     key = random.choice(list(temp.items()))
     InvenInsert(key[0])
     print("The monster droped a " + key[0] + ". It has been put in your inventory.")
@@ -383,8 +410,8 @@ def LevelUp():
         print("You are max level")
         Player.exp = Player.MaxExp
 
-#For the player to explore
-def forest():
+#Introduction to the forest
+def ForestIntro():
     if Player.hp > 0:
         print("Welcome to the forest!")
     elif Player.hp <= 0:
@@ -395,8 +422,10 @@ def forest():
     else:
         print("ERROR: Can't Access forest")
 
+#For the player to explore
+def forest():
+    ForestIntro()
     choice = " "
-
     random.seed()
 
     while choice != "5" and Player.hp != 0:
@@ -437,6 +466,10 @@ def Healer():
     else:
         print("Wrong choice")
 
+def PrintEquip():
+    for key in Player.Equipment:
+        print(key)
+
 #Displays the players stats
 def PlayerStats():
     print("Name: " + Player.name)
@@ -448,8 +481,7 @@ def PlayerStats():
     print("Gold: " + str(Player.gold))
 
     print("\nEquipment:")
-    for key in Player.Equipment:
-        print(key)
+    PrintEquip()
 
 #Display a stat of a selected items
 def ItemStats():
@@ -460,15 +492,16 @@ def ItemStats():
         print("Type exit when done")
         item_lookup = input()
 
-        for key, value in list(Items.items()):
-            if key == item_lookup:
-                print("Name: " + key)
-                print("Attack: " + str(value[Item.attack]))
-                print("Defense: " + str(value[Item.defense]))
-                print("HP: " + str(value[Item.HP]))
-                print("Price: " + str(value[Item.price]))
-                print("Type: " + value[Item.Type])
-                print("Class: " + value[Item.Pclass])
+        if ItemCheck(item_lookup) == True and item_lookup != "exit":
+            print("Name: " + item_lookup)
+            print("Attack: " + str(Items[item_lookup][Item.attack]))
+            print("Defense: " + str(Items[item_lookup][Item.defense]))
+            print("HP: " + str(Items[item_lookup][Item.HP]))
+            print("Price: " + str(Items[item_lookup][Item.price]))
+            print("Type: " + Items[item_lookup][Item.Type])
+            print("Class: " + Items[item_lookup][Item.Pclass] + "\n")
+        elif ItemCheck(item_lookup) == False and item_lookup != "exit":
+            print("Item not found\n")
 
 #Printing out store items
 def PrintStore(Stype):
@@ -487,10 +520,11 @@ def Mbuy(Stype):
     elif item_name != 'no':
         price = 0
         ItemType = ''
-        for key, value in list(Items.items()):
-            if key == item_name:
-                price = value[Item.price]
-                ItemType = value[Item.Type]
+
+        if ItemCheck(item_name) == True:
+            price = Items[item_name][Item.price]
+            ItemType = Items[item_name][Item.Type]
+
         if price != 0 and ItemType != '':
             if Player.gold >= price:
                 Player.gold -= price
@@ -510,6 +544,7 @@ def Mbuy(Stype):
                     print("ERROR: Something went wrong with buying item")
             else:
                 print("You do not have enough money")
+
         elif price == 0 and ItemType != '':
             print("Unidentified item")
         else:
@@ -587,7 +622,7 @@ def DisplayInventory():
     if choice == '1':
         print("Enter the name of the weapon/armor")
         Equip = input()
-        CheckItem = ItemCheck(Equip)
+        CheckItem = InvenCheck(Equip)
         if bool(CheckItem) == True:
             EquipInsert(Equip)
         elif bool(CheckItem) == False:
@@ -597,7 +632,7 @@ def DisplayInventory():
     elif choice == '2':
         print("Enter the name of the item to use")
         item_name = input()
-        CheckItem = ItemCheck(item_name)
+        CheckItem = InvenCheck(item_name)
         if bool(CheckItem) == True:
             for key, value in list(Player.Inventory.items()):
                 if key == item_name:
@@ -626,9 +661,27 @@ def DisplayInventory():
         print("Thanks for shopping")
 
 #Checks if item is in player inventory
-def ItemCheck(item_name):
+def InvenCheck(item_name):
     for key, value in list(Player.Inventory.items()):
         if key == item_name:
+            return True
+    return False
+
+def EquipCheck(item_name):
+    for key, value in list(Player.Equipment.items()):
+        if key == item_name:
+            return True
+    return False
+
+def ItemCheck(item_name):
+    for key, value in list(Items.items()):
+        if key == item_name:
+            return True
+    return False
+
+def EquipTypeCheck(Etype):
+    for key, value in list(Player.Equipment.items()):
+        if value[Item.Type] == Etype:
             return True
     return False
 
@@ -636,10 +689,15 @@ def ItemCheck(item_name):
 def Exit():
     return True
 
+def DeathCheck():
+    if Player.gold <= 0 and CheckHealing() == False:
+        Death()
+
 #Main menu for the game. The player can choose what to do and where to go.
 def Choices():
     stop = False;
     while stop == False:
+        DeathCheck()
         print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Inventory")
         print("5.Item Stats \n6.Store \n7.Exit")
         choice = input()
