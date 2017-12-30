@@ -576,7 +576,7 @@ def Buy():
 def Sell():
     sell = ""
     while sell != "exit":
-        PrintSell()
+        PrintInven()
         print("What item do you want to sell from your inventory?")
         print("Type exit to go back")
         sell = input()
@@ -598,7 +598,7 @@ def Sell():
                     print("ERROR: Can't sell item")
 
 #Prints items in inventory that can be sold
-def PrintSell():
+def PrintInven():
     for key, value in list(Player.Inventory.items()):
         print(key + " X " + str(value[Item.count]))
         
@@ -619,8 +619,7 @@ def Store():
 def DisplayInventory():
     choice = ''
     while choice != '4':
-        for key, value in list(Player.Inventory.items()):
-            print(key + " X " + str(value[Item.count]))
+        PrintInven()
 
         print("\n1. Equip a weapon or armor")
         print("2. Use an item")
