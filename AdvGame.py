@@ -90,7 +90,7 @@ class Player:
     Defense = 0
     gold = 0
     MaxExp = 100
-    exp = 10000
+    exp = 0
     lvl = 1
     Pclass = ""
     Inventory = dict()
@@ -262,8 +262,16 @@ def Intro():
 #List of monsters that appear in the forest
 def MonsterList():
     temp = {}
+    tempLvl = Player.lvl - 5
+
+    if tempLvl <= 0:
+        tempLvl = 1
+        
     for key, value in list(Monsters.items()):
-        if value[Monster.lvl] >= Player.lvl and value[Monster.lvl] <= (Player.lvl + 5):
+        if Player.lvl == 100:
+            if value[Monster.lvl] <= Player.lvl:
+                temp[key] = Monsters[key]
+        elif value[Monster.lvl] >= tempLvl and value[Monster.lvl] <= (Player.lvl + 5):
             temp[key] = Monsters[key]
     return temp
 
