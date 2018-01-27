@@ -281,7 +281,7 @@ def fight():
 
         while Pdamage <= 0 and Edamage <= 0:
             Pdamage = random.randrange(Player.Strength) - random.randrange(value[Monster.defense])
-            Edamage = random.randrange(value[Monster.attack]) - random.randrange(Player.Defense)
+            Edamage = random.randrange(value[Monster.attack]) - (random.randrange(Player.Defense) + (Player.lvl * 2)) 
             Pdamage = abs(Pdamage)
             Edamage = abs(Edamage)
 
