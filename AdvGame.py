@@ -49,8 +49,8 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
 
 #Stats for monsters
 # 0-HP, 1-attack, 2-defense, 3-exp, 4.lvl, 5.MaxHP
-Monsters = {'rat':              list((50,   10,      7,      10,     1,   50)),
-            'Wild Chicken':     list((10,   12,      5,      5,      1,   10)),
+Monsters = {'rat':              list((50,   12,      7,      10,     1,   50)),
+            'Wild Chicken':     list((10,   10,      5,      5,      1,   10)),
             'Spider':           list((25,   15,     10,      15,     3,   25)),
             'goblin':           list((100,  17,     7,      50,     5,   100)),
             'Giant Spider':     list((75,   19,     15,     75,     10,  75)),
@@ -308,7 +308,7 @@ def fight():
 
     if Player.hp > 0:
         print("YOU WON!!!")
-        exp = random.randrange(0, value[Monster.exp]) + value[Monster.lvl]
+        exp = random.randrange(0, value[Monster.exp]) + (value[Monster.lvl] * 2)
         Player.exp += exp
         print("You gained " + str(exp) + " exp")
         LevelUp()
