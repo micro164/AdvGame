@@ -49,12 +49,12 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
 
 #Stats for monsters
 # 0-HP, 1-attack, 2-defense, 3-exp, 4.lvl, 5.MaxHP
-Monsters = {'rat':              list((50,   5,      2,      10,     1,   50)),
-            'Wild Chicken':     list((10,   2,      1,      5,      1,   10)),
-            'Spider':           list((25,   10,     5,      15,     3,   25)),
-            'goblin':           list((100,  10,     5,      50,     5,   100)),
-            'Giant Spider':     list((75,   15,     10,     75,     10,  75)),
-            'Giant Rat':        list((100,  12,     10,     100,    12,  100)),
+Monsters = {'rat':              list((50,   10,      2,      10,     1,   50)),
+            'Wild Chicken':     list((10,   12,      1,      5,      1,   10)),
+            'Spider':           list((25,   15,     5,      15,     3,   25)),
+            'goblin':           list((100,  17,     5,      50,     5,   100)),
+            'Giant Spider':     list((75,   19,     10,     75,     10,  75)),
+            'Giant Rat':        list((100,  16,     10,     100,    12,  100)),
             'Armored Goblin':   list((150,  20,     25,     125,    15,  150)),
             'Zombie':           list((250,  30,     10,     150,    17,  250)),
             'Goblin Zombie':    list((400,  45,     10,     200,    20,  400)),
@@ -274,16 +274,19 @@ def fight():
     key = random.choice(list(temp.items()))
     value = key[1]
     print("It's a " + key[0])
+    Pdamage = 0
+    Edamage = 0
 
     while Player.hp > 0 and value[Monster.HP] > 0:
-        Pdamage = 0
-        Edamage = 0
+        Pdamage = random.randrange(Player.Strength) - random.randrange(value[Monster.defense])
+        Edamage = ((random.randrange(value[Monster.attack]) + value[Monster.lvl]) * Player.lvl) - (random.randrange(Player.Defense) + (Player.lvl * 2)) 
 
-        while Pdamage <= 0 and Edamage <= 0:
-            Pdamage = random.randrange(Player.Strength) - random.randrange(value[Monster.defense])
-            Edamage = random.randrange(value[Monster.attack]) - (random.randrange(Player.Defense) + (Player.lvl * 2)) 
-            Pdamage = abs(Pdamage)
-            Edamage = abs(Edamage)
+        if Pdamage < 0:
+            Pdamage = 0
+
+        if Edamage < 0:
+            Edamage = 0
+    
 
         print("You hit the " + key[0] + " for " + str(Pdamage) + " damage")
         value[Monster.HP] -= Pdamage
