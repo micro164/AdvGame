@@ -12,6 +12,8 @@ import random
 from math import ceil
 from math import floor
 import re
+import _pickle as pickle
+import os
 
 #-----------------------ITEMS-------------------------------
 
@@ -201,7 +203,7 @@ def NameCheck(name):
 
 #Game Intro
 def GameIntro():
-    if Player.Pclass == "\"\"\n":
+    if Player.Pclass == "":
         print("Welcome to TxtBasedAdv")
         print("Please enter a name: ")
         Player.name = input()
@@ -252,7 +254,7 @@ def GameIntro():
         else:
             print("Wrong choice")
             GameIntro()
-    elif Player.Pclass != "\"\"\n":
+    elif Player.Pclass != "":
         Intro()
     else:
         print("GameIntro went wrong!!")
@@ -712,6 +714,7 @@ def EquipTypeCheck(Etype):
 
 #Exiting the game
 def Exit():
+
     with open('PlayerFile.txt', 'w') as f:
         write_data = f.write(Player.name)
         write_data = f.write(str(Player.MaxHP) + "\n")
@@ -723,6 +726,15 @@ def Exit():
         write_data = f.write(str(Player.exp) + "\n")
         write_data = f.write(str(Player.lvl) + "\n")
         write_data = f.write(Player.Pclass)
+    f.close()
+
+    with open('Equipment.txt','wb') as f:
+        pickle.dump(Player.Equipment, f)
+    f.close()
+
+    with open('Inventory.txt','wb') as f:
+        pickle.dump(Player.Inventory, f)
+    f.close()
 
     return True
 
@@ -759,26 +771,39 @@ def Choices():
 #Main game function
 def main():
 
-    with open('PlayerFile.txt') as f:
-        Player.name = f.readline()
-        Player.MaxHP = f.readline()
-        Player.hp = f.readline()
-        Player.Strength = f.readline()
-        Player.Defense = f.readline()
-        Player.gold = f.readline()
-        Player.MaxExp = f.readline()
-        Player.exp = f.readline()
-        Player.lvl = f.readline()
-        Player.Pclass = f.readline()
+    if os.stat('PlayerFile.txt').st_size != 0:
+        with open('PlayerFile.txt') as f:
+            Player.name = f.readline()
+            Player.MaxHP = f.readline()
+            Player.hp = f.readline()
+            Player.Strength = f.readline()
+            Player.Defense = f.readline()
+            Player.gold = f.readline()
+            Player.MaxExp = f.readline()
+            Player.exp = f.readline()
+            Player.lvl = f.readline()
+            Player.Pclass = f.readline()
 
-    Player.MaxHP = int(Player.MaxHP)
-    Player.hp = int(Player.hp)
-    Player.Strength = int(Player.Strength)
-    Player.Defense = int(Player.Defense)
-    Player.gold = int(Player.gold)
-    Player.MaxExp = int(Player.MaxExp)
-    Player.exp = int(Player.exp)
-    Player.lvl = int(Player.lvl)
+        Player.MaxHP = int(Player.MaxHP)
+        Player.hp = int(Player.hp)
+        Player.Strength = int(Player.Strength)
+        Player.Defense = int(Player.Defense)
+        Player.gold = int(Player.gold)
+        Player.MaxExp = int(Player.MaxExp)
+        Player.exp = int(Player.exp)
+        Player.lvl = int(Player.lvl)
+
+        f.close()
+
+    if os.stat("Equipment.txt").st_size != 0:
+        with open('Equipment.txt', 'rb') as f:
+            Player.Equipment = pickle.load(f)
+        f.close()
+
+    if os.stat("Inventory.txt").st_size != 0:
+        with open('Inventory.txt', 'rb') as f:
+            Player.Inventory = pickle.load(f)
+        f.close()
 
     GameIntro()
     Choices()
