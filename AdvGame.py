@@ -54,7 +54,7 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
 Monsters = {'rat':              list((50,   12,      7,      10,     1,   50)),
             'Wild Chicken':     list((40,   10,      5,      5,      1,   10)),
             'Spider':           list((65,   15,     10,      15,     3,   25)),
-            'goblin':           list((100,  17,     7,      50,     5,   100)),
+            'goblin':           list((80,  17,     7,      35,     5,   100)),
             'Giant Spider':     list((110,   25,     15,     75,     10,  75)),
             'Giant Rat':        list((130,  40,     35,     100,    12,  100)),
             'Armored Goblin':   list((150,  80,     45,     125,    15,  150)),
@@ -97,6 +97,7 @@ class Player:
     Pclass = ""
     Inventory = dict()
     Equipment = dict()
+    start = 0
 
 #Monster Class
 class Monster(IntEnum):
@@ -714,9 +715,14 @@ def EquipTypeCheck(Etype):
 
 #Exiting the game
 def Exit():
-
     with open('PlayerFile.txt', 'w') as f:
-        write_data = f.write(Player.name)
+
+        if Player.start <= 0:
+            Player.start = Player.start + 1
+            write_data = f.write(Player.name + "\n")
+        elif Player.start >= 1:
+            write_data = f.write(Player.name)
+
         write_data = f.write(str(Player.MaxHP) + "\n")
         write_data = f.write(str(Player.hp) + "\n")
         write_data = f.write(str(Player.Strength) + "\n")
@@ -725,16 +731,20 @@ def Exit():
         write_data = f.write(str(Player.MaxExp) + "\n")
         write_data = f.write(str(Player.exp) + "\n")
         write_data = f.write(str(Player.lvl) + "\n")
-        write_data = f.write(Player.Pclass)
-    f.close()
+
+        if Player.start <= 1:
+            Player.start = Player.start + 1
+            write_data = f.write(Player.Pclass + "\n")
+        elif Player.start >= 2:
+            write_data = f.write(Player.Pclass)
+
+        write_data = f.write(str(Player.start))
 
     with open('Equipment.txt','wb') as f:
         pickle.dump(Player.Equipment, f)
-    f.close()
 
     with open('Inventory.txt','wb') as f:
         pickle.dump(Player.Inventory, f)
-    f.close()
 
     return True
 
@@ -772,6 +782,7 @@ def Choices():
 def main():
 
     if os.stat('PlayerFile.txt').st_size != 0:
+
         with open('PlayerFile.txt') as f:
             Player.name = f.readline()
             Player.MaxHP = f.readline()
@@ -783,6 +794,7 @@ def main():
             Player.exp = f.readline()
             Player.lvl = f.readline()
             Player.Pclass = f.readline()
+            Player.start = f.readline()
 
         Player.MaxHP = int(Player.MaxHP)
         Player.hp = int(Player.hp)
@@ -792,18 +804,15 @@ def main():
         Player.MaxExp = int(Player.MaxExp)
         Player.exp = int(Player.exp)
         Player.lvl = int(Player.lvl)
-
-        f.close()
+        Player.start = int(Player.start)
 
     if os.stat("Equipment.txt").st_size != 0:
         with open('Equipment.txt', 'rb') as f:
             Player.Equipment = pickle.load(f)
-        f.close()
 
     if os.stat("Inventory.txt").st_size != 0:
         with open('Inventory.txt', 'rb') as f:
             Player.Inventory = pickle.load(f)
-        f.close()
 
     GameIntro()
     Choices()
