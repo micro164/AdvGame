@@ -165,9 +165,10 @@ def RemoveEquip(item_name):
 
 #Inserting Item into equipment
 def EquipInsert(item_name):
-    temp = ItemCheck(item_name)
+    ItemExists = ItemCheck(item_name)
+    Equiped = EquipCheck(item_name)
 
-    if temp == True:
+    if ItemExists == True and Equiped == False:
         if Items[item_name][Item.lvl] <= Player.lvl:
             RemoveEquip(item_name)
 
@@ -182,8 +183,10 @@ def EquipInsert(item_name):
             print("This item can not be equiped at this level")
         else:
             print("ERROR: Can't equip weapon")
-    elif temp == False:
+    elif ItemExists == False:
         print("That is not an item")
+    elif Equiped == True:
+        print("\nYou already have this item equiped\n")
     else:
         print("ERROR: Can't find item")
 
@@ -484,6 +487,7 @@ def Healer():
     else:
         print("Wrong choice")
 
+#Prints what the player has equiped
 def PrintEquip():
     for key in Player.Equipment:
         print(key)
@@ -633,7 +637,7 @@ def Store():
     else:
         print("Wrong choice")
 
-#Displays the players inventory
+#Displays the players inventory and asks if what they want to do with the items
 def DisplayInventory():
     choice = ''
     while choice != '4':
@@ -646,46 +650,56 @@ def DisplayInventory():
         choice = input()
 
         if choice == '1':
-            print("Enter the name of the weapon/armor")
-            Equip = input()
-            CheckItem = InvenCheck(Equip)
-            if bool(CheckItem) == True:
-                EquipInsert(Equip)
-            elif bool(CheckItem) == False:
-                print("Weapon/armor not in inventory")
-            else:
-                print("ERROR: can not equip item from inventory")
+            EquipEquipment()
         elif choice == '2':
-            print("Enter the name of the item to use")
-            item_name = input()
-            CheckItem = InvenCheck(item_name)
-            if bool(CheckItem) == True:
-                for key, value in list(Player.Inventory.items()):
-                    if key == item_name:
-                        Player.Strength += value[Item.attack]
-                        print("\n+" + str(value[Item.attack]) + " attack")
-                        Player.Defense += value[Item.defense]
-                        print("+" + str(value[Item.defense]) + " defense")
-                        if Player.hp < Player.MaxHP:
-                            Player.hp += value[Item.HP]
-                            print("+" + str(value[Item.HP]) + " HP\n")
-                        if Player.hp > Player.MaxHP:
-                            Player.hp = Player.MaxHP
-
-                        print("Strength: " + str(Player.Strength))
-                        print("Defense: " + str(Player.Defense))
-                        print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp) + "\n")
-
-                        if value[Item.count] > 1:
-                            value[Item.count] -= 1
-                        elif value[Item.count] == 1:
-                            value[Item.count] -= 1
-                            del Player.Inventory[item_name]
-                        else:
-                            print("ERROR: could not use item")
+            UseItem()
         elif choice == '3':
             print("Exiting inventory")
             choice = '4'
+
+#Asks the player which item in the inventory they want to equip and equips it
+def EquipEquipment():
+    print("Enter the name of the weapon/armor")
+    Equip = input()
+    CheckItem = InvenCheck(Equip)
+    if bool(CheckItem) == True:
+        EquipInsert(Equip)
+    elif bool(CheckItem) == False:
+        print("Weapon/armor not in inventory")
+    else:
+        print("ERROR: can not equip item from inventory")
+
+#Asks user which item they want to use and then applies the appropriate stats
+def UseItem():
+    print("Enter the name of the item to use")
+    item_name = input()
+    CheckItem = InvenCheck(item_name)
+    if bool(CheckItem) == True:
+        for key, value in list(Player.Inventory.items()):
+            if key == item_name and value[Item.Type] == "item":
+                Player.Strength += value[Item.attack]
+                print("\n+" + str(value[Item.attack]) + " attack")
+                Player.Defense += value[Item.defense]
+                print("+" + str(value[Item.defense]) + " defense")
+                if Player.hp < Player.MaxHP:
+                    Player.hp += value[Item.HP]
+                    print("+" + str(value[Item.HP]) + " HP\n")
+                if Player.hp > Player.MaxHP:
+                    Player.hp = Player.MaxHP
+
+                print("Strength: " + str(Player.Strength))
+                print("Defense: " + str(Player.Defense))
+                print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp) + "\n")
+
+                if value[Item.count] > 1:
+                    value[Item.count] -= 1
+                elif value[Item.count] == 1:
+                    value[Item.count] -= 1
+                    del Player.Inventory[item_name]
+                else:
+                    print("ERROR: could not use item")
+            elif key == item_name and value[Item.Type] != "item":
+                print("\nThis is not an item\n")
 
 #Checks if item is in player inventory
 def InvenCheck(item_name):
@@ -694,18 +708,21 @@ def InvenCheck(item_name):
             return True
     return False
 
+#Checks if item is already equiped to player
 def EquipCheck(item_name):
     for key, value in list(Player.Equipment.items()):
         if key == item_name:
             return True
     return False
 
+#Checks to see if the name entered is actually an item
 def ItemCheck(item_name):
     for key, value in list(Items.items()):
         if key == item_name:
             return True
     return False
 
+#Checks to see the type of the equipment
 def EquipTypeCheck(Etype):
     for key, value in list(Player.Equipment.items()):
         if value[Item.Type] == Etype:
@@ -734,6 +751,7 @@ def Exit():
 
     return True
 
+#Checks to see if player has no option to heal
 def DeathCheck():
     if Player.gold <= 0 and CheckHealing() == False:
         Death()
