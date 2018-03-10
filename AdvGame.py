@@ -97,7 +97,6 @@ class Player:
     Pclass = ""
     Inventory = dict()
     Equipment = dict()
-    start = 0
 
 #Monster Class
 class Monster(IntEnum):
@@ -716,13 +715,7 @@ def EquipTypeCheck(Etype):
 #Exiting the game
 def Exit():
     with open('PlayerFile.txt', 'w') as f:
-
-        if Player.start <= 0:
-            Player.start = Player.start + 1
-            write_data = f.write(Player.name + "\n")
-        elif Player.start >= 1:
-            write_data = f.write(Player.name)
-
+        write_data = f.write(Player.name + "\n")
         write_data = f.write(str(Player.MaxHP) + "\n")
         write_data = f.write(str(Player.hp) + "\n")
         write_data = f.write(str(Player.Strength) + "\n")
@@ -731,14 +724,7 @@ def Exit():
         write_data = f.write(str(Player.MaxExp) + "\n")
         write_data = f.write(str(Player.exp) + "\n")
         write_data = f.write(str(Player.lvl) + "\n")
-
-        if Player.start <= 1:
-            Player.start = Player.start + 1
-            write_data = f.write(Player.Pclass + "\n")
-        elif Player.start >= 2:
-            write_data = f.write(Player.Pclass)
-
-        write_data = f.write(str(Player.start))
+        write_data = f.write(Player.Pclass + "\n")
 
     with open('Equipment.txt','wb') as f:
         pickle.dump(Player.Equipment, f)
@@ -794,8 +780,8 @@ def main():
             Player.exp = f.readline()
             Player.lvl = f.readline()
             Player.Pclass = f.readline()
-            Player.start = f.readline()
 
+        Player.name = Player.name.strip('\n')
         Player.MaxHP = int(Player.MaxHP)
         Player.hp = int(Player.hp)
         Player.Strength = int(Player.Strength)
@@ -804,7 +790,7 @@ def main():
         Player.MaxExp = int(Player.MaxExp)
         Player.exp = int(Player.exp)
         Player.lvl = int(Player.lvl)
-        Player.start = int(Player.start)
+        Player.Pclass = Player.Pclass.strip('\n')
 
     if os.stat("Equipment.txt").st_size != 0:
         with open('Equipment.txt', 'rb') as f:
