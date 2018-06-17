@@ -1,7 +1,10 @@
 from Classes import Player
+from Classes import Directions
+from Classes import Features
 import random
 from Battle import fight
 from Checks import CheckHealing
+from InventoryAndItems import InvenInsert
 
 #Introduction to the forest
 def ForestIntro():
@@ -25,7 +28,9 @@ def forest():
         print("1.up \n2.left \n3.right \n4.down \n5.exit")
         choice = input()
         print("")
+
         if choice >= "1" and choice <= "4":
+            DublicateItem(choice)
             rand = random.randrange(0,2)
             if rand == 0:
                 print("A group of trees")
@@ -38,3 +43,13 @@ def forest():
             print("Leaving forest")
         else:
             print("Wrong choice")
+
+def DublicateItem(choice):
+    dublicationCheck = [Directions.LEFT.value, Directions.LEFT.value, Directions.UP.value, Directions.RIGHT.value, Directions.DOWN.value]
+
+    Features.choiceList.append(choice)
+
+    if len(Features.choiceList) == 5:
+        if Features.choiceList == dublicationCheck:
+            InvenInsert(list(Player.Inventory.keys())[0])
+        Features.choiceList.clear()

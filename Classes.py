@@ -1,4 +1,5 @@
 from enum import IntEnum
+from enum import Enum
 
 #Player stats
 class Player:
@@ -34,3 +35,12 @@ class Item(IntEnum):
     HP = 5
     count = 6
     lvl = 7
+
+class Directions(Enum):
+    UP = '1'
+    LEFT = '2'
+    RIGHT = '3'
+    DOWN = '4'
+
+class Features():
+    choiceList = []
