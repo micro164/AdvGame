@@ -31,7 +31,8 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
          'bronze armor': list((0,10,10,'armor','swordsman',0,0,1)),
          'cloth armor': list((0,5,2,'armor','wizard',5,0,1)),
          'hard cloth armor': list((0,7,5,'armor','rouge',0,0,1)),
-         'potion': list((0,0,20,'item','healer', 20,0,1))}
+         'potion': list((0,0,20,'item','healer', 20,0,1)),
+         'Hyper Potion': list(0,0,50,'item','healer',50,0,20)}
 
 #List of items that monsters drop
 def ItemList(Stype):

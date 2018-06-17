@@ -5,11 +5,14 @@ import random
 from Battle import fight
 from Checks import CheckHealing
 from InventoryAndItems import InvenInsert
+import random
+from Quests import Quests
 
 #Introduction to the forest
 def ForestIntro():
     if Player.hp > 0:
         print("Welcome to the forest!")
+        Quests()
     elif Player.hp <= 0:
         if Player.gold <= 0 and CheckHealing() == False:
             Death()
@@ -51,5 +54,5 @@ def DublicateItem(choice):
 
     if len(Features.choiceList) == 5:
         if Features.choiceList == dublicationCheck:
-            InvenInsert(list(Player.Inventory.keys())[0])
+            InvenInsert(list(Player.Inventory.keys())[random.randrange(0, len(list(Player.Inventory.keys())))])
         Features.choiceList.clear()

@@ -2,6 +2,7 @@ from Monsters import MonsterList
 import random
 from Classes import Player
 from Classes import Monster
+from Classes import QuestInfo
 from Levels import LevelUp
 from Drops import MonsterDrop
 from Death import Death
@@ -53,5 +54,10 @@ def fight():
         LevelUp()
         print("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp))
         MonsterDrop(value[Monster.lvl])
+
+        if key[0] in QuestInfo.MonstersKilled:
+            QuestInfo.MonstersKilled[key[0]] += 1
+        else:
+            QuestInfo.MonstersKilled[key[0]] = 1
 
     Death()

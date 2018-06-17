@@ -2,6 +2,7 @@ import random
 
 from InventoryAndItems import InvenInsert
 from InventoryAndItems import ItemList
+from InventoryAndItems import Items
 from Classes import Player
 from Death import Death
 
@@ -36,3 +37,20 @@ def Drop(Stype):
     key = random.choice(list(temp.items()))
     InvenInsert(key[0])
     print("The monster droped a " + key[0] + ". It has been put in your inventory.\n")
+
+def QuestReward():
+    random.seed()
+    chance = random.random()
+
+    if chance > 0 and chance < 0.5:
+        Drop('item')
+    elif chance >= 0.5 and chance < 1:
+        chance2 = random.random()
+        if chance2 < 0.5:
+            Drop('armor')
+        elif chance2 >= 0.5:
+            Drop('weapon')
+        else:
+            print("ERROR: could not drop weapon/armor")
+    else:
+        print("ERROR: Could not drop item.")
