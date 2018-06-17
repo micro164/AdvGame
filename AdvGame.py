@@ -5,17 +5,19 @@
 #Date Modified: 03/10/18
 #This is a simple text based game created in the language of python
 
+from InventoryAndItems import InvenInsert
+from InventoryAndItems import ItemStats
+from Player import DisplayPlayerInventory
+from Player import PlayerStats
 from Classes import Player
 from Death import DeathCheck
 from Start import Start
-from InventoryAndItems import InvenInsert
 from Forest import forest
 from Healing import Healer
-from Player import PlayerStats
-from Player import DisplayPlayerInventory
-from InventoryAndItems import ItemStats
 from Store import Store
 from Save import Exit
+from Checks import NameCheck
+from Equipment import EquipInsert
 
 #Game Intro
 def GameIntro():

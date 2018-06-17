@@ -9,4 +9,5 @@ Some things that need to be added or done:
 
 How to run game:
 1. Clone the repository
-2. Run the AdvGame.py with the correct program
+2. Make sure you have all of the imports for pyhton installed
+3. Run the AdvGame.py

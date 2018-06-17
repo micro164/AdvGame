@@ -1,7 +1,7 @@
 from Classes import Player
 from Equipment import PrintEquip
-from InventoryAndItems import PrintInven
 from Equipment import EquipEquipment
+from InventoryAndItems import PrintInven
 from InventoryAndItems import UseItem
 
 #Displays the players stats

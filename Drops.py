@@ -1,8 +1,9 @@
 import random
-from InventoryAndItems import ItemList
-from Death import Death
-from Classes import Player
+
 from InventoryAndItems import InvenInsert
+from InventoryAndItems import ItemList
+from Classes import Player
+from Death import Death
 
 #Determines what type of item will be droped
 def MonsterDrop(Mlvl):

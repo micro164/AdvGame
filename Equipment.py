@@ -1,9 +1,9 @@
-from Classes import Player
 from InventoryAndItems import InvenCheck
 from InventoryAndItems import ItemCheck
-from Checks import EquipCheck
 from InventoryAndItems import Items
+from Checks import EquipCheck
 from Classes import Item
+from Classes import Player
 
 #Delete Equipment item
 def DeleteEquip(Etype):
