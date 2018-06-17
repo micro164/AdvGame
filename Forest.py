@@ -1,6 +1,7 @@
 from Classes import Player
 from Classes import Directions
 from Classes import Features
+from Classes import QuestInfo
 import random
 from Battle import fight
 from Checks import CheckHealing
@@ -12,7 +13,6 @@ from Quests import Quests
 def ForestIntro():
     if Player.hp > 0:
         print("Welcome to the forest!")
-        Quests()
     elif Player.hp <= 0:
         if Player.gold <= 0 and CheckHealing() == False:
             Death()
@@ -33,15 +33,23 @@ def forest():
         print("")
 
         if choice >= "1" and choice <= "4":
+
             DublicateItem(choice)
-            rand = random.randrange(0,2)
-            if rand == 0:
-                print("A group of trees")
-            elif rand == 1:
-                print("You encountered a monster")
-                fight()
+            DirectionsWent(choice)
+            Quests() # TODO: Find a better place for this so after presenting the quest it doesn't go directly to battle
+
+            if QuestInfo.InQuest == False:
+                rand = random.randrange(0,2)
+
+                if rand == 0:
+                    print("A group of trees")
+                elif rand == 1:
+                    print("You encountered a monster")
+                    fight()
+                else:
+                    print("ERROR")
             else:
-                print("ERROR")
+                QuestInfo.InQuest = False
         elif choice == "5":
             print("Leaving forest")
         else:
@@ -56,3 +64,9 @@ def DublicateItem(choice):
         if Features.choiceList == dublicationCheck:
             InvenInsert(list(Player.Inventory.keys())[random.randrange(0, len(list(Player.Inventory.keys())))])
         Features.choiceList.clear()
+
+def DirectionsWent(choice):
+    if len(Features.LastDirections) == 5:
+        Features.LastDirections.clear()
+
+    Features.LastDirections.append(choice)

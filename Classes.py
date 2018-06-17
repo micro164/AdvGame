@@ -44,7 +44,11 @@ class Directions(Enum):
 
 class Features():
     choiceList = []
+    LastDirections = []
 
 class QuestInfo():
     MonstersKilled = dict()
-    QuestNumber = 0
+    QuestNumber = 2
+    QuestSeen = False
+    Win = True
+    InQuest = False

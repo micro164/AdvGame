@@ -61,3 +61,47 @@ def fight():
             QuestInfo.MonstersKilled[key[0]] = 1
 
     Death()
+
+def QuestFight(MonsterName, MonsterHP, MonsterAttack, MonsterDefense, MonsterLvl, MonsterExp):
+    print("It's a " + MonsterName)
+    Pdamage = 0
+    Edamage = 0
+    QuestInfo.InQuest = True
+
+    while Player.hp > 0 and MonsterHP > 0:
+        Pdamage = random.randrange(Player.Strength) - (random.randrange(MonsterDefense) + MonsterLvl)
+        Edamage = (random.randrange(MonsterAttack) + MonsterLvl) - (random.randrange(Player.Defense) + (Player.lvl * 2))
+
+        if Pdamage < 0:
+            Pdamage = 0
+
+        if Edamage < 0:
+            Edamage = 0
+
+
+        print("You hit the " + MonsterName + " for " + str(Pdamage) + " damage")
+        MonsterHP -= Pdamage
+        print(MonsterName + " now has " + str(MonsterHP) + " life left.")
+        if MonsterHP <= 0:
+            break
+        print(MonsterName + " hit you for " + str(Edamage) + " damage")
+        Player.hp -= Edamage
+        print("You have " + str(Player.hp) + " life left.")
+
+    print("")
+
+    if Player.hp <= 0:
+        Player.hp = 0
+        print("YOU LOSE!!")
+        QuestInfo.Win = False
+
+    if Player.hp > 0:
+        print("YOU WON!!!")
+        exp = random.randrange(0, MonsterExp) + (MonsterLvl * 2)
+        Player.exp += exp
+        print("You gained " + str(exp) + " exp")
+        LevelUp()
+        print("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp))
+        MonsterDrop(MonsterLvl)
+
+    Death()
