@@ -52,10 +52,6 @@ def Quests():
 
             CastleLocation = [Directions.UP.value, Directions.UP.value, Directions.RIGHT.value, Directions.UP.value, Directions.LEFT.value]
 
-            print(CastleLocation)
-            print("\n")
-            print(Features.LastDirections)
-
             if Features.LastDirections == CastleLocation:
                 print("You have found the castle!!!")
                 print("Now you must battle all the way to the top\n")
@@ -80,17 +76,22 @@ def Quests():
                     QuestInfo.QuestSeen = False
                     QuestReward()
                     if Player.Pclass == 'swordsman':
-                        Items['Kings Sword'] = list((60,0,120,'weapon','swordsman',0,0,0))
+                        Items['Kings Sword'] = list((35,0,120,'weapon','swordsman',0,0,0))
+                        Items['Kings Armor'] = list((0,25,100,'armor','swordsman',50,0,0))
                         InvenInsert('Kings Sword')
-                        print("You were also given a Kings Sword!")
+                        InvenInsert('Kings Armor')
+                        print("You were also given a Kings Sword & Armor!")
                     elif Player.Pclass == 'wizard':
-                        Items['Kings Staff'] = list((70,0,200,'weapon','wizard',0,0,0))
+                        Items['Kings Staff'] = list((40,0,200,'weapon','wizard',0,0,0))
+                        Items['Kings Cloth'] = list((0,15,100,'armor','wizard',150,0,0))
                         InvenInsert('Kings Staff')
-                        print("You were also given a Kings Staff")
+                        InvenInsert('Kings Cloth')
+                        print("You were also given a Kings Staff & Cloth")
                     elif Player.Pclass == 'rouge':
-                        Items['Kings Dagger'] = list((55,0,100,'weapon','rouge',0,0,0))
+                        Items['Kings Dagger'] = list((30,0,100,'weapon','rouge',0,0,0))
+                        Items['Kings Cloak'] = list((0,20,100,'armor','rouge',60,0,0))
                         InvenInsert('Kings Dagger')
-                        print("You were also given a Kings Dagger")
+                        print("You were also given a Kings Dagger & Cloak")
                     else:
                         print("Could not give out reward")
         QuestInfo.Win = True
