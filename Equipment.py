@@ -1,6 +1,7 @@
 from InventoryAndItems import InvenCheck
 from InventoryAndItems import ItemCheck
 from InventoryAndItems import Items
+from InventoryAndItems import InvenInsert
 from Checks import EquipCheck
 from Classes import Item
 from Classes import Player

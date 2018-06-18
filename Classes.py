@@ -48,7 +48,7 @@ class Features():
 
 class QuestInfo():
     MonstersKilled = dict()
-    QuestNumber = 2
+    QuestNumber = 0
     QuestSeen = False
     Win = True
     InQuest = False

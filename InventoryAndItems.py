@@ -39,7 +39,7 @@ def ItemList(Stype):
     temp = {}
     for key, value in list(Items.items()):
         if value[Item.Type] == Stype:
-            if value[Item.lvl] <= (Player.lvl + 5):
+            if value[Item.lvl] <= (Player.lvl + 5) and value[Item.lvl] > 0:
                 temp[key] = Items[key]
     return temp
 
