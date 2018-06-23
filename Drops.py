@@ -2,9 +2,7 @@ import random
 
 from InventoryAndItems import InvenInsert
 from InventoryAndItems import ItemList
-from InventoryAndItems import Items
 from Classes import Player
-from Death import Death
 
 #Determines what type of item will be droped
 def MonsterDrop(Mlvl):
@@ -54,7 +52,7 @@ def Drop(Stype):
 
 def QuestReward():
     '''Determines the reward for completing the quest'''
-    
+
     random.seed()
     chance = random.random()
 
