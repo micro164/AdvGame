@@ -11,6 +11,8 @@ from Quests import Quests
 
 #Introduction to the forest
 def ForestIntro():
+    '''The introduction to entering the forest'''
+
     if Player.hp > 0:
         print("Welcome to the forest!")
     elif Player.hp <= 0:
@@ -23,6 +25,8 @@ def ForestIntro():
 
 #For the player to explore
 def forest():
+    '''The menu for exploring the forest'''
+
     ForestIntro()
     choice = " "
     random.seed()
@@ -56,6 +60,13 @@ def forest():
             print("Wrong choice")
 
 def DublicateItem(choice):
+    '''Dubplicates an item in the players Inventory when the correct sequence is pushed
+
+    Arguments:
+    choice -- The direction that the player chooses
+
+    '''
+
     dublicationCheck = [Directions.LEFT.value, Directions.LEFT.value, Directions.UP.value, Directions.RIGHT.value, Directions.DOWN.value]
 
     Features.choiceList.append(choice)
@@ -66,6 +77,13 @@ def DublicateItem(choice):
         Features.choiceList.clear()
 
 def DirectionsWent(choice):
+    '''Keeps track of the last 5 directions the player went
+
+    Arguments:
+    choice -- The direction the player chooses
+
+    '''
+
     if len(Features.LastDirections) == 5:
         Features.LastDirections.clear()
 

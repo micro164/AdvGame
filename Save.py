@@ -1,7 +1,14 @@
 from Classes import Player
-import _pickle as pickle
+
+try:
+    import _pickle as pickle
+except ImportError:
+    print("Can't save without the _pickle import")
+
 
 def Exit():
+    '''Saves the players stats'''
+    
     with open('PlayerFile.txt', 'w') as f:
         write_data = f.write(Player.name + "\n")
         write_data = f.write(str(Player.MaxHP) + "\n")

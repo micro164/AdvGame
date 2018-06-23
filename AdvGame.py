@@ -19,8 +19,12 @@ from Save import Exit
 from Checks import NameCheck
 from Equipment import EquipInsert
 
+# TODO: Make the game intro into its own file
+
 #Game Intro
 def GameIntro():
+    '''Introduction to the game'''
+
     if Player.Pclass == "":
         print("Welcome to TxtBasedAdv")
         print("Please enter a name: ")
@@ -79,6 +83,8 @@ def GameIntro():
 
 #Gives the player a potion to survive and an awsome introduction to the game
 def Intro():
+    '''Another part to the game introduction'''
+
     InvenInsert('potion')
 
     print("Now you are ready to go on an adventure. You will be able to travel")
@@ -86,6 +92,8 @@ def Intro():
 
 #Main menu for the game. The player can choose what to do and where to go.
 def Choices():
+    '''Gives the player all the choices for the game'''
+
     stop = False;
     while stop == False:
         DeathCheck()

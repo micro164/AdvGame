@@ -1,8 +1,13 @@
 import os
 from Classes import Player
-import _pickle as pickle
+
+try:
+    import _pickle as pickle
+except ImportError:
+    print("Can't open saved file without _pickle import")
 
 def Start():
+    '''Loads in the players stats when the game is opened'''
 
     if os.stat('PlayerFile.txt').st_size != 0:
 

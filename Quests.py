@@ -8,8 +8,11 @@ from InventoryAndItems import Items
 from InventoryAndItems import InvenInsert
 
 def Quests():
+    '''Function where all of the players quests reside'''
 
     def KillTheRats():
+        '''Quest to kill 10 rats'''
+
         if QuestInfo.QuestNumber == 0:
             if QuestInfo.QuestSeen == False:
                 print("QUEST NAME: Kill The Rats\n")
@@ -26,6 +29,8 @@ def Quests():
     KillTheRats()
 
     def GoblinExtermination():
+        '''Quest to kill 10 goblins'''
+
         if QuestInfo.QuestNumber == 1:
             if QuestInfo.QuestSeen == False:
                 print("QUEST NAME: Goblin Extermination\n")
@@ -42,6 +47,8 @@ def Quests():
     GoblinExtermination()
 
     def FindTheCastle():
+        '''Quest for finding and conquring a castle'''
+        
         if QuestInfo.QuestNumber == 2:
             if QuestInfo.QuestSeen == False:
                 print("QUEST NAME: Find The Castle\n")

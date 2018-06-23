@@ -35,6 +35,8 @@ Monsters = {'rat':              list((50,   12,      7,      10,     1,   50)),
 
 #List of monsters that appear in the forest
 def MonsterList():
+    '''Gives a list of monsters that the player can fight'''
+    
     temp = {}
     tempLvl = Player.lvl - 5
 

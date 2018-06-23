@@ -9,6 +9,8 @@ from math import ceil
 
 #The store for the player
 def Store():
+    '''Gives the options for the store'''
+
     print("1.Buy \n2.Sell \n3.Exit")
     choice = input()
     if choice == "1":
@@ -22,6 +24,8 @@ def Store():
 
 #Function for buying store items
 def Buy():
+    '''Gives the menu to the player for buying items/weapons/armor'''
+
     buy = ""
 
     while buy != '4':
@@ -41,6 +45,8 @@ def Buy():
 
 #Function for selling store items
 def Sell():
+    '''Menu for player selling an item/armor/weapon'''
+
     sell = ""
     while sell != "exit":
         PrintInven()
@@ -62,10 +68,17 @@ def Sell():
                     print("\nYou gained " + str(Igold) + " gold.\n")
                     del Player.Inventory[sell]
                 else:
-                    print("ERROR: Can't sell item")
+                    print("\nERROR: Can't sell item\n")
 
 #The main function for buying a weapon, armor, or item
 def Mbuy(Stype):
+    '''Gives the menu for player to buy a weapon, armor, or item
+
+    Arguments:
+    Stype -- the type of the item that the player is tring to buy
+
+    '''
+
     PrintStore(Stype)
     print("Type the name of the " + Stype + " you want to buy or no to exit")
     item_name = input()
@@ -79,7 +92,6 @@ def Mbuy(Stype):
             price = Items[item_name][Item.price]
             ItemType = Items[item_name][Item.Type]
 
-        if price != 0 and ItemType != '':
             if Player.gold >= price:
                 Player.gold -= price
                 if ItemType != 'item':
@@ -89,26 +101,30 @@ def Mbuy(Stype):
                         EquipInsert(item_name)
                         if Items[item_name][Item.lvl] > Player.lvl:
                             InvenInsert(item_name)
-                            print("The item has been put in your inventory")
+                            print("The item has been put in your inventory\n")
                     elif choice == 'no':
                         InvenInsert(item_name)
                     else:
-                        print("ERROR: Could not put away or equip " + item_name)
+                        print("\nERROR: Could not put away or equip " + item_name + "\n")
                 elif ItemType == 'item':
-                    print("Item put in your inventory.")
+                    print("Item put in your inventory.\n")
                     InvenInsert(item_name)
                 else:
-                    print("ERROR: Something went wrong with buying item")
+                    print("\nERROR: Something went wrong with buying item\n")
             else:
                 print("\nYou do not have enough money\n")
-
-        elif price == 0 and ItemType != '':
-            print("Unidentified item")
         else:
-            print("ERROR: can't buy item")
+            print("\nERROR: can't buy item\n")
 
 #Printing out store items
 def PrintStore(Stype):
+    '''Prints all the items in the store for the player
+
+    Arguments:
+    Stype -- the type of the item that the player is tring to buy
+
+    '''
+
     for key, value in list(Items.items()):
         if (value[Item.Pclass] == Player.Pclass or  value[Item.Type] == 'item') and (value[Item.Type] == Stype):
             if value[Item.lvl] >= Player.lvl and value[Item.lvl] <= (Player.lvl + 5):

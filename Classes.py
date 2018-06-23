@@ -1,6 +1,8 @@
 from enum import IntEnum
 from enum import Enum
 
+# QUESTION: Is ths the best way to do this?
+
 #Player stats
 class Player:
     name = ""

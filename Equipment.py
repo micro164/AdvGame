@@ -8,6 +8,13 @@ from Classes import Player
 
 #Delete Equipment item
 def DeleteEquip(Etype):
+    '''Unequips equipment
+
+    Arguments:
+    Etype -- gives the type of the item (weapon/armor/healer/item)
+
+    '''
+
     temp = EquipTypeCheck(Etype)
     if temp == True:
         item_name = ""
@@ -21,25 +28,27 @@ def DeleteEquip(Etype):
             Player.MaxHP -= Player.Equipment[item_name][Item.HP]
             InvenInsert(item_name)
             del Player.Equipment[item_name]
-    elif temp == False:
-        print("Item not in equipment")
     else:
         print("ERROR: could not find item in equipment")
 
 #Removing Equipment
 def RemoveEquip(item_name):
+    '''Checks to see what equipment to remove
+
+    Arguments:
+    item_name -- name of the item that is trying to be removed
+
+    '''
+
     if bool(Player.Equipment) != False:
         temp = ItemCheck(item_name)
         if temp == True:
             if Player.Pclass == Items[item_name][Item.Pclass]:
                 if Items[item_name][Item.Type] == 'weapon' and EquipTypeCheck('weapon') == True:
                     DeleteEquip('weapon')
-                elif Items[item_name][Item.Type] == 'weapon' and EquipTypeCheck('weapon') == False:
-                    return
-
-                if Items[item_name][Item.Type] == 'armor' and EquipTypeCheck('armor') == True:
+                elif Items[item_name][Item.Type] == 'armor' and EquipTypeCheck('armor') == True:
                     DeleteEquip('armor')
-                elif Items[item_name][Item.Type] == 'armor' and EquipTypeCheck('armor') == False:
+                else:
                     return
             elif Items[item_name][Item.Pclass] == 'healer':
                 print("\nERROR: can't equip healing item\n")
@@ -53,6 +62,13 @@ def RemoveEquip(item_name):
 
 #Inserting Item into equipment
 def EquipInsert(item_name):
+    '''Equips a weapon or armor to the player
+
+    Arguments:
+    item_name -- the name of the weapon or armor being equiped
+
+    '''
+
     ItemExists = ItemCheck(item_name)
     Equiped = EquipCheck(item_name)
 
@@ -80,18 +96,25 @@ def EquipInsert(item_name):
 
 #Asks the player which item in the inventory they want to equip and equips it
 def EquipEquipment():
+    '''Menu for the player in order to equip armor and weapons'''
+
     print("Enter the name of the weapon/armor")
     Equip = input()
     CheckItem = InvenCheck(Equip)
     if bool(CheckItem) == True:
         EquipInsert(Equip)
-    elif bool(CheckItem) == False:
-        print("\nWeapon/armor not in inventory")
     else:
         print("ERROR: can not equip item from inventory")
 
 #Checks to see the type of the equipment
 def EquipTypeCheck(Etype):
+    '''Checks the type of the equipment
+
+    Arguments:
+    Etype -- gives the type of the item (weapon/armor/healer/item)
+
+    '''
+
     for key, value in list(Player.Equipment.items()):
         if value[Item.Type] == Etype:
             return True
@@ -99,5 +122,7 @@ def EquipTypeCheck(Etype):
 
 #Prints what the player has equiped
 def PrintEquip():
+    '''Prints the players equipment'''
+
     for key in Player.Equipment:
         print(key)

@@ -3,6 +3,8 @@ from Checks import CheckHealing
 
 #Revives player when there is no way to gain hp
 def Death():
+    '''Revives the player when there is no other way to gain hp'''
+
     if Player.hp == 0 and Player.gold == 0:
         HealingItem = CheckHealing()
         if bool(HealingItem) == False and Player.exp > 0:
@@ -21,5 +23,7 @@ def Death():
 
 #Checks to see if player has no option to heal
 def DeathCheck():
+    '''Checks if the player has no other options to heal'''
+    
     if Player.gold <= 0 and CheckHealing() == False:
         Death()

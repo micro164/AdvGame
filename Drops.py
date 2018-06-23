@@ -8,6 +8,13 @@ from Death import Death
 
 #Determines what type of item will be droped
 def MonsterDrop(Mlvl):
+    '''Determines what type of item a monster will drop
+
+    Arguments:
+    Mlvl - The level of the monster
+
+    '''
+
     random.seed()
     chance = random.random()
 
@@ -32,6 +39,13 @@ def MonsterDrop(Mlvl):
 
 #Function for randomly droping items when monster dies
 def Drop(Stype):
+    '''Determines what items drop from the monster
+
+    Arguments:
+    Stype -- The type of the item being dropped
+
+    '''
+
     random.seed()
     temp = ItemList(Stype)
     key = random.choice(list(temp.items()))
@@ -39,6 +53,8 @@ def Drop(Stype):
     print("The monster droped a " + key[0] + ". It has been put in your inventory.\n")
 
 def QuestReward():
+    '''Determines the reward for completing the quest'''
+    
     random.seed()
     chance = random.random()
 

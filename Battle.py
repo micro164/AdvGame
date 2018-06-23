@@ -9,6 +9,8 @@ from Death import Death
 
 #Player encounters a random monster
 def fight():
+    '''Random battles in forest for player'''
+
     temp = MonsterList()
     random.seed()
     key = random.choice(list(temp.items()))
@@ -63,6 +65,18 @@ def fight():
     Death()
 
 def QuestFight(MonsterName, MonsterHP, MonsterAttack, MonsterDefense, MonsterLvl, MonsterExp):
+    '''Quest battles for the player
+
+    Arguments:
+    MonsterName -- Name of the monster the player is fighting
+    MonsterHP -- The amount of health the monster has
+    MonsterAttack -- The amount of attack power the monster has
+    MonsterDefense -- The amount of defense power the mosnter has
+    MonsterLvl -- The level of the monster
+    MonsterExp -- The amount of experence the monster gives
+
+    '''
+
     print("It's a " + MonsterName)
     Pdamage = 0
     Edamage = 0

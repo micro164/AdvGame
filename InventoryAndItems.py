@@ -2,7 +2,6 @@ from Classes import Item
 from Classes import Player
 from Checks import EquipCheck
 
-
 #Stats for each item in the game
 # 0-attack, 1-defense, 2-price, 3-type, 4-Pclass, 5-HP, 6-count, 7-lvl
 Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
@@ -40,6 +39,13 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
 
 #List of items that monsters drop
 def ItemList(Stype):
+    '''Gives a list of items that can be dropped from the monster
+
+    Arguments:
+    Stype -- Gives the type (item/weapon/armor) that will be dropped
+
+    '''
+
     temp = {}
     for key, value in list(Items.items()):
         if value[Item.Type] == Stype:
@@ -49,6 +55,8 @@ def ItemList(Stype):
 
 #Asks user which item they want to use and then applies the appropriate stats
 def UseItem():
+    '''Allows the user to use an item'''
+
     print("Enter the name of the item to use")
     item_name = input()
     CheckItem = InvenCheck(item_name)
@@ -81,6 +89,8 @@ def UseItem():
 
 #Display a stat of a selected items
 def ItemStats():
+    '''Allows the user to see an items stats'''
+
     item_lookup = ""
 
     while item_lookup != "exit":
@@ -101,6 +111,13 @@ def ItemStats():
 
 #Inserting Item into inventory
 def InvenInsert(item_name):
+    '''Inserts an item into the players inventory
+
+    Arguments:
+    item_name -- name of the item that is being inserted into the inventory
+
+    '''
+
     Player.Inventory[item_name] = Items[item_name]
     Echeck = EquipCheck(item_name)
     if Echeck == False:
@@ -108,11 +125,20 @@ def InvenInsert(item_name):
 
 #Prints items in inventory that can be sold
 def PrintInven():
+    '''Prints the players inventory'''
+
     for key, value in list(Player.Inventory.items()):
         print(key + " X " + str(value[Item.count]))
 
 #Checks if item is in player inventory
 def InvenCheck(item_name):
+    '''Checks to see if an item is in the players inventory
+
+    Arguments:
+    item_name -- name of item being inserted into players inventory
+
+    '''
+
     for key, value in list(Player.Inventory.items()):
         if key == item_name:
             return True
@@ -120,6 +146,13 @@ def InvenCheck(item_name):
 
 #Checks to see if the name entered is actually an item
 def ItemCheck(item_name):
+    '''Checks to see if the name entered is actually in the inventory
+
+    Arguments:
+    item_name -- name of item that will be chacked
+
+    '''
+
     for key, value in list(Items.items()):
         if key == item_name:
             return True

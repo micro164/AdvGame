@@ -6,6 +6,8 @@ from InventoryAndItems import UseItem
 
 #Displays the players stats
 def PlayerStats():
+    '''Displays the players stats'''
+
     print("Name: " + Player.name)
     print("Level: " + str(Player.lvl))
     print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp))
@@ -19,6 +21,8 @@ def PlayerStats():
 
 #Displays the players inventory and asks if what they want to do with the items
 def DisplayPlayerInventory():
+    '''Displays the players inventory'''
+    
     choice = ''
     while choice != '4':
         PrintInven()
