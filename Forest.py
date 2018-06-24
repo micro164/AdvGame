@@ -7,7 +7,7 @@ from Battle import fight
 from Checks import CheckHealing
 from InventoryAndItems import InvenInsert
 from Quests import Quests
-from Death import Death 
+from Death import Death
 
 #Introduction to the forest
 def ForestIntro():

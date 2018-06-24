@@ -11,13 +11,15 @@ from math import ceil
 def Store():
     '''Gives the options for the store'''
 
-    print("1.Buy \n2.Sell \n3.Exit")
+    print("1.Buy \n2.Sell \n3.Augmentation \n4.Exit")
     choice = input()
     if choice == "1":
         Buy()
     elif choice == "2":
         Sell()
     elif choice == "3":
+        Augmentation()
+    elif choice == "4":
         print("Thanks for shopping")
     else:
         print("Wrong choice")
@@ -129,3 +131,47 @@ def PrintStore(Stype):
         if (value[Item.Pclass] == Player.Pclass or  value[Item.Type] == 'item') and (value[Item.Type] == Stype):
             if value[Item.lvl] >= Player.lvl and value[Item.lvl] <= (Player.lvl + 5):
                 print(key + ": " + str(value[Item.price]))
+
+def Augmentation():
+    '''Allows the player to augment their weapon or armor'''
+
+    print("\nWelcome to the augmentation center.")
+    print("Please select what you want to augment")
+    print("\n1.Weapon \n2.Armor")
+
+    choice = input()
+
+    if choice == "1":
+        for key, value in list(Player.Equipment.items()):
+            if value[Item.Type] == 'weapon':
+                cToInt = 0
+
+                for c in value[Item.Pclass]:
+                    cToInt = cToInt + ord(c)
+
+                price = value[Item.lvl] * int((cToInt / len(value[Item.Pclass])))
+
+                print("\nThe price to augment the weapon will be " + str(price) + ".")
+                print("Do you accept the charges? (y/n)")
+
+                accept = input()
+
+                if accept == 'y' or accept == 'Y':
+                    if Player.gold >= price:
+                        Player.gold = Player.gold - price
+                        Player.Strength = Player.Strength - value[Item.attack]
+                        value[Item.attack] = value[Item.attack] + value[Item.lvl]
+                        Player.Strength = Player.Strength + value[Item.attack]
+                        print("Your weapon now has " + str(value[Item.attack]) + " attack\n")
+                    else:
+                        print("Not enough gold.\n")
+                elif accept == 'n' or accept == 'N':
+                    print("Thank you for coming\n")
+                else:
+                    print("ERROR: wrong key pressed")
+    elif choice == "2":
+        print("In progress")
+        # TODO: print out the list of armor
+        # TODO: make the rest like weapon
+    else:
+        print("wrong key")
