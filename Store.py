@@ -123,7 +123,7 @@ def PrintStore(Stype):
     '''Prints all the items in the store for the player
 
     Arguments:
-    Stype -- the type of the item that the player is tring to buy
+    Stype -- the type of the item that the player is trying to buy
 
     '''
 
@@ -142,8 +142,22 @@ def Augmentation():
     choice = input()
 
     if choice == "1":
-        for key, value in list(Player.Equipment.items()):
-            if value[Item.Type] == 'weapon':
+        AugmentItem("weapon")
+    elif choice == "2":
+        AugmentItem("armor")
+    else:
+        print("wrong key")
+
+def AugmentItem(typeOfItem):
+    '''Actual augmentation of weapon or armor
+    
+    Arguments:
+    typeOfItem -- the type of item that the player is trying to augment
+
+    '''
+
+    for key, value in list(Player.Equipment.items()):
+            if value[Item.Type] == typeOfItem:
                 cToInt = 0
 
                 for c in value[Item.Pclass]:
@@ -151,7 +165,7 @@ def Augmentation():
 
                 price = value[Item.lvl] * int((cToInt / len(value[Item.Pclass])))
 
-                print("\nThe price to augment the weapon will be " + str(price) + ".")
+                print("\nThe price to augment the" + itemType + " will be " + str(price) + ".")
                 print("Do you accept the charges? (y/n)")
 
                 accept = input()
@@ -159,19 +173,22 @@ def Augmentation():
                 if accept == 'y' or accept == 'Y':
                     if Player.gold >= price:
                         Player.gold = Player.gold - price
-                        Player.Strength = Player.Strength - value[Item.attack]
-                        value[Item.attack] = value[Item.attack] + value[Item.lvl]
-                        Player.Strength = Player.Strength + value[Item.attack]
-                        print("Your weapon now has " + str(value[Item.attack]) + " attack\n")
+                        
+                        if typeOfItem == 'weapon':
+                            Player.Strength = Player.Strength - value[Item.attack]
+                            value[Item.attack] = value[Item.attack] + value[Item.lvl]
+                            Player.Strength = Player.Strength + value[Item.attack]
+                            print("Your weapon now has " + str(value[Item.attack]) + " attack\n")
+                        
+                        if typeOfItem == 'armor':
+                            Player.Defense = Player.Defense - value[Item.defense]                            
+                            value[Item.defense] = value[Item.defense] + value[Item.lvl]
+                            Player.Defense = Player.Defense + value[Item.defense]
+                            print("Your armor now has " + str(value[Item.defense]) + " defense\n")
+
                     else:
                         print("Not enough gold.\n")
                 elif accept == 'n' or accept == 'N':
                     print("Thank you for coming\n")
                 else:
                     print("ERROR: wrong key pressed")
-    elif choice == "2":
-        print("In progress")
-        # TODO: print out the list of armor
-        # TODO: make the rest like weapon
-    else:
-        print("wrong key")
