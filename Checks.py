@@ -32,7 +32,7 @@ def NameCheck(name):
 #Checks if player has a healing item in inventory
 def CheckHealing():
     '''Checks to see if the player has a healing item in his inventory'''
-    
+
     for key, value in list(Player.Inventory.items()):
         if value[Item.Pclass] == 'healer':
             return True
