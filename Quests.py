@@ -99,6 +99,7 @@ def Quests():
                         Items['Kings Dagger'] = list((30,0,100,'weapon','rouge',0,0,0))
                         Items['Kings Cloak'] = list((0,20,100,'armor','rouge',60,0,0))
                         InvenInsert('Kings Dagger')
+                        InvenInsert('Kings Cloak')
                         print("You were also given a Kings Dagger & Cloak")
                     else:
                         print("Could not give out reward")

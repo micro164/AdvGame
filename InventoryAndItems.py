@@ -41,7 +41,6 @@ Items = {'sword': list((10,0,10,'weapon', 'swordsman', 0,0,1)),
          'potion': list((0,0,20,'item','healer', 20,0,1)),
          'Hyper Potion': list((0,0,50,'item','healer',50,0,20))}
 
-#List of items that monsters drop
 def ItemList(Stype):
     '''Gives a list of items that can be dropped from the monster
 
@@ -57,7 +56,6 @@ def ItemList(Stype):
                 temp[key] = Items[key]
     return temp
 
-#Asks user which item they want to use and then applies the appropriate stats
 def UseItem():
     '''Allows the user to use an item'''
 
@@ -91,7 +89,6 @@ def UseItem():
             elif key == item_name and value[Item.Type] != "item":
                 print("\nThis is not an item\n")
 
-#Display a stat of a selected items
 def ItemStats():
     '''Allows the user to see an items stats'''
 
@@ -113,7 +110,6 @@ def ItemStats():
         elif ItemCheck(item_lookup) == False and item_lookup != "exit":
             print("Item not found\n")
 
-#Inserting Item into inventory
 def InvenInsert(item_name):
     '''Inserts an item into the players inventory
 
@@ -127,14 +123,12 @@ def InvenInsert(item_name):
     if Echeck == False:
         Player.Inventory[item_name][Item.count] += 1
 
-#Prints items in inventory that can be sold
 def PrintInven():
     '''Prints the players inventory'''
 
     for key, value in list(Player.Inventory.items()):
         print(key + " X " + str(value[Item.count]))
 
-#Checks if item is in player inventory
 def InvenCheck(item_name):
     '''Checks to see if an item is in the players inventory
 
@@ -148,7 +142,6 @@ def InvenCheck(item_name):
             return True
     return False
 
-#Checks to see if the name entered is actually an item
 def ItemCheck(item_name):
     '''Checks to see if the name entered is actually in the inventory
 
