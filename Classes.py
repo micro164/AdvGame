@@ -1,10 +1,8 @@
 from enum import IntEnum
 from enum import Enum
 
-# QUESTION: Is ths the best way to do this?
-
-#Player stats
 class Player:
+    '''Player Class'''
     name = ""
     MaxHP = 0
     hp = 0
@@ -18,8 +16,8 @@ class Player:
     Inventory = dict()
     Equipment = dict()
 
-#Monster Class
 class Monster(IntEnum):
+    '''Monster Class'''
     HP = 0
     attack = 1
     defense = 2
@@ -37,7 +35,7 @@ class enemy(object):
     lvl = 0
     MaxHP = 0
     questFight = False
-    
+
     def __init__(self, name, hp, attack, defense, exp, lvl, maxHp, questFight):
         super(enemy, self).__init__()
         self.name = name
@@ -49,9 +47,8 @@ class enemy(object):
         self.MaxHP = maxHp
         self.questFight = questFight
 
-
-#Item Class
 class Item(IntEnum):
+    '''Item Class'''
     attack = 0
     defense = 1
     price = 2
@@ -62,16 +59,19 @@ class Item(IntEnum):
     lvl = 7
 
 class Directions(Enum):
+    '''Directions Class'''
     UP = '1'
     LEFT = '2'
     RIGHT = '3'
     DOWN = '4'
 
 class Features():
+    '''Features Class'''
     choiceList = []
     LastDirections = []
 
 class QuestInfo():
+    '''QuestInfo Class'''
     MonstersKilled = dict()
     QuestNumber = 0
     QuestSeen = False

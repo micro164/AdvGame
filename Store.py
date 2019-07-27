@@ -150,7 +150,7 @@ def Augmentation():
 
 def AugmentItem(typeOfItem):
     '''Actual augmentation of weapon or armor
-    
+
     Arguments:
     typeOfItem -- the type of item that the player is trying to augment
 
@@ -165,7 +165,7 @@ def AugmentItem(typeOfItem):
 
                 price = value[Item.lvl] * int((cToInt / len(value[Item.Pclass])))
 
-                print("\nThe price to augment the" + itemType + " will be " + str(price) + ".")
+                print("\nThe price to augment the " + typeOfItem + " will be " + str(price) + ".")
                 print("Do you accept the charges? (y/n)")
 
                 accept = input()
@@ -173,15 +173,15 @@ def AugmentItem(typeOfItem):
                 if accept == 'y' or accept == 'Y':
                     if Player.gold >= price:
                         Player.gold = Player.gold - price
-                        
+
                         if typeOfItem == 'weapon':
                             Player.Strength = Player.Strength - value[Item.attack]
                             value[Item.attack] = value[Item.attack] + value[Item.lvl]
                             Player.Strength = Player.Strength + value[Item.attack]
                             print("Your weapon now has " + str(value[Item.attack]) + " attack\n")
-                        
+
                         if typeOfItem == 'armor':
-                            Player.Defense = Player.Defense - value[Item.defense]                            
+                            Player.Defense = Player.Defense - value[Item.defense]
                             value[Item.defense] = value[Item.defense] + value[Item.lvl]
                             Player.Defense = Player.Defense + value[Item.defense]
                             print("Your armor now has " + str(value[Item.defense]) + " defense\n")
