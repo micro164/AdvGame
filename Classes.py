@@ -27,6 +27,29 @@ class Monster(IntEnum):
     lvl = 4
     MaxHP = 5
 
+class enemy(object):
+    """Enemy class"""
+    name = ""
+    HP = 0
+    attack = 0
+    defense = 0
+    exp = 0
+    lvl = 0
+    MaxHP = 0
+    questFight = False
+    
+    def __init__(self, name, hp, attack, defense, exp, lvl, maxHp, questFight):
+        super(enemy, self).__init__()
+        self.name = name
+        self.HP = hp
+        self.attack = attack
+        self.defense = defense
+        self.exp = exp
+        self.lvl = lvl
+        self.MaxHP = maxHp
+        self.questFight = questFight
+
+
 #Item Class
 class Item(IntEnum):
     attack = 0

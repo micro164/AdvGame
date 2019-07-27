@@ -2,7 +2,8 @@ from Classes import QuestInfo
 from Classes import Directions
 from Classes import Features
 from Classes import Player
-from Battle import QuestFight
+from Classes import enemy
+from Battle import battle
 from Drops import QuestReward
 from InventoryAndItems import Items
 from InventoryAndItems import InvenInsert
@@ -48,7 +49,7 @@ def Quests():
 
     def FindTheCastle():
         '''Quest for finding and conquring a castle'''
-        
+
         if QuestInfo.QuestNumber == 2:
             if QuestInfo.QuestSeen == False:
                 print("QUEST NAME: Find The Castle\n")
@@ -64,17 +65,17 @@ def Quests():
                 print("Now you must battle all the way to the top\n")
 
                 print("The first opponent is a Guard of the castle")
-                QuestFight("Guard",20,10,8,5,200)
+                battle(enemy("Guard",20,10,8,200,5,20,True))
 
                 if QuestInfo.Win == True:
                     print("You have made it into the castle")
                     print("Now you have to fight a Knight")
-                    QuestFight("Knight",50,25,20,15,575)
+                    battle(enemy("Knight",50,25,20,575,15,50,True))
 
                 if QuestInfo.Win == True:
                     print("You have passed the Knight")
                     print("Know you must fight the King to take the castle")
-                    QuestFight("King",100,50,50,20,1000)
+                    battle(enemy("King",100,50,50,1000,20,100,True))
 
                 # TODO: Figure out why the Kings drop gets dublicated when equiped
                 if QuestInfo.Win == True:
