@@ -50,6 +50,20 @@ def Drop(Stype):
     InvenInsert(key[0])
     print("The monster droped a " + key[0] + ". It has been put in your inventory.\n")
 
+def QuestDrop(Stype):
+    '''Determines what quest reward will be
+
+    Arguments:
+    Stype -- The type of the item being dropped
+
+    '''
+
+    random.seed()
+    iList = ItemList(Stype)
+    item = random.choice(list(iList.items()))
+    InvenInsert(item[0])
+    print("You got a " + item[0] + " for you efforts. It has been put in your inventory.\n")
+
 def QuestReward():
     '''Determines the reward for completing the quest'''
 
@@ -57,13 +71,13 @@ def QuestReward():
     chance = random.random()
 
     if chance > 0 and chance < 0.5:
-        Drop('item')
+        QuestDrop('item')
     elif chance >= 0.5 and chance < 1:
         chance2 = random.random()
         if chance2 < 0.5:
-            Drop('armor')
+            QuestDrop('armor')
         elif chance2 >= 0.5:
-            Drop('weapon')
+            QuestDrop('weapon')
         else:
             print("ERROR: could not drop weapon/armor")
     else:

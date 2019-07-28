@@ -19,6 +19,8 @@ def Quests():
                 print("QUEST NAME: Kill The Rats\n")
                 print("The first quest on this journey is to kill 10 rats\n")
                 QuestInfo.QuestSeen = True
+                QuestInfo.InQuest = True
+                pause()
 
             if 'rat' in QuestInfo.MonstersKilled.keys():
                 print("RATS KILLED: " + str(QuestInfo.MonstersKilled['rat']) + "\n")
@@ -26,7 +28,9 @@ def Quests():
                     print("Congragulations you have completed the first quest\n")
                     QuestInfo.QuestNumber = QuestInfo.QuestNumber + 1
                     QuestInfo.QuestSeen = False
+                    QuestInfo.InQuest = True
                     QuestReward()
+                    pause()
     KillTheRats()
 
     def GoblinExtermination():
@@ -37,6 +41,8 @@ def Quests():
                 print("QUEST NAME: Goblin Extermination\n")
                 print("Kill 10 goblins to complete the quest\n")
                 QuestInfo.QuestSeen = True
+                QuestInfo.InQuest = True
+                pause()
 
             if 'goblin' in QuestInfo.MonstersKilled.keys():
                 print("GOBLINS KILLED: " + str(QuestInfo.MonstersKilled['goblin']) + "\n")
@@ -44,7 +50,9 @@ def Quests():
                     print("Congragulations on completing the quest\n")
                     QuestInfo.QuestNumber = QuestInfo.QuestNumber + 1
                     QuestInfo.QuestSeen = False
+                    QuestInfo.InQuest = True
                     QuestReward()
+                    pause()
     GoblinExtermination()
 
     def FindTheCastle():
@@ -57,6 +65,8 @@ def Quests():
                 print("Search for a Castle hidden in the forest.")
                 print("You will have to go up, down, left, right and all around.")
                 QuestInfo.QuestSeen = True
+                QuestInfo.InQuest = True
+                pause()
 
             CastleLocation = [Directions.UP.value, Directions.UP.value, Directions.RIGHT.value, Directions.UP.value, Directions.LEFT.value]
 
@@ -65,16 +75,19 @@ def Quests():
                 print("Now you must battle all the way to the top\n")
 
                 print("The first opponent is a Guard of the castle")
+                pause()
                 battle(enemy("Guard",20,10,8,200,5,20,True))
 
                 if QuestInfo.Win == True:
                     print("You have made it into the castle")
                     print("Now you have to fight a Knight")
+                    pause()
                     battle(enemy("Knight",50,25,20,575,15,50,True))
 
                 if QuestInfo.Win == True:
                     print("You have passed the Knight")
                     print("Know you must fight the King to take the castle")
+                    pause()
                     battle(enemy("King",100,50,50,1000,20,100,True))
 
                 # TODO: Figure out why the Kings drop gets dublicated when equiped
@@ -82,6 +95,7 @@ def Quests():
                     print("Congragulations on captureing the caslte and completing the quest\n")
                     QuestInfo.QuestNumber = QuestInfo.QuestNumber + 1
                     QuestInfo.QuestSeen = False
+                    QuestInfo.InQuest = True
                     QuestReward()
                     if Player.Pclass == 'swordsman':
                         Items['Kings Sword'] = list((35,0,120,'weapon','swordsman',0,0,0))
@@ -89,19 +103,26 @@ def Quests():
                         InvenInsert('Kings Sword')
                         InvenInsert('Kings Armor')
                         print("You were also given a Kings Sword & Armor!")
+                        pause()
                     elif Player.Pclass == 'wizard':
                         Items['Kings Staff'] = list((40,0,200,'weapon','wizard',0,0,0))
                         Items['Kings Cloth'] = list((0,15,100,'armor','wizard',150,0,0))
                         InvenInsert('Kings Staff')
                         InvenInsert('Kings Cloth')
                         print("You were also given a Kings Staff & Cloth")
+                        pause()
                     elif Player.Pclass == 'rouge':
                         Items['Kings Dagger'] = list((30,0,100,'weapon','rouge',0,0,0))
                         Items['Kings Cloak'] = list((0,20,100,'armor','rouge',60,0,0))
                         InvenInsert('Kings Dagger')
                         InvenInsert('Kings Cloak')
                         print("You were also given a Kings Dagger & Cloak")
+                        pause()
                     else:
                         print("Could not give out reward")
         QuestInfo.Win = True
     FindTheCastle()
+
+def pause():
+    print("Press any key to continue...")
+    input()

@@ -7,10 +7,8 @@ Some things that need to be added or done:
 3. Add more items
 4. Quests & general story of the game
 5. Fix rat quest so it won't get stuck
-6. Switch Max Hp/Exp positions
-7. Add in random items, gold, and healing into forest
 
 How to run game:
 1. Clone the repository
-2. Make sure you have all of the imports for pyhton installed
+2. Make sure you have all of the imports for python installed
 3. Run the AdvGame.py

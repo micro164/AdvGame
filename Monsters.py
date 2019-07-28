@@ -36,17 +36,13 @@ Monsters = {'rat':              list((50,   12,      7,      10,     1,   50)),
 #List of monsters that appear in the forest
 def MonsterList():
     '''Gives a list of monsters that the player can fight'''
-    
-    temp = {}
-    tempLvl = Player.lvl - 5
 
-    if tempLvl <= 0:
-        tempLvl = 1
+    temp = {}
 
     for key, value in list(Monsters.items()):
         if Player.lvl == 100:
             if value[Monster.lvl] <= Player.lvl:
                 temp[key] = Monsters[key]
-        elif value[Monster.lvl] >= tempLvl and value[Monster.lvl] <= (Player.lvl + 5):
+        elif value[Monster.lvl] >= 1 and value[Monster.lvl] <= (Player.lvl + 5):
             temp[key] = Monsters[key]
     return temp
