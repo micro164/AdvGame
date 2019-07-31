@@ -6,7 +6,6 @@ Some things that need to be added or done:
 2. Add more armors
 3. Add more items
 4. Quests & general story of the game
-5. Fix rat quest so it won't get stuck
 
 How to run game:
 1. Clone the repository

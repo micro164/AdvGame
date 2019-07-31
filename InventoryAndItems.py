@@ -1,6 +1,7 @@
 from Classes import Item
 from Classes import Player
 from Checks import EquipCheck
+import copy
 
 #Stats for each item in the game
 # 0-attack, 1-defense, 2-price, 3-type, 4-Pclass, 5-HP, 6-count, 7-lvl
@@ -118,9 +119,13 @@ def InvenInsert(item_name):
 
     '''
 
-    Player.Inventory[item_name] = Items[item_name]
     Echeck = EquipCheck(item_name)
-    if Echeck == False:
+    if item_name in Player.Inventory and Echeck == False:
+        Player.Inventory[item_name][Item.count] += 1
+
+    else:
+        kvPair = copy.deepcopy({item_name : Items[item_name]})
+        Player.Inventory.update(kvPair)
         Player.Inventory[item_name][Item.count] += 1
 
 def PrintInven():

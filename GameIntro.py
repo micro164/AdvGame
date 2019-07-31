@@ -27,8 +27,10 @@ def GameIntro():
             Player.hp = 100
             Player.MaxHP = 100
             EquipInsert('sword')
+            InvenInsert('sword')
             print("You have been given a sword.")
             EquipInsert('bronze armor')
+            InvenInsert('bronze armor')
             print("You have been given a bronze armor\n")
             Intro()
         elif choice == "2":

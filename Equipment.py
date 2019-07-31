@@ -5,6 +5,7 @@ from InventoryAndItems import InvenInsert
 from Checks import EquipCheck
 from Classes import Item
 from Classes import Player
+import copy
 
 #Delete Equipment item
 def DeleteEquip(Etype):
@@ -26,7 +27,9 @@ def DeleteEquip(Etype):
             Player.Strength -= Player.Equipment[item_name][Item.attack]
             Player.Defense -= Player.Equipment[item_name][Item.defense]
             Player.MaxHP -= Player.Equipment[item_name][Item.HP]
+            # print("Before Insert: " + str(Player.Inventory[item_name]))
             InvenInsert(item_name)
+            # print("After Insert: " + str(Player.Inventory[item_name]))
             del Player.Equipment[item_name]
     else:
         print("ERROR: could not find item in equipment")
@@ -77,7 +80,9 @@ def EquipInsert(item_name):
             RemoveEquip(item_name)
 
             if Player.Pclass == Items[item_name][Item.Pclass]:
-                Player.Equipment[item_name] = Items[item_name]
+                kvPair = copy.deepcopy({item_name : Items[item_name]})
+                Player.Equipment[item_name] = {}
+                Player.Equipment.update(kvPair)
                 Player.Strength += Player.Equipment[item_name][Item.attack]
                 Player.Defense += Player.Equipment[item_name][Item.defense]
                 Player.MaxHP += Player.Equipment[item_name][Item.HP]

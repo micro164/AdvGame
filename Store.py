@@ -3,6 +3,7 @@ from InventoryAndItems import ItemCheck
 from InventoryAndItems import PrintInven
 from InventoryAndItems import InvenInsert
 from Equipment import EquipInsert
+from Checks import EquipCheck
 from Classes import Item
 from Classes import Player
 from math import ceil
@@ -65,10 +66,13 @@ def Sell():
                     print(value[Item.count])
                     print("\nYou gained " + str(Igold) + " gold.\n")
                 elif value[Item.count] == 1:
-                    Player.gold += Igold
-                    value[Item.count] -= 1
-                    print("\nYou gained " + str(Igold) + " gold.\n")
-                    del Player.Inventory[sell]
+                    if EquipCheck(key) == False:
+                        Player.gold += Igold
+                        value[Item.count] -= 1
+                        print("\nYou gained " + str(Igold) + " gold.\n")
+                        del Player.Inventory[sell]
+                    else:
+                        print("\nThat item is currently equipped\n")
                 else:
                     print("\nERROR: Can't sell item\n")
 
