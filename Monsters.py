@@ -33,7 +33,6 @@ Monsters = {'rat':              list((50,   12,      7,      10,     1,   50)),
             'Elder Lich':       list((4500, 800,    975,    2500,   95,  3500)),
             'Dragon':           list((10000, 1200,    1100,    5000,   100, 5000))}
 
-#List of monsters that appear in the forest
 def MonsterList():
     '''Gives a list of monsters that the player can fight'''
 

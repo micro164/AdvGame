@@ -4,14 +4,13 @@ from Equipment import EquipEquipment
 from InventoryAndItems import PrintInven
 from InventoryAndItems import UseItem
 
-#Displays the players stats
 def PlayerStats():
     '''Displays the players stats'''
 
     print("Name: " + Player.name)
     print("Level: " + str(Player.lvl))
-    print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp))
-    print("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp))
+    print("HP: " + str(Player.hp) + "/" + str(Player.MaxHP))
+    print("EXP: " + str(Player.exp) + "/" + str(Player.MaxExp))
     print("Strength: " + str(Player.Strength))
     print("Defense: " + str(Player.Defense))
     print("Gold: " + str(Player.gold))
@@ -19,10 +18,9 @@ def PlayerStats():
     print("\nEquipment:")
     PrintEquip()
 
-#Displays the players inventory and asks if what they want to do with the items
 def DisplayPlayerInventory():
     '''Displays the players inventory'''
-    
+
     choice = ''
     while choice != '4':
         PrintInven()

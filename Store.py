@@ -8,7 +8,6 @@ from Classes import Item
 from Classes import Player
 from math import ceil
 
-#The store for the player
 def Store():
     '''Gives the options for the store'''
 
@@ -25,7 +24,6 @@ def Store():
     else:
         print("Wrong choice")
 
-#Function for buying store items
 def Buy():
     '''Gives the menu to the player for buying items/weapons/armor'''
 
@@ -46,7 +44,6 @@ def Buy():
         else:
             print("\nERROR: could not buy item\n")
 
-#Function for selling store items
 def Sell():
     '''Menu for player selling an item/armor/weapon'''
 
@@ -76,7 +73,6 @@ def Sell():
                 else:
                     print("\nERROR: Can't sell item\n")
 
-#The main function for buying a weapon, armor, or item
 def Mbuy(Stype):
     '''Gives the menu for player to buy a weapon, armor, or item
 
@@ -122,7 +118,6 @@ def Mbuy(Stype):
         else:
             print("\nERROR: can't buy item\n")
 
-#Printing out store items
 def PrintStore(Stype):
     '''Prints all the items in the store for the player
 

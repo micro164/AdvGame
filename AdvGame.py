@@ -16,7 +16,6 @@ from Store import Store
 from Save import Exit
 from GameIntro import GameIntro
 
-#Main menu for the game. The player can choose what to do and where to go.
 def Choices():
     '''Gives the player all the choices for the game'''
 
@@ -44,8 +43,8 @@ def Choices():
         else:
             print("Wrong Choice")
 
-#Main game function
 def main():
+    '''Main Game Function'''
     Start()
     GameIntro()
     Choices()

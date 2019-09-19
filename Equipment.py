@@ -7,7 +7,6 @@ from Classes import Item
 from Classes import Player
 import copy
 
-#Delete Equipment item
 def DeleteEquip(Etype):
     '''Unequips equipment
 
@@ -34,7 +33,6 @@ def DeleteEquip(Etype):
     else:
         print("ERROR: could not find item in equipment")
 
-#Removing Equipment
 def RemoveEquip(item_name):
     '''Checks to see what equipment to remove
 
@@ -63,7 +61,6 @@ def RemoveEquip(item_name):
         else:
             print("ERROR: could not find item")
 
-#Inserting Item into equipment
 def EquipInsert(item_name):
     '''Equips a weapon or armor to the player
 
@@ -99,7 +96,6 @@ def EquipInsert(item_name):
     else:
         print("ERROR: Can't find item")
 
-#Asks the player which item in the inventory they want to equip and equips it
 def EquipEquipment():
     '''Menu for the player in order to equip armor and weapons'''
 
@@ -111,7 +107,6 @@ def EquipEquipment():
     else:
         print("ERROR: can not equip item from inventory")
 
-#Checks to see the type of the equipment
 def EquipTypeCheck(Etype):
     '''Checks the type of the equipment
 
@@ -125,7 +120,6 @@ def EquipTypeCheck(Etype):
             return True
     return False
 
-#Prints what the player has equiped
 def PrintEquip():
     '''Prints the players equipment'''
 

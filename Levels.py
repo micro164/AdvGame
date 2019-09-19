@@ -3,7 +3,6 @@ from Classes import Player
 from math import ceil
 from math import floor
 
-#Function for checking if the player can level up and to adjust the stats of the player
 def LevelUp():
     '''Checks if the player can reach a new level and then adds the stats to the player'''
 

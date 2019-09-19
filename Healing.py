@@ -1,9 +1,8 @@
 from Classes import Player
 
-#Function for healing facility for the game
 def Healer():
     '''Gives the player a choice to heal in exchange for gold'''
-    
+
     print("Welcome to the healer.\nWould you like to heal?")
     choice = input("Y/N\n")
     if Player.hp != Player.MaxHP and choice == 'Y' or choice == 'y':

@@ -2,7 +2,6 @@ from Classes import Player
 from Classes import Item
 import re
 
-#Checks if item is already equiped to player
 def EquipCheck(item_name):
     '''Checks if the player already has the item equiped
 
@@ -16,7 +15,6 @@ def EquipCheck(item_name):
             return True
     return False
 
-#Check if name is valid
 def NameCheck(name):
     '''Checks to see if the player has entered a valid Name
 
@@ -29,7 +27,6 @@ def NameCheck(name):
         Player.name = input()
         NameCheck(Player.name)
 
-#Checks if player has a healing item in inventory
 def CheckHealing():
     '''Checks to see if the player has a healing item in his inventory'''
 

@@ -8,7 +8,6 @@ from Drops import MonsterDrop
 from Death import Death
 import random
 
-#Player encounters a random monster
 def fight():
     '''Random battles in forest for player'''
 

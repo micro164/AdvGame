@@ -3,7 +3,6 @@ from Classes import Player
 from Checks import NameCheck
 from Equipment import EquipInsert
 
-#Game Intro
 def GameIntro():
     '''Introduction to the game'''
 
@@ -18,45 +17,12 @@ def GameIntro():
         print("1.Swordsman Class \n2.Wizard Class \n3.Rogue Class")
         choice = input()
 
-        #Choosing a class
         if choice == "1":
-            print("Welcome to the swordsman class\n")
-            Player.Pclass = 'swordsman'
-            Player.Strength = 10
-            Player.Defense = 10
-            Player.hp = 100
-            Player.MaxHP = 100
-            EquipInsert('sword')
-            InvenInsert('sword')
-            print("You have been given a sword.")
-            EquipInsert('bronze armor')
-            InvenInsert('bronze armor')
-            print("You have been given a bronze armor\n")
-            Intro()
+            AssignClass("swordsman", 10, 10, 100, 100, 'sword', 'bronze armor')
         elif choice == "2":
-            print("Welcome to the wizard class\n")
-            Player.Pclass = 'wizard'
-            Player.Strength = 5
-            Player.Defense = 3
-            Player.hp = 50
-            Player.MaxHP = 50
-            EquipInsert('wand')
-            print("You have been given a wand.")
-            EquipInsert('cloth armor')
-            print("You have been given a cloth armor\n")
-            Intro()
+            AssignClass("wizard", 5, 3, 50, 50, 'wand', 'cloth armor')
         elif choice == "3":
-            print("Welcome to the rogue class\n")
-            Player.Pclass = 'rouge'
-            Player.Strength = 7
-            Player.Defense = 5
-            Player.hp = 70
-            Player.MaxHP = 70
-            EquipInsert('dagger')
-            print("You have been given a dagger.")
-            EquipInsert('hard cloth armor')
-            print("You have been given a hard cloth armor.\n")
-            Intro()
+            AssignClass("rogue", 7, 5, 70, 70, 'dagger', 'hard cloth armor')
         else:
             print("Wrong choice")
             GameIntro()
@@ -65,7 +31,6 @@ def GameIntro():
     else:
         print("GameIntro went wrong!!")
 
-#Gives the player a potion to survive and an awsome introduction to the game
 def Intro():
     '''Another part to the game introduction'''
 
@@ -73,3 +38,29 @@ def Intro():
 
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
+
+def AssignClass(PlayerClass, str, dfs, hp, mHp, weapon, armor):
+    '''Assigning the players class and stats
+
+    Arguments:
+    PlayerClass - The class the player chose
+    str - Starting strength of the player
+    dfs - Starting defense of the player
+    hp - Starting hp of the player
+    mHp - Starting MaxHP of the player
+    weapon - Starting weapon of the player
+    armor - Starting armor of the player
+
+    '''
+
+    print("Welcome to the " + PlayerClass + " class\n")
+    Player.Pclass = PlayerClass
+    Player.Strength = str
+    Player.Defense = dfs
+    Player.hp = hp
+    Player.MaxHP = mHp
+    EquipInsert(weapon)
+    print("You have been given a " + weapon)
+    EquipInsert(armor)
+    print("You have been given a " + armor + ".\n")
+    Intro()

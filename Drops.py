@@ -4,7 +4,6 @@ from InventoryAndItems import InvenInsert
 from InventoryAndItems import ItemList
 from Classes import Player
 
-#Determines what type of item will be droped
 def MonsterDrop(Mlvl):
     '''Determines what type of item a monster will drop
 
@@ -35,7 +34,6 @@ def MonsterDrop(Mlvl):
     else:
         print("ERROR: Could not drop item.")
 
-#Function for randomly droping items when monster dies
 def Drop(Stype):
     '''Determines what items drop from the monster
 

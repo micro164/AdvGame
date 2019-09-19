@@ -42,7 +42,7 @@ def forest():
             DirectionsWent(choice)
 
             if randomPlace == False:
-                Quests() # TODO: Find a better place for this so after presenting the quest it doesn't go directly to battle
+                Quests()
 
                 if QuestInfo.InQuest == False:
                     rand = random.randrange(0,2)
