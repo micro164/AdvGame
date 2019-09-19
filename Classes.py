@@ -36,7 +36,7 @@ class enemy(object):
     MaxHP = 0
     questFight = False
 
-    def __init__(self, name, hp, attack, defense, exp, lvl, maxHp, questFight):
+    def __init__(self, name='', hp=0, attack=0, defense=0, exp=0, lvl=0, maxHp=0, questFight=False):
         super(enemy, self).__init__()
         self.name = name
         self.HP = hp

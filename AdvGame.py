@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
-#Author: Jonathon Bryant
-#Date Created: 9/22/17
-#Date Modified: 03/10/18
+#Author: Jonathon T. Bryant
 #This is a simple text based game created in the language of python
 
 from InventoryAndItems import ItemStats
