@@ -5,8 +5,8 @@ from Classes import Features
 from Classes import enemy
 from Battle import battle
 from Drops import QuestReward
-from InventoryAndItems import Items
-from InventoryAndItems import InvenInsert
+from Items import Items
+from Inventory import InvenInsert
 from helperUtilities import pause
 
 def FindTheCastle():

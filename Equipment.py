@@ -1,7 +1,7 @@
-from InventoryAndItems import InvenCheck
-from InventoryAndItems import ItemCheck
-from InventoryAndItems import Items
-from InventoryAndItems import InvenInsert
+from Inventory import InvenCheck
+from Items import ItemCheck
+from Items import Items
+from Inventory import InvenInsert
 from Checks import EquipCheck
 from Classes import Item
 from Classes import Player
@@ -17,7 +17,7 @@ def DeleteEquip(Etype):
 
     temp = EquipTypeCheck(Etype)
     if temp == True:
-        item_name = findItemName(Etype)
+        item_name = _findItemName(Etype)
 
         if Player.Equipment[item_name][Item.Type] == Etype and Player.Equipment[item_name][Item.count] > 0:
             Player.Strength -= Player.Equipment[item_name][Item.attack]
@@ -28,7 +28,7 @@ def DeleteEquip(Etype):
     else:
         print("ERROR: could not find item in equipment")
 
-def findItemName(Etype):
+def _findItemName(Etype):
     for key, value in list(Player.Equipment.items()):
         if value[Item.Type] == Etype:
             return key
@@ -76,7 +76,7 @@ def EquipInsert(item_name):
     Equiped = EquipCheck(item_name)
 
     if ItemExists == True and Equiped == False:
-        compareItemAndPlayerLevel(item_name)
+        _compareItemAndPlayerLevel(item_name)
     elif ItemExists == False:
         print("That is not an item")
     elif Equiped == True:
@@ -84,7 +84,7 @@ def EquipInsert(item_name):
     else:
         print("ERROR: Can't find item")
 
-def compareItemAndPlayerLevel(item_name):
+def _compareItemAndPlayerLevel(item_name):
     if Items[item_name][Item.lvl] <= Player.lvl:
         RemoveEquip(item_name)
 

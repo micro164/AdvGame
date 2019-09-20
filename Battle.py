@@ -12,7 +12,7 @@ import random
 EnemyOrPlayer = enum('PLAYER', 'ENEMY')
 ENEMYSTATS = enemy()
 
-def instantiateEnemyStats(Enemy):
+def _instantiateEnemyStats(Enemy):
     '''Initialize Enemy Stats'''
 
     ENEMYSTATS.name = Enemy.name
@@ -49,15 +49,15 @@ def buildEnemy():
 def battle(enemy):
     '''Encapsulates battle for forest and quest fight'''
 
-    instantiateEnemyStats(enemy)
-    enemyIntroduction()
-    battleLoop()
+    _instantiateEnemyStats(enemy)
+    _enemyIntroduction()
+    _battleLoop()
     print("")
-    lose()
-    win()
+    _lose()
+    _win()
     Death()
 
-def enemyIntroduction():
+def _enemyIntroduction():
     '''Introduction for the start of battle'''
 
     print("It's a " + ENEMYSTATS.name)
@@ -65,17 +65,17 @@ def enemyIntroduction():
     if ENEMYSTATS.questFight == True:
         QuestInfo.InQuest = True
 
-def getDamage(enemyOrPlayer):
+def _getDamage(enemyOrPlayer):
     '''Gets the damage for the player or enemy'''
 
     if enemyOrPlayer == EnemyOrPlayer.PLAYER:
-        damage = decideDamageCalc(Player.Strength, ENEMYSTATS.defense, enemyOrPlayer)
+        damage = _decideDamageCalc(Player.Strength, ENEMYSTATS.defense, enemyOrPlayer)
     else:
-        damage = decideDamageCalc(ENEMYSTATS.attack, Player.Defense, enemyOrPlayer)
+        damage = _decideDamageCalc(ENEMYSTATS.attack, Player.Defense, enemyOrPlayer)
 
     return 0 if damage < 0 else damage
 
-def decideDamageCalc(attack, defense, enemyOrPlayer):
+def _decideDamageCalc(attack, defense, enemyOrPlayer):
     '''Determining how to calculate the damage'''
 
     randAtk = random.randrange(attack)
@@ -86,21 +86,21 @@ def decideDamageCalc(attack, defense, enemyOrPlayer):
     else:
         return (randAtk + ENEMYSTATS.lvl) - (randDfs + (Player.lvl * 2))
 
-def battleLoop():
+def _battleLoop():
     '''Main loop for the battle'''
 
     while Player.hp > 0 and ENEMYSTATS.HP > 0:
-        Pdamage = getDamage(EnemyOrPlayer.PLAYER)
-        Edamage = getDamage(EnemyOrPlayer.ENEMY)
+        Pdamage = _getDamage(EnemyOrPlayer.PLAYER)
+        Edamage = _getDamage(EnemyOrPlayer.ENEMY)
 
-        playersTurn(Pdamage)
+        _playersTurn(Pdamage)
 
         if ENEMYSTATS.HP <= 0:
             break
 
-        enemysTurn(Edamage)
+        _enemysTurn(Edamage)
 
-def lose():
+def _lose():
     '''Losing state for player'''
 
     if Player.hp <= 0:
@@ -109,7 +109,7 @@ def lose():
         if ENEMYSTATS.questFight == True:
             QuestInfo.Win = False
 
-def win():
+def _win():
     '''Winning state for player'''
 
     if Player.hp > 0:
@@ -127,14 +127,14 @@ def win():
             else:
                 QuestInfo.MonstersKilled[ENEMYSTATS.name] = 1
 
-def playersTurn(Pdamage):
+def _playersTurn(Pdamage):
     '''Players turn to attack'''
 
     print("You hit the " + ENEMYSTATS.name + " for " + str(Pdamage) + " damage")
     ENEMYSTATS.HP -= Pdamage
     print(ENEMYSTATS.name + " now has " + str(ENEMYSTATS.HP) + " life left.")
 
-def enemysTurn(Edamage):
+def _enemysTurn(Edamage):
     '''Enemys turn to attack'''
 
     print(ENEMYSTATS.name + " hit you for " + str(Edamage) + " damage")

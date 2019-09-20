@@ -3,7 +3,7 @@
 #Author: Jonathon T. Bryant
 #This is a simple text based game created in the language of python
 
-from InventoryAndItems import ItemStats
+from Items import ItemStats
 from Player import DisplayPlayerInventory
 from Player import PlayerStats
 from Death import DeathCheck

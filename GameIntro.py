@@ -1,4 +1,4 @@
-from InventoryAndItems import InvenInsert
+from Inventory import InvenInsert
 from Classes import Player
 from Checks import NameCheck
 from Equipment import EquipInsert
@@ -18,11 +18,11 @@ def GameIntro():
         choice = input()
 
         if choice == "1":
-            AssignClass("swordsman", 10, 10, 100, 100, 'sword', 'bronze armor')
+            _AssignClass("swordsman", 10, 10, 100, 100, 'sword', 'bronze armor')
         elif choice == "2":
-            AssignClass("wizard", 5, 3, 50, 50, 'wand', 'cloth armor')
+            _AssignClass("wizard", 5, 3, 50, 50, 'wand', 'cloth armor')
         elif choice == "3":
-            AssignClass("rogue", 7, 5, 70, 70, 'dagger', 'hard cloth armor')
+            _AssignClass("rogue", 7, 5, 70, 70, 'dagger', 'hard cloth armor')
         else:
             print("Wrong choice")
             GameIntro()
@@ -39,7 +39,7 @@ def Intro():
     print("Now you are ready to go on an adventure. You will be able to travel")
     print("and collect awsome items and level up to your hearts content.\n")
 
-def AssignClass(PlayerClass, str, dfs, hp, mHp, weapon, armor):
+def _AssignClass(PlayerClass, str, dfs, hp, mHp, weapon, armor):
     '''Assigning the players class and stats
 
     Arguments:

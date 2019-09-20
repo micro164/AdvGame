@@ -1,7 +1,7 @@
 import random
 
-from InventoryAndItems import InvenInsert
-from InventoryAndItems import ItemList
+from Inventory import InvenInsert
+from Items import ItemList
 from Classes import Player
 
 def MonsterDrop(Mlvl):

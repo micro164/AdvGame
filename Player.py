@@ -1,8 +1,8 @@
 from Classes import Player
 from Equipment import PrintEquip
 from Equipment import EquipEquipment
-from InventoryAndItems import PrintInven
-from InventoryAndItems import UseItem
+from Inventory import PrintInven
+from Items import UseItem
 
 def PlayerStats():
     '''Displays the players stats'''
