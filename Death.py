@@ -15,12 +15,16 @@ def DeathCheck():
         Death()
 
 def checkHealingOptions(HealingItem):
+    '''Figures out which healing option the player has'''
+
     if bool(HealingItem) == False and Player.exp > 0:
         noMoneyHealing()
     elif Player.exp == 0 and bool(HealingItem) == False:
         noMoneyAndExpHealing()
 
 def noMoneyHealing():
+    '''Heals the player when they have no money'''
+
     print("Grim Reaper: 'You have no gold to heal yourself. Muhahaha'")
     print("Grim Reaper: 'I will take some experience from you in order to restore your life.'")
     print("")
@@ -28,8 +32,10 @@ def noMoneyHealing():
     if Player.exp < 0:
         Player.exp = 0
     Player.hp = Player.MaxHP
-
+    
 def noMoneyAndExpHealing():
+    '''Heals the player when they have no money or experience'''
+
     print("Grim Reaper: 'You have nothing so I will add to your Max Exp. to restore your life.'")
     print("")
     Player.MaxExp += 10 * Player.lvl

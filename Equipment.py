@@ -17,21 +17,21 @@ def DeleteEquip(Etype):
 
     temp = EquipTypeCheck(Etype)
     if temp == True:
-        item_name = ""
-        for key, value in list(Player.Equipment.items()):
-            if value[Item.Type] == Etype:
-                item_name = key
+        item_name = findItemName()
 
         if Player.Equipment[item_name][Item.Type] == Etype and Player.Equipment[item_name][Item.count] > 0:
             Player.Strength -= Player.Equipment[item_name][Item.attack]
             Player.Defense -= Player.Equipment[item_name][Item.defense]
             Player.MaxHP -= Player.Equipment[item_name][Item.HP]
-            # print("Before Insert: " + str(Player.Inventory[item_name]))
             InvenInsert(item_name)
-            # print("After Insert: " + str(Player.Inventory[item_name]))
             del Player.Equipment[item_name]
     else:
         print("ERROR: could not find item in equipment")
+
+def findItemName():
+    for key, value in list(Player.Equipment.items()):
+        if value[Item.Type] == Etype:
+            return key
 
 def RemoveEquip(item_name):
     '''Checks to see what equipment to remove
@@ -44,22 +44,25 @@ def RemoveEquip(item_name):
     if bool(Player.Equipment) != False:
         temp = ItemCheck(item_name)
         if temp == True:
-            if Player.Pclass == Items[item_name][Item.Pclass]:
-                if Items[item_name][Item.Type] == 'weapon' and EquipTypeCheck('weapon') == True:
-                    DeleteEquip('weapon')
-                elif Items[item_name][Item.Type] == 'armor' and EquipTypeCheck('armor') == True:
-                    DeleteEquip('armor')
-                else:
-                    return
-            elif Items[item_name][Item.Pclass] == 'healer':
-                print("\nERROR: can't equip healing item\n")
-            else:
-                print("ERROR: can't remove equipment")
-
+            checkItemClass(item_name)
         elif temp == False:
             print("This is not an item")
         else:
             print("ERROR: could not find item")
+
+checkItemClass(item_name):
+    if Player.Pclass == Items[item_name][Item.Pclass]:
+        checkEquipmentType(item_name)
+    elif Items[item_name][Item.Pclass] == 'healer':
+        print("\nERROR: can't equip healing item\n")
+    else:
+        print("ERROR: can't remove equipment")
+
+def checkEquipmentType(item_name):
+    if Items[item_name][Item.Type] == 'weapon' and EquipTypeCheck('weapon') == True:
+        DeleteEquip('weapon')
+    elif Items[item_name][Item.Type] == 'armor' and EquipTypeCheck('armor') == True:
+        DeleteEquip('armor')
 
 def EquipInsert(item_name):
     '''Equips a weapon or armor to the player
@@ -73,28 +76,31 @@ def EquipInsert(item_name):
     Equiped = EquipCheck(item_name)
 
     if ItemExists == True and Equiped == False:
-        if Items[item_name][Item.lvl] <= Player.lvl:
-            RemoveEquip(item_name)
-
-            if Player.Pclass == Items[item_name][Item.Pclass]:
-                kvPair = copy.deepcopy({item_name : Items[item_name]})
-                Player.Equipment[item_name] = {}
-                Player.Equipment.update(kvPair)
-                Player.Strength += Player.Equipment[item_name][Item.attack]
-                Player.Defense += Player.Equipment[item_name][Item.defense]
-                Player.MaxHP += Player.Equipment[item_name][Item.HP]
-                Player.Equipment[item_name][Item.count] += 1
-
-        elif Items[item_name][Item.lvl] > Player.lvl:
-            print("\nThis item can not be equiped at this level\n")
-        else:
-            print("ERROR: Can't equip weapon")
+        compareItemAndPlayerLevel(item_name)
     elif ItemExists == False:
         print("That is not an item")
     elif Equiped == True:
         print("\nYou already have this item equiped\n")
     else:
         print("ERROR: Can't find item")
+
+def compareItemAndPlayerLevel(item_name):
+    if Items[item_name][Item.lvl] <= Player.lvl:
+        RemoveEquip(item_name)
+
+        if Player.Pclass == Items[item_name][Item.Pclass]:
+            kvPair = copy.deepcopy({item_name : Items[item_name]})
+            Player.Equipment[item_name] = {}
+            Player.Equipment.update(kvPair)
+            Player.Strength += Player.Equipment[item_name][Item.attack]
+            Player.Defense += Player.Equipment[item_name][Item.defense]
+            Player.MaxHP += Player.Equipment[item_name][Item.HP]
+            Player.Equipment[item_name][Item.count] += 1
+
+    elif Items[item_name][Item.lvl] > Player.lvl:
+        print("\nThis item can not be equiped at this level\n")
+    else:
+        print("ERROR: Can't equip weapon")
 
 def EquipEquipment():
     '''Menu for the player in order to equip armor and weapons'''
