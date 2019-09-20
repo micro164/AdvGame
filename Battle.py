@@ -27,12 +27,15 @@ def instantiateEnemyStats(Enemy):
 def fight():
     '''Random battles in forest for player'''
 
+    battle(buildEnemy())
+
+def buildEnemy():
     temp = MonsterList()
     random.seed()
     key = random.choice(list(temp.items()))
     value = key[1]
 
-    instantiateEnemyStats(enemy(
+    return enemy(
         key[0],
         value[Monster.HP],
         value[Monster.attack],
@@ -41,16 +44,12 @@ def fight():
         value[Monster.lvl],
         value[Monster.MaxHP],
         False
-        ))
+        )
 
-    battle()
-
-def battle(enemy=None):
+def battle(enemy):
     '''Encapsulates battle for forest and quest fight'''
 
-    if enemy is not None:
-        instantiateEnemyStats(enemy)
-
+    instantiateEnemyStats(enemy)
     enemyIntroduction()
     battleLoop()
     print("")
@@ -89,6 +88,7 @@ def decideDamageCalc(attack, defense, enemyOrPlayer):
 
 def battleLoop():
     '''Main loop for the battle'''
+
     while Player.hp > 0 and ENEMYSTATS.HP > 0:
         Pdamage = getDamage(EnemyOrPlayer.PLAYER)
         Edamage = getDamage(EnemyOrPlayer.ENEMY)

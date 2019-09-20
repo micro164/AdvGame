@@ -6,7 +6,7 @@ from Battle import fight
 from Checks import CheckHealing
 from InventoryAndItems import InvenInsert
 from InventoryAndItems import ItemList
-from Quests import Quests
+from Quests.Quests import Quests
 from Death import Death
 import random
 
