@@ -17,7 +17,7 @@ def DeleteEquip(Etype):
 
     temp = EquipTypeCheck(Etype)
     if temp == True:
-        item_name = findItemName()
+        item_name = findItemName(Etype)
 
         if Player.Equipment[item_name][Item.Type] == Etype and Player.Equipment[item_name][Item.count] > 0:
             Player.Strength -= Player.Equipment[item_name][Item.attack]
@@ -28,7 +28,7 @@ def DeleteEquip(Etype):
     else:
         print("ERROR: could not find item in equipment")
 
-def findItemName():
+def findItemName(Etype):
     for key, value in list(Player.Equipment.items()):
         if value[Item.Type] == Etype:
             return key
@@ -50,7 +50,7 @@ def RemoveEquip(item_name):
         else:
             print("ERROR: could not find item")
 
-checkItemClass(item_name):
+def checkItemClass(item_name):
     if Player.Pclass == Items[item_name][Item.Pclass]:
         checkEquipmentType(item_name)
     elif Items[item_name][Item.Pclass] == 'healer':

@@ -8,7 +8,7 @@ from Player import DisplayPlayerInventory
 from Player import PlayerStats
 from Death import DeathCheck
 from Start import Start
-from Forest import forest
+from Forest.Forest import forest
 from Healing import Healer
 from Store import Store
 from Save import Exit
