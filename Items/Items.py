@@ -22,27 +22,31 @@ def UseItem():
     '''Allows the user to use an item'''
 
     print("Enter the name of the item to use")
-    item_name = input()
+    inputString = input()
+    split = str.split(inputString)
+    item_name = split[0]
+    amount = split[1] if len(split) == 2 else 1
+
     CheckItem = InvenCheck(item_name)
     if bool(CheckItem) == True:
-        _checkType(item_name)
+        _checkType(item_name, amount)
 
-def _checkType(item_name):
+def _checkType(item_name, amount):
     for key, value in list(Player.Inventory.items()):
         if key == item_name and value[Item.Type] == "item":
-            _adjustStats(value, item_name)
+            _adjustStats(value, item_name, amount)
         elif key == item_name and value[Item.Type] != "item":
             print("\nThis is not an item\n")
 
-def _adjustStats(value, item_name):
-    Player.Strength += value[Item.attack]
+def _adjustStats(value, item_name, amount):
+    Player.Strength += (value[Item.attack] * int(amount))
     print("\n+" + str(value[Item.attack]) + " attack")
 
-    Player.Defense += value[Item.defense]
+    Player.Defense += (value[Item.defense] * int(amount))
     print("+" + str(value[Item.defense]) + " defense")
 
     if Player.hp < Player.MaxHP:
-        Player.hp += value[Item.HP]
+        Player.hp += (value[Item.HP] * int(amount))
         print("+" + str(value[Item.HP]) + " HP\n")
 
     if Player.hp > Player.MaxHP:
@@ -52,12 +56,12 @@ def _adjustStats(value, item_name):
     print("Defense: " + str(Player.Defense))
     print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp) + "\n")
 
-    _changeItemCount(value, item_name)
+    _changeItemCount(value, item_name, amount)
 
 
-def _changeItemCount(value, item_name):
+def _changeItemCount(value, item_name, amount):
     if value[Item.count] > 1:
-        value[Item.count] -= 1
+        value[Item.count] -= amount
     elif value[Item.count] == 1:
         value[Item.count] -= 1
         del Player.Inventory[item_name]

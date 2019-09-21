@@ -27,9 +27,9 @@ def DisplayPlayerInventory():
     while choice != '4':
         PrintInven()
 
-        print("\n1. Equip a weapon or armor")
-        print("2. Use an item")
-        print("3. Exit")
+        Print("\n1. Equip a weapon or armor")
+        Print("2. Use an item")
+        Print("3. Exit")
 
         choice = input()
 

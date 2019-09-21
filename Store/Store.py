@@ -57,10 +57,10 @@ def Sell():
 
         for key, value in list(Player.Inventory.items()):
             if key == sell:
-                Igold = ceil((value[Item.price] * .8))
-                _sellItem(sell)
+                _sellItem(sell, key, value)
 
-def _sellItem(sell):
+def _sellItem(sell, key, value):
+    Igold = ceil((value[Item.price] * .8))
     if value[Item.count] > 1:
         Player.gold += Igold
         value[Item.count] -= 1
@@ -178,7 +178,7 @@ def AugmentItem(typeOfItem):
             accept = input()
 
             if accept == 'y' or accept == 'Y':
-                _checkAugmentGold(price)
+                _checkAugmentGold(price, typeOfItem, value)
             elif accept == 'n' or accept == 'N':
                 print("Thank you for coming\n")
             else:
@@ -192,23 +192,23 @@ def _calculateAugmentPrice(value):
 
     return value[Item.lvl] * int((cToInt / len(value[Item.Pclass])))
 
-def _checkAugmentGold(price):
+def _checkAugmentGold(price, typeOfItem, value):
     if Player.gold >= price:
         Player.gold = Player.gold - price
         if typeOfItem == 'weapon':
-            _augmentWeapon()
+            _augmentWeapon(value)
         if typeOfItem == 'armor':
-            _augmentArmor()
+            _augmentArmor(value)
     else:
         print("Not enough gold.\n")
 
-def _augmentWeapon():
+def _augmentWeapon(value):
     Player.Strength = Player.Strength - value[Item.attack]
     value[Item.attack] = value[Item.attack] + value[Item.lvl]
     Player.Strength = Player.Strength + value[Item.attack]
     print("Your weapon now has " + str(value[Item.attack]) + " attack\n")
 
-def _augmentArmor():
+def _augmentArmor(value):
     Player.Defense = Player.Defense - value[Item.defense]
     value[Item.defense] = value[Item.defense] + value[Item.lvl]
     Player.Defense = Player.Defense + value[Item.defense]

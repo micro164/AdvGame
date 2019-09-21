@@ -15,7 +15,6 @@ from Healing.Healing import Healer
 from Store.Store import Store
 from Quit.Save import Exit
 from Main.GameIntro import GameIntro
-from Utilities.HelperUtilities import PrintSlow
 
 def Choices():
     '''Gives the player all the choices for the game'''
