@@ -1,14 +1,15 @@
-from Classes import QuestInfo
-from Drops import QuestReward
-from helperUtilities import pause
+from Classes.Classes import QuestInfo
+from Battle.Drops import QuestReward
+from Utilities.HelperUtilities import pause
+from Utilities.HelperUtilities import PrintSlow
 
 def KillTheRats():
     '''Quest to kill 10 rats'''
 
     if QuestInfo.QuestNumber == 0:
         if QuestInfo.QuestSeen == False:
-            print("QUEST NAME: Kill The Rats\n")
-            print("The first quest on this journey is to kill 10 rats\n")
+            PrintSlow("QUEST NAME: Kill The Rats\n")
+            PrintSlow("The first quest on this journey is to kill 10 rats\n")
             QuestInfo.QuestSeen = True
             QuestInfo.InQuest = True
             pause()
@@ -28,8 +29,8 @@ def GoblinExtermination():
 
     if QuestInfo.QuestNumber == 1:
         if QuestInfo.QuestSeen == False:
-            print("QUEST NAME: Goblin Extermination\n")
-            print("Kill 10 goblins to complete the quest\n")
+            PrintSlow("QUEST NAME: Goblin Extermination\n")
+            PrintSlow("Kill 10 goblins to complete the quest\n")
             QuestInfo.QuestSeen = True
             QuestInfo.InQuest = True
             pause()

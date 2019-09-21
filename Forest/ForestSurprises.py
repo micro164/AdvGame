@@ -1,8 +1,6 @@
-from Classes import Directions
-from Classes import Features
-from Classes import Player
-from Inventory import InvenInsert
-from Items import ItemList
+from Classes.Classes import *
+from Player.Inventory import InvenInsert
+from Items.Items import ItemList
 import random
 
 def DublicateItem(choice):

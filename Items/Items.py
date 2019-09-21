@@ -1,7 +1,7 @@
-from ItemList import Items
-from Classes import Player
-from Classes import Item
-from Inventory import InvenCheck
+from Items.ItemList import Items
+from Classes.Classes import Player
+from Classes.Classes import Item
+from Player.Inventory import InvenCheck
 
 def ItemList(Stype):
     '''Gives a list of items that can be dropped from the monster
@@ -25,31 +25,44 @@ def UseItem():
     item_name = input()
     CheckItem = InvenCheck(item_name)
     if bool(CheckItem) == True:
-        for key, value in list(Player.Inventory.items()):
-            if key == item_name and value[Item.Type] == "item":
-                Player.Strength += value[Item.attack]
-                print("\n+" + str(value[Item.attack]) + " attack")
-                Player.Defense += value[Item.defense]
-                print("+" + str(value[Item.defense]) + " defense")
-                if Player.hp < Player.MaxHP:
-                    Player.hp += value[Item.HP]
-                    print("+" + str(value[Item.HP]) + " HP\n")
-                if Player.hp > Player.MaxHP:
-                    Player.hp = Player.MaxHP
+        _checkType(item_name)
 
-                print("Strength: " + str(Player.Strength))
-                print("Defense: " + str(Player.Defense))
-                print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp) + "\n")
+def _checkType(item_name):
+    for key, value in list(Player.Inventory.items()):
+        if key == item_name and value[Item.Type] == "item":
+            _adjustStats(value, item_name)
+        elif key == item_name and value[Item.Type] != "item":
+            print("\nThis is not an item\n")
 
-                if value[Item.count] > 1:
-                    value[Item.count] -= 1
-                elif value[Item.count] == 1:
-                    value[Item.count] -= 1
-                    del Player.Inventory[item_name]
-                else:
-                    print("ERROR: could not use item")
-            elif key == item_name and value[Item.Type] != "item":
-                print("\nThis is not an item\n")
+def _adjustStats(value, item_name):
+    Player.Strength += value[Item.attack]
+    print("\n+" + str(value[Item.attack]) + " attack")
+
+    Player.Defense += value[Item.defense]
+    print("+" + str(value[Item.defense]) + " defense")
+
+    if Player.hp < Player.MaxHP:
+        Player.hp += value[Item.HP]
+        print("+" + str(value[Item.HP]) + " HP\n")
+
+    if Player.hp > Player.MaxHP:
+        Player.hp = Player.MaxHP
+
+    print("Strength: " + str(Player.Strength))
+    print("Defense: " + str(Player.Defense))
+    print("HP: " + str(Player.MaxHP) + "/" + str(Player.hp) + "\n")
+
+    _changeItemCount(value, item_name)
+
+
+def _changeItemCount(value, item_name):
+    if value[Item.count] > 1:
+        value[Item.count] -= 1
+    elif value[Item.count] == 1:
+        value[Item.count] -= 1
+        del Player.Inventory[item_name]
+    else:
+        print("ERROR: could not use item")
 
 def ItemStats():
     '''Allows the user to see an items stats'''

@@ -1,5 +1,5 @@
-from Classes import Player
-from Checks import CheckHealing
+from Classes.Classes import Player
+from Utilities.Checks import CheckHealing
 
 def Death():
     '''Revives the player when there is no other way to gain hp'''
@@ -32,7 +32,7 @@ def noMoneyHealing():
     if Player.exp < 0:
         Player.exp = 0
     Player.hp = Player.MaxHP
-    
+
 def noMoneyAndExpHealing():
     '''Heals the player when they have no money or experience'''
 

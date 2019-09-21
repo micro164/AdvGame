@@ -2,17 +2,20 @@
 
 #Author: Jonathon T. Bryant
 #This is a simple text based game created in the language of python
+import sys
+sys.path.insert(1, '../')
 
-from Items import ItemStats
-from Player import DisplayPlayerInventory
-from Player import PlayerStats
-from Death import DeathCheck
-from Start import Start
+from Items.Items import ItemStats
+from Player.Player import DisplayPlayerInventory
+from Player.Player import PlayerStats
+from Battle.Death import DeathCheck
+from Main.Start import Start
 from Forest.Forest import forest
-from Healing import Healer
-from Store import Store
-from Save import Exit
-from GameIntro import GameIntro
+from Healing.Healing import Healer
+from Store.Store import Store
+from Quit.Save import Exit
+from Main.GameIntro import GameIntro
+from Utilities.HelperUtilities import PrintSlow
 
 def Choices():
     '''Gives the player all the choices for the game'''

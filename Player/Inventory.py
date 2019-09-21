@@ -1,7 +1,8 @@
-from Classes import Item
-from Classes import Player
-from Checks import EquipCheck
-from ItemList import Items
+from Classes.Classes import Item
+from Classes.Classes import Player
+from Utilities.Checks import EquipCheck
+from Items.ItemList import Items
+from Utilities.HelperUtilities import PrintSlow
 import copy
 
 def InvenInsert(item_name):
@@ -25,7 +26,7 @@ def PrintInven():
     '''Prints the players inventory'''
 
     for key, value in list(Player.Inventory.items()):
-        print(key + " X " + str(value[Item.count]))
+        PrintSlow(key + " X " + str(value[Item.count]), 0.05)
 
 def InvenCheck(item_name):
     '''Checks to see if an item is in the players inventory

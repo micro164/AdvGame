@@ -1,5 +1,5 @@
-from Classes import Player
-from Classes import Monster
+from Classes.Classes import Player
+from Classes.Classes import Monster
 
 #Stats for monsters
 # 0-HP, 1-attack, 2-defense, 3-exp, 4.lvl, 5.MaxHP

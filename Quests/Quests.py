@@ -1,4 +1,4 @@
-from Quests.introQuests import *
+from Quests.IntroQuests import *
 from Quests.FindTheCastle import FindTheCastle
 
 def Quests():

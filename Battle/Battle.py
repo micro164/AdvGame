@@ -1,12 +1,10 @@
-from Monsters import MonsterList
-from Classes import Player
-from Classes import Monster
-from Classes import enemy
-from Classes import QuestInfo
-from Levels import LevelUp
-from Drops import MonsterDrop
-from Death import Death
-from helperUtilities import enum
+from Battle.Monsters import MonsterList
+from Classes.Classes import *
+from Battle.Levels import LevelUp
+from Battle.Drops import MonsterDrop
+from Battle.Death import Death
+from Utilities.HelperUtilities import enum
+from Utilities.HelperUtilities import Print
 import random
 
 EnemyOrPlayer = enum('PLAYER', 'ENEMY')
@@ -113,12 +111,12 @@ def _win():
     '''Winning state for player'''
 
     if Player.hp > 0:
-        print("YOU WON!!!")
+        Print("YOU WON!!!", 0.3)
         exp = random.randrange(0, ENEMYSTATS.exp) + (ENEMYSTATS.lvl * 2)
         Player.exp += exp
-        print("You gained " + str(exp) + " exp")
+        Print("You gained " + str(exp) + " exp", 0.3)
         LevelUp()
-        print("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp))
+        Print("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp), 0.3)
         MonsterDrop(ENEMYSTATS.lvl)
 
         if ENEMYSTATS.questFight == False:
@@ -130,13 +128,13 @@ def _win():
 def _playersTurn(Pdamage):
     '''Players turn to attack'''
 
-    print("You hit the " + ENEMYSTATS.name + " for " + str(Pdamage) + " damage")
+    Print("You hit the " + ENEMYSTATS.name + " for " + str(Pdamage) + " damage")
     ENEMYSTATS.HP -= Pdamage
-    print(ENEMYSTATS.name + " now has " + str(ENEMYSTATS.HP) + " life left.")
+    Print(ENEMYSTATS.name + " now has " + str(ENEMYSTATS.HP) + " life left.")
 
 def _enemysTurn(Edamage):
     '''Enemys turn to attack'''
 
-    print(ENEMYSTATS.name + " hit you for " + str(Edamage) + " damage")
+    Print(ENEMYSTATS.name + " hit you for " + str(Edamage) + " damage")
     Player.hp -= Edamage
-    print("You have " + str(Player.hp) + " life left.")
+    Print("You have " + str(Player.hp) + " life left.")

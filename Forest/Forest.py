@@ -1,18 +1,19 @@
-from Classes import Player
-from Classes import Features
-from Classes import QuestInfo
-from Battle import fight
-from Checks import CheckHealing
+from Classes.Classes import *
+from Battle.Battle import fight
+from Utilities.Checks import CheckHealing
 from Quests.Quests import Quests
-from Forest.forestSurprises import *
-from Death import Death
+from Forest.ForestSurprises import *
+from Battle.Death import Death
+from Utilities.HelperUtilities import Print
+from Utilities.HelperUtilities import PrintSlow
+from time import sleep
 import random
 
 def ForestIntro():
     '''The introduction to entering the forest'''
 
     if Player.hp > 0:
-        print("Welcome to the forest!")
+        PrintSlow("Welcome to the forest!", 0.05)
     elif Player.hp <= 0:
         if Player.gold <= 0 and CheckHealing() == False:
             Death()
@@ -29,6 +30,7 @@ def forest():
     random.seed()
 
     while choice != "5" and Player.hp != 0:
+        sleep(0.5)
         print("1.up \n2.left \n3.right \n4.down \n5.exit")
         choice = input()
         print("")
@@ -57,14 +59,12 @@ def _randomEncounter():
     rand = random.randrange(0,2)
 
     if rand == 0:
-        print("A group of trees")
+        print("A group of trees\n")
     elif rand == 1:
-        print("You encountered a monster")
+        Print("You encountered a monster")
         fight()
     else:
         print("ERROR")
-
-
 
 def _DirectionsWent(choice):
     '''Keeps track of the last 5 directions the player went

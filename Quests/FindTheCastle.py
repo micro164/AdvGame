@@ -1,13 +1,9 @@
-from Classes import QuestInfo
-from Classes import Directions
-from Classes import Player
-from Classes import Features
-from Classes import enemy
-from Battle import battle
-from Drops import QuestReward
-from Items import Items
-from Inventory import InvenInsert
-from helperUtilities import pause
+from Classes.Classes import *
+from Battle.Battle import battle
+from Battle.Drops import QuestReward
+from Items.Items import Items
+from Player.Inventory import InvenInsert
+from Utilities.HelperUtilities import pause
 
 def FindTheCastle():
     '''Quest for finding and conquring a castle'''

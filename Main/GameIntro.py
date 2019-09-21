@@ -1,20 +1,22 @@
-from Inventory import InvenInsert
-from Classes import Player
-from Checks import NameCheck
-from Equipment import EquipInsert
+from Player.Inventory import InvenInsert
+from Classes.Classes import Player
+from Utilities.Checks import NameCheck
+from Player.Equipment import EquipInsert
+from Utilities.HelperUtilities import Print
+from Utilities.HelperUtilities import PrintSlow
 
 def GameIntro():
     '''Introduction to the game'''
 
     if Player.Pclass == "":
-        print("Welcome to TxtBasedAdv")
-        print("Please enter a name: ")
+        PrintSlow("Welcome to TxtBasedAdv")
+        PrintSlow("Please enter a name: ", 0.08)
         Player.name = input()
         NameCheck(Player.name)
-        print("Hello " + Player.name)
+        PrintSlow("Hello " + Player.name)
 
-        print("\nChoose your class")
-        print("1.Swordsman Class \n2.Wizard Class \n3.Rogue Class")
+        PrintSlow("\nChoose your class", 0.05)
+        PrintSlow("1.Swordsman Class \n2.Wizard Class \n3.Rogue Class", 0.05)
         choice = input()
 
         if choice == "1":
@@ -36,8 +38,8 @@ def Intro():
 
     InvenInsert('potion')
 
-    print("Now you are ready to go on an adventure. You will be able to travel")
-    print("and collect awsome items and level up to your hearts content.\n")
+    PrintSlow("Now you are ready to go on an adventure. You will be able to travel", 0.05)
+    PrintSlow("and collect awsome items and level up to your hearts content.", 0.05)
 
 def _AssignClass(PlayerClass, str, dfs, hp, mHp, weapon, armor):
     '''Assigning the players class and stats
@@ -53,14 +55,14 @@ def _AssignClass(PlayerClass, str, dfs, hp, mHp, weapon, armor):
 
     '''
 
-    print("Welcome to the " + PlayerClass + " class\n")
+    PrintSlow("\nWelcome to the " + PlayerClass + " class")
     Player.Pclass = PlayerClass
     Player.Strength = str
     Player.Defense = dfs
     Player.hp = hp
     Player.MaxHP = mHp
     EquipInsert(weapon)
-    print("You have been given a " + weapon)
+    Print("You have been given a " + weapon)
     EquipInsert(armor)
-    print("You have been given a " + armor + ".\n")
+    Print("You have been given a " + armor + ".\n")
     Intro()

@@ -1,10 +1,11 @@
-from Inventory import InvenCheck
-from Items import ItemCheck
-from Items import Items
-from Inventory import InvenInsert
-from Checks import EquipCheck
-from Classes import Item
-from Classes import Player
+from Player.Inventory import InvenCheck
+from Items.Items import ItemCheck
+from Items.Items import Items
+from Player.Inventory import InvenInsert
+from Utilities.Checks import EquipCheck
+from Classes.Classes import Item
+from Classes.Classes import Player
+from Utilities.HelperUtilities import Print
 import copy
 
 def DeleteEquip(Etype):
@@ -130,4 +131,4 @@ def PrintEquip():
     '''Prints the players equipment'''
 
     for key in Player.Equipment:
-        print(key)
+        Print(key)

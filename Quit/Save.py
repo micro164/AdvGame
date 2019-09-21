@@ -1,4 +1,4 @@
-from Classes import Player
+from Classes.Classes import Player
 
 try:
     import _pickle as pickle
@@ -9,7 +9,11 @@ except ImportError:
 def Exit():
     '''Saves the players stats'''
 
-    with open('PlayerFile.txt', 'w') as f:
+    playerFilePath = '../Player/PlayerFile.txt'
+    equipmentFilePath = '../Player/Equipment.txt'
+    inventoryFilePath = '../Player/Inventory.txt'
+
+    with open(playerFilePath, 'w') as f:
         f.write(Player.name + "\n")
         f.write(str(Player.MaxHP) + "\n")
         f.write(str(Player.hp) + "\n")
@@ -21,10 +25,10 @@ def Exit():
         f.write(str(Player.lvl) + "\n")
         f.write(Player.Pclass + "\n")
 
-    with open('Equipment.txt','wb') as f:
+    with open(equipmentFilePath,'wb') as f:
         pickle.dump(Player.Equipment, f)
 
-    with open('Inventory.txt','wb') as f:
+    with open(inventoryFilePath,'wb') as f:
         pickle.dump(Player.Inventory, f)
 
     return True

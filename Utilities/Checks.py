@@ -1,5 +1,5 @@
-from Classes import Player
-from Classes import Item
+from Classes.Classes import Player
+from Classes.Classes import Item
 import re
 
 def EquipCheck(item_name):
@@ -22,7 +22,7 @@ def NameCheck(name):
     name -- Name the player enetered
 
     '''
-    
+
     if bool(re.compile('[A-Z]', re.IGNORECASE).match(name)) == False:
         print("Name must start with a letter")
         Player.name = input()

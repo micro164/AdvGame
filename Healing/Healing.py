@@ -1,9 +1,10 @@
-from Classes import Player
+from Classes.Classes import Player
+from Utilities.HelperUtilities import PrintSlow
 
 def Healer():
     '''Gives the player a choice to heal in exchange for gold'''
 
-    print("Welcome to the healer.\nWould you like to heal?")
+    PrintSlow("Welcome to the healer.\nWould you like to heal?")
     choice = input("Y/N\n")
     if Player.hp != Player.MaxHP and choice == 'Y' or choice == 'y':
         _checkPlayerHealing()

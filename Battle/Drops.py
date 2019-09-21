@@ -1,8 +1,8 @@
 import random
 
-from Inventory import InvenInsert
-from Items import ItemList
-from Classes import Player
+from Player.Inventory import InvenInsert
+from Items.Items import ItemList
+from Classes.Classes import Player
 
 def MonsterDrop(Mlvl):
     '''Determines what type of item a monster will drop
