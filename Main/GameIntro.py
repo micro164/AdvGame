@@ -19,6 +19,7 @@ def game_intro():
 
         PrintSlow("\nChoose your class", 0.05)
         PrintSlow("1.Swordsman Class \n2.Wizard Class \n3.Rogue Class", 0.05)
+        Player.uniqueId = uuid.uuid1().int
         choice = input()
 
         if choice == "1":
@@ -31,7 +32,6 @@ def game_intro():
             print("Wrong choice")
             game_intro()
     elif Player.Pclass != "":
-        Player.uniqueId = uuid.uuid1().int
         intro()
     else:
         print("GameIntro went wrong!!")
