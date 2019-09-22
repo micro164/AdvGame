@@ -26,19 +26,19 @@ def FindTheCastle():
 
             print("The first opponent is a Guard of the castle")
             pause()
-            battle(enemy("Guard",20,10,8,200,5,20,True))
+            battle(Enemy("Guard", 20, 10, 8, 200, 5, 20, True))
 
             if QuestInfo.Win == True:
                 print("You have made it into the castle")
                 print("Now you have to fight a Knight")
                 pause()
-                battle(enemy("Knight",50,25,20,575,15,50,True))
+                battle(Enemy("Knight", 50, 25, 20, 575, 15, 50, True))
 
             if QuestInfo.Win == True:
                 print("You have passed the Knight")
                 print("Know you must fight the King to take the castle")
                 pause()
-                battle(enemy("King",100,50,50,1000,20,100,True))
+                battle(Enemy("King", 100, 50, 50, 1000, 20, 100, True))
 
             # TODO: Figure out why the Kings drop gets dublicated when equiped
             if QuestInfo.Win == True:

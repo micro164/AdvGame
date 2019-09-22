@@ -8,7 +8,7 @@ from Utilities.HelperUtilities import Print
 import random
 
 EnemyOrPlayer = enum('PLAYER', 'ENEMY')
-ENEMYSTATS = enemy()
+ENEMYSTATS = Enemy()
 
 def _instantiateEnemyStats(Enemy):
     '''Initialize Enemy Stats'''
@@ -33,7 +33,7 @@ def buildEnemy():
     key = random.choice(list(temp.items()))
     value = key[1]
 
-    return enemy(
+    return Enemy(
         key[0],
         value[Monster.HP],
         value[Monster.attack],

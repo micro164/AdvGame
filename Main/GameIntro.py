@@ -4,13 +4,15 @@ from Utilities.Checks import NameCheck
 from Player.Equipment import EquipInsert
 from Utilities.HelperUtilities import Print
 from Utilities.HelperUtilities import PrintSlow
+import uuid
 
-def GameIntro():
+
+def game_intro():
     '''Introduction to the game'''
 
     if Player.Pclass == "":
         PrintSlow("Welcome to TxtBasedAdv")
-        PrintSlow("Please enter a name: ", 0.08)
+        PrintSlow("Please enter a name: ", 0.05)
         Player.name = input()
         NameCheck(Player.name)
         PrintSlow("Hello " + Player.name)
@@ -20,28 +22,31 @@ def GameIntro():
         choice = input()
 
         if choice == "1":
-            _AssignClass("swordsman", 10, 10, 100, 100, 'sword', 'bronze armor')
+            _assign_class("swordsman", 10, 10, 100, 100, 'sword', 'bronze armor')
         elif choice == "2":
-            _AssignClass("wizard", 5, 3, 50, 50, 'wand', 'cloth armor')
+            _assign_class("wizard", 5, 3, 50, 50, 'wand', 'cloth armor')
         elif choice == "3":
-            _AssignClass("rogue", 7, 5, 70, 70, 'dagger', 'hard cloth armor')
+            _assign_class("rogue", 7, 5, 70, 70, 'dagger', 'hard cloth armor')
         else:
             print("Wrong choice")
-            GameIntro()
+            game_intro()
     elif Player.Pclass != "":
-        Intro()
+        intro()
     else:
         print("GameIntro went wrong!!")
 
-def Intro():
+
+def intro():
     '''Another part to the game introduction'''
 
+    Player.uniqueId = uuid.uuid1().int
     InvenInsert('potion')
 
     PrintSlow("Now you are ready to go on an adventure. You will be able to travel", 0.05)
     PrintSlow("and collect awsome items and level up to your hearts content.", 0.05)
 
-def _AssignClass(PlayerClass, str, dfs, hp, mHp, weapon, armor):
+
+def _assign_class(PlayerClass, str, dfs, hp, mHp, weapon, armor):
     '''Assigning the players class and stats
 
     Arguments:
@@ -65,4 +70,4 @@ def _AssignClass(PlayerClass, str, dfs, hp, mHp, weapon, armor):
     Print("You have been given a " + weapon)
     EquipInsert(armor)
     Print("You have been given a " + armor + ".\n")
-    Intro()
+    intro()

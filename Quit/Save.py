@@ -6,14 +6,14 @@ except ImportError:
     print("Can't save without the _pickle import")
 
 
-def Exit():
+def exit_and_save():
     '''Saves the players stats'''
 
-    playerFilePath = '../Player/PlayerFile.txt'
-    equipmentFilePath = '../Player/Equipment.txt'
-    inventoryFilePath = '../Player/Inventory.txt'
+    player_file_path = '../Player/PlayerFile.txt'
+    equipment_file_path = '../Player/Equipment.txt'
+    inventory_file_path = '../Player/Inventory.txt'
 
-    with open(playerFilePath, 'w') as f:
+    with open(player_file_path, 'w') as f:
         f.write(Player.name + "\n")
         f.write(str(Player.MaxHP) + "\n")
         f.write(str(Player.hp) + "\n")
@@ -25,10 +25,10 @@ def Exit():
         f.write(str(Player.lvl) + "\n")
         f.write(Player.Pclass + "\n")
 
-    with open(equipmentFilePath,'wb') as f:
+    with open(equipment_file_path, 'wb') as f:
         pickle.dump(Player.Equipment, f)
 
-    with open(inventoryFilePath,'wb') as f:
+    with open(inventory_file_path, 'wb') as f:
         pickle.dump(Player.Inventory, f)
 
     return True

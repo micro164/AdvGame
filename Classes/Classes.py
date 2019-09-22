@@ -1,6 +1,7 @@
 from enum import IntEnum
 from enum import Enum
 
+
 class Player:
     '''Player Class'''
     name = ""
@@ -15,6 +16,24 @@ class Player:
     Pclass = ""
     Inventory = dict()
     Equipment = dict()
+    uniqueId = 0
+
+    def __init__(self, player):
+        super(player, self).__init__()
+        self.name = player.name
+        self.MaxHP = player.MaxHP
+        self.hp = player.hp
+        self.Strength = player.Strength
+        self.Defense = player.Defense
+        self.gold = player.gold
+        self.MaxExp = player.MaxExp
+        self.exp = player.exp
+        self.lvl = player.lvl
+        self.Pclass = player.Pclass
+        self.Inventory = dict()
+        self.Equipment = dict()
+        self.uniqueId = player.uniqueId
+
 
 class Monster(IntEnum):
     '''Monster Class'''
@@ -25,7 +44,8 @@ class Monster(IntEnum):
     lvl = 4
     MaxHP = 5
 
-class enemy(object):
+
+class Enemy(object):
     """Enemy class"""
     name = ""
     HP = 0
@@ -37,7 +57,7 @@ class enemy(object):
     questFight = False
 
     def __init__(self, name='', hp=0, attack=0, defense=0, exp=0, lvl=0, maxHp=0, questFight=False):
-        super(enemy, self).__init__()
+        super(Enemy, self).__init__()
         self.name = name
         self.HP = hp
         self.attack = attack
@@ -46,6 +66,7 @@ class enemy(object):
         self.lvl = lvl
         self.MaxHP = maxHp
         self.questFight = questFight
+
 
 class Item(IntEnum):
     '''Item Class'''
@@ -58,6 +79,7 @@ class Item(IntEnum):
     count = 6
     lvl = 7
 
+
 class Directions(Enum):
     '''Directions Class'''
     UP = '1'
@@ -65,10 +87,12 @@ class Directions(Enum):
     RIGHT = '3'
     DOWN = '4'
 
+
 class Features():
     '''Features Class'''
     choiceList = []
     LastDirections = []
+
 
 class QuestInfo():
     '''QuestInfo Class'''
