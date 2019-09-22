@@ -30,7 +30,7 @@ def get_player_list():
 		sending = pickle.dumps(new_player)
 		server.send(sending)
 		message = server.recv(1024)
-		new_list = pickle.loads(message)
+		new_list.append(pickle.loads(message))
 		server.close()
 	except:
 		print("Server Can't be reached.")

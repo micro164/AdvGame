@@ -18,7 +18,6 @@ class Player:
     Inventory = dict()
     Equipment = dict()
 
-
     def __init__(self, player):
         super(player, self).__init__()
         self.name = player.name

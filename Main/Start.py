@@ -9,14 +9,14 @@ except ImportError:
 def Start():
     '''Loads in the players stats when the game is opened'''
 
-    playerFilePath = '../Player/PlayerFile.txt'
-    equipmentFilePath = '../Player/Equipment.txt'
-    inventoryFilePath = '../Player/Inventory.txt'
+    player_file_path = '../Player/PlayerFile.txt'
+    equipment_file_path = '../Player/Equipment.txt'
+    inventory_file_path = '../Player/Inventory.txt'
 
-    if os.path.isfile(playerFilePath):
-        if os.stat(playerFilePath).st_size != 0:
+    if os.path.isfile(player_file_path):
+        if os.stat(player_file_path).st_size != 0:
 
-            with open(playerFilePath) as f:
+            with open(player_file_path) as f:
                 Player.name = f.readline()
                 Player.MaxHP = f.readline()
                 Player.hp = f.readline()
@@ -41,12 +41,12 @@ def Start():
             Player.Pclass = Player.Pclass.strip('\n')
             Player.uniqueId = int(Player.uniqueId)
 
-    if os.path.isfile(equipmentFilePath):
-        if os.stat(equipmentFilePath).st_size != 0:
-            with open(equipmentFilePath, 'rb') as f:
+    if os.path.isfile(equipment_file_path):
+        if os.stat(equipment_file_path).st_size != 0:
+            with open(equipment_file_path, 'rb') as f:
                 Player.Equipment = pickle.load(f)
 
-    if os.path.isfile(inventoryFilePath):
-        if os.stat(inventoryFilePath).st_size != 0:
-            with open(inventoryFilePath, 'rb') as f:
+    if os.path.isfile(inventory_file_path):
+        if os.stat(inventory_file_path).st_size != 0:
+            with open(inventory_file_path, 'rb') as f:
                 Player.Inventory = pickle.load(f)
