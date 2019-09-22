@@ -14,9 +14,10 @@ class Player:
     exp = 0
     lvl = 1
     Pclass = ""
+    uniqueId = 0
     Inventory = dict()
     Equipment = dict()
-    uniqueId = 0
+
 
     def __init__(self, player):
         super(player, self).__init__()
@@ -30,9 +31,9 @@ class Player:
         self.exp = player.exp
         self.lvl = player.lvl
         self.Pclass = player.Pclass
+        self.uniqueId = player.uniqueId
         self.Inventory = dict()
         self.Equipment = dict()
-        self.uniqueId = player.uniqueId
 
 
 class Monster(IntEnum):

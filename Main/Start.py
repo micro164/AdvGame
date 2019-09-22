@@ -27,6 +27,7 @@ def Start():
                 Player.exp = f.readline()
                 Player.lvl = f.readline()
                 Player.Pclass = f.readline()
+                Player.uniqueId = f.readline()
 
             Player.name = Player.name.strip('\n')
             Player.MaxHP = int(Player.MaxHP)
@@ -38,6 +39,7 @@ def Start():
             Player.exp = int(Player.exp)
             Player.lvl = int(Player.lvl)
             Player.Pclass = Player.Pclass.strip('\n')
+            Player.uniqueId = int(Player.uniqueId)
 
     if os.path.isfile(equipmentFilePath):
         if os.stat(equipmentFilePath).st_size != 0:

@@ -24,6 +24,7 @@ def exit_and_save():
         f.write(str(Player.exp) + "\n")
         f.write(str(Player.lvl) + "\n")
         f.write(Player.Pclass + "\n")
+        f.write(str(Player.uniqueId) + "\n")
 
     with open(equipment_file_path, 'wb') as f:
         pickle.dump(Player.Equipment, f)
