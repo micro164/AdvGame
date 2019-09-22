@@ -31,6 +31,7 @@ def game_intro():
             print("Wrong choice")
             game_intro()
     elif Player.Pclass != "":
+        Player.uniqueId = uuid.uuid1().int
         intro()
     else:
         print("GameIntro went wrong!!")
@@ -39,7 +40,6 @@ def game_intro():
 def intro():
     '''Another part to the game introduction'''
 
-    Player.uniqueId = uuid.uuid1().int
     InvenInsert('potion')
 
     PrintSlow("Now you are ready to go on an adventure. You will be able to travel", 0.05)
