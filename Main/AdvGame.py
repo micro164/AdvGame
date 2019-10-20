@@ -6,13 +6,13 @@
 import sys
 sys.path.insert(1, '../')
 
-from Items.Items import ItemStats
+from Items.Items import item_stats
 from Player.Player import DisplayPlayerInventory
 from Player.Player import PlayerStats
-from Battle.Death import DeathCheck
-from Main.Start import Start
+from Battle.Death import death_check
+from Main.Start import start
 from Forest.Forest import forest
-from Healing.Healing import Healer
+from Healing.Healing import healer
 from Store.Store import Store
 from Quit.Save import exit_and_save
 from Main.GameIntro import game_intro
@@ -23,7 +23,7 @@ def choices():
     """Gives the player all the choices for the game"""
     stop = False
     while not stop:
-        DeathCheck()
+        death_check()
         print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Inventory")
         print("5.Item Stats \n6.Store \n7.Battle Arena \n8.Exit")
         choice = input()
@@ -31,13 +31,13 @@ def choices():
         if choice == "1":
             forest()
         elif choice == "2":
-            Healer()
+            healer()
         elif choice == "3":
             PlayerStats()
         elif choice == "4":
             DisplayPlayerInventory()
         elif choice == "5":
-            ItemStats()
+            item_stats()
         elif choice == "6":
             Store()
         elif choice == "7":
@@ -50,7 +50,7 @@ def choices():
 
 def main():
     '''Main Game Function'''
-    Start()
+    start()
     game_intro()
     choices()
 

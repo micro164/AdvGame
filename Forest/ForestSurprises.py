@@ -1,69 +1,67 @@
 from Classes.Classes import *
-from Player.Inventory import InvenInsert
-from Items.Items import ItemList
+from Player.Inventory import inventory_insert
+from Items.Items import item_list
 import random
 
-def DublicateItem(choice):
-    '''Dubplicates an item in the players Inventory when the correct sequence is pushed
+
+def duplicate_item(choice):
+    """Duplicates an item in the players Inventory when the correct sequence is pushed
 
     Arguments:
     choice -- The direction that the player chooses
 
-    '''
+    """
 
-    dublicationCheck = [Directions.LEFT.value, Directions.LEFT.value, Directions.UP.value, Directions.RIGHT.value, Directions.DOWN.value]
+    duplication_check = [Directions.LEFT.value, Directions.LEFT.value, Directions.UP.value, Directions.RIGHT.value, Directions.DOWN.value]
 
-    ## QUESTION: Why do I have choiceList and LastDirections
+    # QUESTION: Why do I have choiceList and LastDirections
     Features.choiceList.append(choice)
 
     if len(Features.choiceList) == 5:
-        if Features.choiceList == dublicationCheck:
-            InvenInsert(list(Player.Inventory.keys())[random.randrange(0, len(list(Player.Inventory.keys())))])
+        if Features.choiceList == duplication_check:
+            inventory_insert(list(Player.Inventory.keys())[random.randrange(0, len(list(Player.Inventory.keys())))])
         Features.choiceList.clear()
 
-def randomSpot(choice):
-    '''Determines if player gets random item, gold, or healing based on directions
 
-    Arguments:
-    choice -- The direction the player chooses
-
-    '''
-
+def random_spot():
     if len(Features.LastDirections) == 5:
-        randDir = []
+        rand_dir = []
 
         for i in range(0, 5):
-            randDir.append(str(random.randrange(1, 5)))
+            rand_dir.append(str(random.randrange(1, 5)))
 
-        if Features.LastDirections == randDir:
+        if Features.LastDirections == rand_dir:
             rand = random.randrange(0,3)
 
             if rand == 0:
-                _foundItem()
+                _found_item()
             elif rand == 1:
-                _foundGold()
+                _found_gold()
             elif rand == 2:
-                _foundLife()
+                _found_life()
 
             return True
     return False
 
-def _foundItem():
+
+def _found_item():
     print("You found an item")
-    itemGained = random.choice(list(ItemList('weapon')))
-    InvenInsert(itemGained)
-    print("A " + itemGained + " was added to your inventory.\n")
+    item_gained = random.choice(list(item_list('weapon')))
+    inventory_insert(item_gained)
+    print("A " + item_gained + " was added to your inventory.\n")
 
-def _foundGold():
+
+def _found_gold():
     print("You found some gold")
-    randNum = 0
+    rand_num = 0
     for char in Player.name:
-        randNum += ord(char)
-    goldGained = (Player.lvl * random.randrange(0, randNum)) + Player.lvl
-    Player.gold += goldGained
-    print(str(goldGained) + " gold was gained.\n")
+        rand_num += ord(char)
+    gold_gained = (Player.lvl * random.randrange(0, rand_num)) + Player.lvl
+    Player.gold += gold_gained
+    print(str(gold_gained) + " gold was gained.\n")
 
-def _foundLife():
+
+def _found_life():
     print("You found a fountain of life")
     if Player.hp != Player.MaxHP:
         perc = random.randint(1, 11)/100

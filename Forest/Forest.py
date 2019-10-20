@@ -1,9 +1,9 @@
 from Classes.Classes import *
 from Battle.Battle import fight
-from Utilities.Checks import CheckHealing
+from Utilities.Checks import check_healing
 from Quests.Quests import Quests
 from Forest.ForestSurprises import *
-from Battle.Death import Death
+from Battle.Death import death
 from Utilities.HelperUtilities import Print
 from Utilities.HelperUtilities import PrintSlow
 from time import sleep
@@ -16,8 +16,8 @@ def ForestIntro():
 	if Player.hp > 0:
 		PrintSlow("Welcome to the forest!", 0.05)
 	elif Player.hp <= 0:
-		if Player.gold <= 0 and CheckHealing() == False:
-			Death()
+		if Player.gold <= 0 and check_healing() == False:
+			death()
 		else:
 			print("You do not have enough hp to fight.")
 	else:
@@ -46,8 +46,8 @@ def forest():
 
 
 def _movePlayer(choice):
-	DublicateItem(choice)
-	randomPlace = randomSpot(choice)
+	duplicate_item(choice)
+	randomPlace = random_spot(choice)
 	_DirectionsWent(choice)
 
 	if randomPlace == False:

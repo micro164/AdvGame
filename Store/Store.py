@@ -1,9 +1,9 @@
 from Items.Items import Items
-from Items.Items import ItemCheck
-from Player.Inventory import PrintInven
-from Player.Inventory import InvenInsert
+from Items.Items import item_check
+from Player.Inventory import print_inventory
+from Player.Inventory import inventory_insert
 from Player.Equipment import EquipInsert
-from Utilities.Checks import EquipCheck
+from Utilities.Checks import equip_check
 from Classes.Classes import Item
 from Classes.Classes import Player
 from math import ceil
@@ -50,7 +50,7 @@ def Sell():
 
     sell = ""
     while sell != "exit":
-        PrintInven()
+        print_inventory()
         PrintSlow("\nWhat item do you want to sell from your inventory?", 0.05)
         print("Type exit to go back")
         sell = input()
@@ -67,7 +67,7 @@ def _sellItem(sell, key, value):
         print(value[Item.count])
         print("\nYou gained " + str(Igold) + " gold.\n")
     elif value[Item.count] == 1:
-        if EquipCheck(key) == False:
+        if equip_check(key) == False:
             Player.gold += Igold
             value[Item.count] -= 1
             print("\nYou gained " + str(Igold) + " gold.\n")
@@ -92,7 +92,7 @@ def Mbuy(Stype):
     if item_name == 'no':
         print("\nThank you for shopping with us\n")
     elif item_name != 'no':
-        if ItemCheck(item_name) == True:
+        if item_check(item_name) == True:
             _checkGold(item_name)
         else:
             print("\nERROR: can't buy item\n")
@@ -111,7 +111,7 @@ def _checkItemType(item_name):
         _decideEquip(item_name)
     elif ItemType == 'item':
         print("Item put in your inventory.\n")
-        InvenInsert(item_name)
+        inventory_insert(item_name)
     else:
         print("\nERROR: Something went wrong with buying item\n")
 
@@ -121,14 +121,14 @@ def _decideEquip(item_name):
     if choice == 'yes':
         _equipItem(item_name)
     elif choice == 'no':
-        InvenInsert(item_name)
+        inventory_insert(item_name)
     else:
         print("\nERROR: Could not put away or equip " + item_name + "\n")
 
 def _equipItem(item_name):
     EquipInsert(item_name)
     if Items[item_name][Item.lvl] > Player.lvl:
-        InvenInsert(item_name)
+        inventory_insert(item_name)
         print("The item has been put in your inventory\n")
 
 def PrintStore(Stype):

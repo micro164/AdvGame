@@ -24,9 +24,12 @@ def get_player_list():
 	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	host = 'gk\x97a\x95l\x9a\x92\x93cj'
 	actual_host = _decode(secretKey, host)
+	tempHost = socket.gethostbyname('advgame.ddns.net')
 	port = 8080
 	try:
-		server.connect((actual_host, port))
+		print(tempHost)
+		server.connect((tempHost, port))
+		print("connected")
 		sending = pickle.dumps(new_player)
 		server.send(sending)
 		message = server.recv(1024)

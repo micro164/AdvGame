@@ -1,81 +1,85 @@
 import random
 
-from Player.Inventory import InvenInsert
-from Items.Items import ItemList
+from Player.Inventory import inventory_insert
+from Items.Items import item_list
 from Classes.Classes import Player
 
-def MonsterDrop(Mlvl):
-    '''Determines what type of item a monster will drop
+
+def monster_drop(Mlvl):
+    """Determines what type of item a monster will drop
 
     Arguments:
     Mlvl - The level of the monster
 
-    '''
+    """
 
     random.seed()
     chance = random.random()
 
-    if chance > 0.5 and chance < 0.7:
-        Drop('item')
-    elif chance >= 0.7 and chance < 0.8:
+    if 0.5 < chance < 0.7:
+        drop('item')
+    elif 0.7 <= chance < 0.8:
         chance2 = random.random()
         if chance2 < 0.5:
-            Drop('armor')
+            drop('armor')
         elif chance2 >= 0.5:
-            Drop('weapon')
+            drop('weapon')
         else:
             print("ERROR: could not drop weapon/armor")
     elif chance >= 0.8:
-        GoldGained = random.randrange(0, Mlvl * 10) + 10
-        print("The monster droped " + str(GoldGained) + " gold.\n")
-        Player.gold += GoldGained
+        gold_gained = random.randrange(0, Mlvl * 10) + 10
+        print("The monster dropped " + str(gold_gained) + " gold.\n")
+        Player.gold += gold_gained
     elif chance <= 0.5:
         print("The monster did not drop anything.\n")
     else:
         print("ERROR: Could not drop item.")
 
-def Drop(Stype):
-    '''Determines what items drop from the monster
+
+def drop(item_type):
+    """Determines what items drop from the monster
 
     Arguments:
-    Stype -- The type of the item being dropped
+    item_type -- The type of the item being dropped
 
-    '''
+    """
 
     random.seed()
-    temp = ItemList(Stype)
+    temp = item_list(item_type)
     key = random.choice(list(temp.items()))
-    InvenInsert(key[0])
-    print("The monster droped a " + key[0] + ". It has been put in your inventory.\n")
+    inventory_insert(key[0])
+    print("The monster dropped a " + key[0] + ". It has been put in your inventory.\n")
 
-def QuestDrop(Stype):
-    '''Determines what quest reward will be
+
+def quest_drop(item_type):
+    """Determines what quest reward will be
 
     Arguments:
-    Stype -- The type of the item being dropped
+    item_type -- The type of the item being dropped
 
-    '''
+    """
 
     random.seed()
-    iList = ItemList(Stype)
-    item = random.choice(list(iList.items()))
-    InvenInsert(item[0])
+    i_list = item_list(item_type)
+    item = random.choice(list(i_list.items()))
+    inventory_insert(item[0])
     print("You got a " + item[0] + " for you efforts. It has been put in your inventory.\n")
 
-def QuestReward():
-    '''Determines the reward for completing the quest'''
+
+def quest_reward():
+    """Determines the reward for completing the quest"""
 
     random.seed()
     chance = random.random()
 
-    if chance > 0 and chance < 0.5:
-        QuestDrop('item')
-    elif chance >= 0.5 and chance < 1:
+    if 0 < chance < 0.5:
+        quest_drop('item')
+    elif 0.5 <= chance < 1:
         chance2 = random.random()
         if chance2 < 0.5:
-            QuestDrop('armor')
+            quest_drop('armor')
         elif chance2 >= 0.5:
-            QuestDrop('weapon')
+            quest_drop('weapon')
         else:
             print("ERROR: could not drop weapon/armor")
     else:

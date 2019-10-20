@@ -3,7 +3,7 @@ from enum import Enum
 
 
 class Player:
-    '''Player Class'''
+    """Player Class"""
     name = ""
     MaxHP = 0
     hp = 0
@@ -36,7 +36,7 @@ class Player:
 
 
 class Monster(IntEnum):
-    '''Monster Class'''
+    """Monster Class"""
     HP = 0
     attack = 1
     defense = 2
@@ -56,7 +56,7 @@ class Enemy(object):
     MaxHP = 0
     questFight = False
 
-    def __init__(self, name='', hp=0, attack=0, defense=0, exp=0, lvl=0, maxHp=0, questFight=False):
+    def __init__(self, name='', hp=0, attack=0, defense=0, exp=0, lvl=0, max_hp=0, quest_fight=False):
         super(Enemy, self).__init__()
         self.name = name
         self.HP = hp
@@ -64,12 +64,12 @@ class Enemy(object):
         self.defense = defense
         self.exp = exp
         self.lvl = lvl
-        self.MaxHP = maxHp
-        self.questFight = questFight
+        self.MaxHP = max_hp
+        self.questFight = quest_fight
 
 
 class Item(IntEnum):
-    '''Item Class'''
+    """Item Class"""
     attack = 0
     defense = 1
     price = 2
@@ -81,7 +81,7 @@ class Item(IntEnum):
 
 
 class Directions(Enum):
-    '''Directions Class'''
+    """Directions Class"""
     UP = '1'
     LEFT = '2'
     RIGHT = '3'
@@ -89,13 +89,13 @@ class Directions(Enum):
 
 
 class Features():
-    '''Features Class'''
+    """Features Class"""
     choiceList = []
     LastDirections = []
 
 
 class QuestInfo():
-    '''QuestInfo Class'''
+    """QuestInfo Class"""
     MonstersKilled = dict()
     QuestNumber = 0
     QuestSeen = False

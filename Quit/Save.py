@@ -7,7 +7,7 @@ except ImportError:
 
 
 def exit_and_save():
-    '''Saves the players stats'''
+    """Saves the players stats"""
 
     player_file_path = '../Player/PlayerFile.txt'
     equipment_file_path = '../Player/Equipment.txt'

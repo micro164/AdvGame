@@ -1,8 +1,8 @@
-from Player.Inventory import InvenCheck
-from Items.Items import ItemCheck
+from Player.Inventory import inventory_check
+from Items.Items import item_check
 from Items.Items import Items
-from Player.Inventory import InvenInsert
-from Utilities.Checks import EquipCheck
+from Player.Inventory import inventory_insert
+from Utilities.Checks import equip_check
 from Classes.Classes import Item
 from Classes.Classes import Player
 from Utilities.HelperUtilities import Print
@@ -24,7 +24,7 @@ def DeleteEquip(Etype):
             Player.Strength -= Player.Equipment[item_name][Item.attack]
             Player.Defense -= Player.Equipment[item_name][Item.defense]
             Player.MaxHP -= Player.Equipment[item_name][Item.HP]
-            InvenInsert(item_name)
+            inventory_insert(item_name)
             del Player.Equipment[item_name]
     else:
         print("ERROR: could not find item in equipment")
@@ -43,7 +43,7 @@ def RemoveEquip(item_name):
     '''
 
     if bool(Player.Equipment) != False:
-        temp = ItemCheck(item_name)
+        temp = item_check(item_name)
         if temp == True:
             checkItemClass(item_name)
         elif temp == False:
@@ -73,8 +73,8 @@ def EquipInsert(item_name):
 
     '''
 
-    ItemExists = ItemCheck(item_name)
-    Equiped = EquipCheck(item_name)
+    ItemExists = item_check(item_name)
+    Equiped = equip_check(item_name)
 
     if ItemExists == True and Equiped == False:
         _compareItemAndPlayerLevel(item_name)
@@ -108,7 +108,7 @@ def EquipEquipment():
 
     print("Enter the name of the weapon/armor")
     Equip = input()
-    CheckItem = InvenCheck(Equip)
+    CheckItem = inventory_check(Equip)
     if bool(CheckItem) == True:
         EquipInsert(Equip)
     else:

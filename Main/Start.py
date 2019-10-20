@@ -6,8 +6,9 @@ try:
 except ImportError:
     print("Can't open saved file without _pickle import")
 
-def Start():
-    '''Loads in the players stats when the game is opened'''
+
+def start():
+    """Loads in the players stats when the game is opened"""
 
     player_file_path = '../Player/PlayerFile.txt'
     equipment_file_path = '../Player/Equipment.txt'

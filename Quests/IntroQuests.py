@@ -1,5 +1,5 @@
 from Classes.Classes import QuestInfo
-from Battle.Drops import QuestReward
+from Battle.Drops import quest_reward
 from Utilities.HelperUtilities import pause
 from Utilities.HelperUtilities import PrintSlow
 
@@ -21,7 +21,7 @@ def KillTheRats():
                 QuestInfo.QuestNumber = QuestInfo.QuestNumber + 1
                 QuestInfo.QuestSeen = False
                 QuestInfo.InQuest = True
-                QuestReward()
+                quest_reward()
                 pause()
 
 def GoblinExtermination():
@@ -42,5 +42,5 @@ def GoblinExtermination():
                 QuestInfo.QuestNumber = QuestInfo.QuestNumber + 1
                 QuestInfo.QuestSeen = False
                 QuestInfo.InQuest = True
-                QuestReward()
+                quest_reward()
                 pause()

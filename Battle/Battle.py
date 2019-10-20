@@ -1,8 +1,8 @@
-from Battle.Monsters import MonsterList
+from Battle.Monsters import monster_list
 from Classes.Classes import *
-from Battle.Levels import LevelUp
-from Battle.Drops import MonsterDrop
-from Battle.Death import Death
+from Battle.Levels import level_up
+from Battle.Drops import monster_drop
+from Battle.Death import death
 from Utilities.HelperUtilities import enum
 from Utilities.HelperUtilities import Print
 import random
@@ -10,25 +10,28 @@ import random
 EnemyOrPlayer = enum('PLAYER', 'ENEMY')
 ENEMYSTATS = Enemy()
 
-def _instantiateEnemyStats(Enemy):
-    '''Initialize Enemy Stats'''
 
-    ENEMYSTATS.name = Enemy.name
-    ENEMYSTATS.HP = Enemy.HP
-    ENEMYSTATS.attack = Enemy.attack
-    ENEMYSTATS.defense = Enemy.defense
-    ENEMYSTATS.exp = Enemy.exp
-    ENEMYSTATS.lvl = Enemy.lvl
-    ENEMYSTATS.MaxHP = Enemy.MaxHP
-    ENEMYSTATS.questFight = Enemy.questFight
+def _instantiate_enemy_stats(enemy):
+    """Initialize Enemy Stats"""
+
+    ENEMYSTATS.name = enemy.name
+    ENEMYSTATS.HP = enemy.HP
+    ENEMYSTATS.attack = enemy.attack
+    ENEMYSTATS.defense = enemy.defense
+    ENEMYSTATS.exp = enemy.exp
+    ENEMYSTATS.lvl = enemy.lvl
+    ENEMYSTATS.MaxHP = enemy.MaxHP
+    ENEMYSTATS.questFight = enemy.questFight
+
 
 def fight():
-    '''Random battles in forest for player'''
+    """Random battles in forest for player"""
 
-    battle(buildEnemy())
+    battle(build_enemy())
 
-def buildEnemy():
-    temp = MonsterList()
+
+def build_enemy():
+    temp = monster_list()
     random.seed()
     key = random.choice(list(temp.items()))
     value = key[1]
@@ -44,97 +47,106 @@ def buildEnemy():
         False
         )
 
-def battle(enemy):
-    '''Encapsulates battle for forest and quest fight'''
 
-    _instantiateEnemyStats(enemy)
-    _enemyIntroduction()
-    _battleLoop()
+def battle(enemy):
+    """Encapsulates battle for forest and quest fight"""
+
+    _instantiate_enemy_stats(enemy)
+    _enemy_introduction()
+    _battle_loop()
     print("")
     _lose()
     _win()
-    Death()
+    death()
 
-def _enemyIntroduction():
-    '''Introduction for the start of battle'''
+
+def _enemy_introduction():
+    """Introduction for the start of battle"""
 
     print("It's a " + ENEMYSTATS.name)
 
-    if ENEMYSTATS.questFight == True:
+    if ENEMYSTATS.questFight:
         QuestInfo.InQuest = True
 
-def _getDamage(enemyOrPlayer):
-    '''Gets the damage for the player or enemy'''
 
-    if enemyOrPlayer == EnemyOrPlayer.PLAYER:
-        damage = _decideDamageCalc(Player.Strength, ENEMYSTATS.defense, enemyOrPlayer)
+def _get_damage(enemy_or_player):
+    """Gets the damage for the player or enemy"""
+
+    if enemy_or_player == EnemyOrPlayer.PLAYER:
+        damage = _decide_damage_calculation(Player.Strength, ENEMYSTATS.defense, enemy_or_player)
     else:
-        damage = _decideDamageCalc(ENEMYSTATS.attack, Player.Defense, enemyOrPlayer)
+        damage = _decide_damage_calculation(ENEMYSTATS.attack, Player.Defense, enemy_or_player)
 
     return 0 if damage < 0 else damage
 
-def _decideDamageCalc(attack, defense, enemyOrPlayer):
-    '''Determining how to calculate the damage'''
 
-    randAtk = random.randrange(attack)
-    randDfs = random.randrange(defense)
+def _decide_damage_calculation(attack, defense, enemy_or_player):
+    """Determining how to calculate the damage"""
 
-    if enemyOrPlayer == EnemyOrPlayer.PLAYER:
-        return randAtk - (randDfs + ENEMYSTATS.lvl)
+    random_attack = random.randrange(attack)
+    random_defense = random.randrange(defense)
+
+    if enemy_or_player == EnemyOrPlayer.PLAYER:
+        return random_attack - (random_defense + ENEMYSTATS.lvl)
     else:
-        return (randAtk + ENEMYSTATS.lvl) - (randDfs + (Player.lvl * 2))
+        return (random_attack + ENEMYSTATS.lvl) - (random_defense + (Player.lvl * 2))
 
-def _battleLoop():
-    '''Main loop for the battle'''
+
+def _battle_loop():
+    """Main loop for the battle"""
 
     while Player.hp > 0 and ENEMYSTATS.HP > 0:
-        Pdamage = _getDamage(EnemyOrPlayer.PLAYER)
-        Edamage = _getDamage(EnemyOrPlayer.ENEMY)
+        Pdamage = _get_damage(EnemyOrPlayer.PLAYER)
+        Edamage = _get_damage(EnemyOrPlayer.ENEMY)
 
-        _playersTurn(Pdamage)
+        _players_turn(Pdamage)
 
         if ENEMYSTATS.HP <= 0:
             break
 
-        _enemysTurn(Edamage)
+        _enemies_turn(Edamage)
+
 
 def _lose():
-    '''Losing state for player'''
+    """Losing state for player"""
 
     if Player.hp <= 0:
         Player.hp = 0
         print("YOU LOSE!!")
-        if ENEMYSTATS.questFight == True:
+        if ENEMYSTATS.questFight:
             QuestInfo.Win = False
 
+
 def _win():
-    '''Winning state for player'''
+    """Winning state for player"""
 
     if Player.hp > 0:
         Print("YOU WON!!!", 0.3)
         exp = random.randrange(0, ENEMYSTATS.exp) + (ENEMYSTATS.lvl * 2)
         Player.exp += exp
         Print("You gained " + str(exp) + " exp", 0.3)
-        LevelUp()
+        level_up()
         Print("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp), 0.3)
-        MonsterDrop(ENEMYSTATS.lvl)
+        monster_drop(ENEMYSTATS.lvl)
 
-        if ENEMYSTATS.questFight == False:
+        if not ENEMYSTATS.questFight:
             if ENEMYSTATS.name in QuestInfo.MonstersKilled:
                 QuestInfo.MonstersKilled[ENEMYSTATS.name] += 1
             else:
                 QuestInfo.MonstersKilled[ENEMYSTATS.name] = 1
 
-def _playersTurn(Pdamage):
-    '''Players turn to attack'''
 
-    Print("You hit the " + ENEMYSTATS.name + " for " + str(Pdamage) + " damage")
-    ENEMYSTATS.HP -= Pdamage
+def _players_turn(player_damage):
+    """Players turn to attack"""
+
+    Print("You hit the " + ENEMYSTATS.name + " for " + str(player_damage) + " damage")
+    ENEMYSTATS.HP -= player_damage
     Print(ENEMYSTATS.name + " now has " + str(ENEMYSTATS.HP) + " life left.")
 
-def _enemysTurn(Edamage):
-    '''Enemys turn to attack'''
 
-    Print(ENEMYSTATS.name + " hit you for " + str(Edamage) + " damage")
-    Player.hp -= Edamage
+def _enemies_turn(enemy_damage):
+    """Enemys turn to attack"""
+
+    Print(ENEMYSTATS.name + " hit you for " + str(enemy_damage) + " damage")
+    Player.hp -= enemy_damage
     Print("You have " + str(Player.hp) + " life left.")

@@ -1,6 +1,6 @@
-from Player.Inventory import InvenInsert
+from Player.Inventory import inventory_insert
 from Classes.Classes import Player
-from Utilities.Checks import NameCheck
+from Utilities.Checks import name_check
 from Player.Equipment import EquipInsert
 from Utilities.HelperUtilities import Print
 from Utilities.HelperUtilities import PrintSlow
@@ -8,13 +8,13 @@ import uuid
 
 
 def game_intro():
-    '''Introduction to the game'''
+    """Introduction to the game"""
 
     if Player.Pclass == "":
         PrintSlow("Welcome to TxtBasedAdv")
         PrintSlow("Please enter a name: ", 0.05)
         Player.name = input()
-        NameCheck(Player.name)
+        name_check(Player.name)
         PrintSlow("Hello " + Player.name)
 
         PrintSlow("\nChoose your class", 0.05)
@@ -38,16 +38,16 @@ def game_intro():
 
 
 def intro():
-    '''Another part to the game introduction'''
+    """Another part to the game introduction"""
 
-    InvenInsert('potion')
+    inventory_insert('potion')
 
     PrintSlow("Now you are ready to go on an adventure. You will be able to travel", 0.05)
-    PrintSlow("and collect awsome items and level up to your hearts content.", 0.05)
+    PrintSlow("and collect awesome items and level up to your hearts content.", 0.05)
 
 
-def _assign_class(PlayerClass, str, dfs, hp, mHp, weapon, armor):
-    '''Assigning the players class and stats
+def _assign_class(PlayerClass, strength, dfs, hp, mHp, weapon, armor):
+    """Assigning the players class and stats
 
     Arguments:
     PlayerClass - The class the player chose
@@ -58,11 +58,11 @@ def _assign_class(PlayerClass, str, dfs, hp, mHp, weapon, armor):
     weapon - Starting weapon of the player
     armor - Starting armor of the player
 
-    '''
+    """
 
     PrintSlow("\nWelcome to the " + PlayerClass + " class")
     Player.Pclass = PlayerClass
-    Player.Strength = str
+    Player.Strength = strength
     Player.Defense = dfs
     Player.hp = hp
     Player.MaxHP = mHp

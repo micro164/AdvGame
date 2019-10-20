@@ -1,8 +1,8 @@
 from Classes.Classes import *
 from Battle.Battle import battle
-from Battle.Drops import QuestReward
+from Battle.Drops import quest_reward
 from Items.Items import Items
-from Player.Inventory import InvenInsert
+from Player.Inventory import inventory_insert
 from Utilities.HelperUtilities import pause
 
 def FindTheCastle():
@@ -46,7 +46,7 @@ def FindTheCastle():
                 QuestInfo.QuestNumber = QuestInfo.QuestNumber + 1
                 QuestInfo.QuestSeen = False
                 QuestInfo.InQuest = True
-                QuestReward()
+                quest_reward()
                 if Player.Pclass == 'swordsman':
                     reward = QuestWeaponAndArmor(
                         'Kings Sword',list((35,0,120,'weapon','swordsman',0,0,0)),
@@ -71,8 +71,8 @@ def CastleQuestReward(reward):
 
     Items[reward.weaponName] = reward.weaponStats
     Items[reward.armorName] = reward.armorStats
-    InvenInsert(reward.weaponName)
-    InvenInsert(reward.armorName)
+    inventory_insert(reward.weaponName)
+    inventory_insert(reward.armorName)
     print("You were also given a " + reward.weaponName + " & " + reward.armorName)
     pause()
 

@@ -1,8 +1,8 @@
 from Classes.Classes import Player
 from Player.Equipment import PrintEquip
 from Player.Equipment import EquipEquipment
-from Player.Inventory import PrintInven
-from Items.Items import UseItem
+from Player.Inventory import print_inventory
+from Items.Items import use_item
 from Utilities.HelperUtilities import PrintSlow
 from Utilities.HelperUtilities import Print
 
@@ -25,7 +25,7 @@ def DisplayPlayerInventory():
 
     choice = ''
     while choice != '4':
-        PrintInven()
+        print_inventory()
 
         Print("\n1. Equip a weapon or armor")
         Print("2. Use an item")
@@ -36,7 +36,7 @@ def DisplayPlayerInventory():
         if choice == '1':
             EquipEquipment()
         elif choice == '2':
-            UseItem()
+            use_item()
         elif choice == '3':
             print("Exiting inventory")
             choice = '4'

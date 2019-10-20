@@ -1,7 +1,7 @@
 from Classes.Classes import Player
 from Classes.Classes import Monster
 
-#Stats for monsters
+# Stats for monsters
 # 0-HP, 1-attack, 2-defense, 3-exp, 4.lvl, 5.MaxHP
 Monsters = {'rat':              list((50,   12,      7,      10,     1,   50)),
             'Wild Chicken':     list((40,   10,      5,      5,      1,   10)),
@@ -33,8 +33,9 @@ Monsters = {'rat':              list((50,   12,      7,      10,     1,   50)),
             'Elder Lich':       list((4500, 800,    975,    2500,   95,  3500)),
             'Dragon':           list((10000, 1200,    1100,    5000,   100, 5000))}
 
-def MonsterList():
-    '''Gives a list of monsters that the player can fight'''
+
+def monster_list():
+    """Gives a list of monsters that the player can fight"""
 
     temp = {}
 
@@ -42,6 +43,6 @@ def MonsterList():
         if Player.lvl == 100:
             if value[Monster.lvl] <= Player.lvl:
                 temp[key] = Monsters[key]
-        elif value[Monster.lvl] >= 1 and value[Monster.lvl] <= (Player.lvl + 5):
+        elif 1 <= value[Monster.lvl] <= (Player.lvl + 5):
             temp[key] = Monsters[key]
     return temp

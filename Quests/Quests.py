@@ -1,8 +1,9 @@
 from Quests.IntroQuests import *
 from Quests.FindTheCastle import FindTheCastle
 
-def Quests():
-    '''Function where all of the players quests reside'''
+
+def quests():
+    """Function where all of the players quests reside"""
 
     KillTheRats()
     GoblinExtermination()
