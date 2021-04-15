@@ -25,7 +25,7 @@ def name_check(name):
 
     """
 
-    if bool(re.compile('[A-Z]', re.IGNORECASE).match(name)) == False:
+    if not bool(re.compile('[A-Z]', re.IGNORECASE).match(name)):
         print("Name must start with a letter")
         Player.name = input()
         name_check(Player.name)

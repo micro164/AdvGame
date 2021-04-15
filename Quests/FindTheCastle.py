@@ -5,11 +5,12 @@ from Items.Items import Items
 from Player.Inventory import inventory_insert
 from Utilities.HelperUtilities import pause
 
-def FindTheCastle():
-    '''Quest for finding and conquring a castle'''
+
+def find_the_castle():
+    """Quest for finding and conquring a castle"""
 
     if QuestInfo.QuestNumber == 2:
-        if QuestInfo.QuestSeen == False:
+        if not QuestInfo.QuestSeen:
             print("QUEST NAME: Find The Castle\n")
             print("You are finally ready for a much grander quest.")
             print("Search for a Castle hidden in the forest.")
@@ -28,46 +29,41 @@ def FindTheCastle():
             pause()
             battle(Enemy("Guard", 20, 10, 8, 200, 5, 20, True))
 
-            if QuestInfo.Win == True:
+            if QuestInfo.Win:
                 print("You have made it into the castle")
                 print("Now you have to fight a Knight")
                 pause()
                 battle(Enemy("Knight", 50, 25, 20, 575, 15, 50, True))
 
-            if QuestInfo.Win == True:
+            if QuestInfo.Win:
                 print("You have passed the Knight")
                 print("Know you must fight the King to take the castle")
                 pause()
                 battle(Enemy("King", 100, 50, 50, 1000, 20, 100, True))
 
             # TODO: Figure out why the Kings drop gets dublicated when equiped
-            if QuestInfo.Win == True:
+            if QuestInfo.Win:
                 print("Congragulations on captureing the caslte and completing the quest\n")
                 QuestInfo.QuestNumber = QuestInfo.QuestNumber + 1
                 QuestInfo.QuestSeen = False
                 QuestInfo.InQuest = True
                 quest_reward()
                 if Player.Pclass == 'swordsman':
-                    reward = QuestWeaponAndArmor(
-                        'Kings Sword',list((35,0,120,'weapon','swordsman',0,0,0)),
-                        'Kings Armor',list((35,0,120,'weapon','swordsman',0,0,0)))
-                    CastleQuestReward(reward)
+                    reward = QuestWeaponAndArmor()
+                    castle_quest_reward(reward)
                 elif Player.Pclass == 'wizard':
-                    reward = QuestWeaponAndArmor(
-                        'Kings Staff',list((40,0,200,'weapon','wizard',0,0,0)),
-                        'Kings Cloth',list((0,15,100,'armor','wizard',150,0,0)))
-                    CastleQuestReward(reward)
+                    reward = QuestWeaponAndArmor()
+                    castle_quest_reward(reward)
                 elif Player.Pclass == 'rouge':
-                    reward = QuestWeaponAndArmor(
-                        'Kings Staff',list((30,0,100,'weapon','rouge',0,0,0)),
-                        'Kings Cloth',list((0,20,100,'armor','rouge',60,0,0)))
-                    CastleQuestReward(reward)
+                    reward = QuestWeaponAndArmor()
+                    castle_quest_reward(reward)
                 else:
                     print("Could not give out reward")
     QuestInfo.Win = True
 
-def CastleQuestReward(reward):
-    '''Assigns quest reward to player'''
+
+def castle_quest_reward(reward):
+    """Assigns quest reward to player"""
 
     Items[reward.weaponName] = reward.weaponStats
     Items[reward.armorName] = reward.armorStats
@@ -76,8 +72,9 @@ def CastleQuestReward(reward):
     print("You were also given a " + reward.weaponName + " & " + reward.armorName)
     pause()
 
-class QuestWeaponAndArmor():
-    '''QuestWeaponAndArmor Class'''
+
+class QuestWeaponAndArmor:
+    """QuestWeaponAndArmor Class"""
     weaponName = ''
     weaponStats = []
     armorName = ''

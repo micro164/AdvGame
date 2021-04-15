@@ -4,17 +4,17 @@ from Utilities.Checks import check_healing
 from Quests.Quests import Quests
 from Forest.ForestSurprises import *
 from Battle.Death import death
-from Utilities.HelperUtilities import Print
-from Utilities.HelperUtilities import PrintSlow
+from Utilities.HelperUtilities import print_text
+from Utilities.HelperUtilities import print_slow
 from time import sleep
 import random
 
 
-def ForestIntro():
+def forest_intro():
 	'''The introduction to entering the forest'''
 
 	if Player.hp > 0:
-		PrintSlow("Welcome to the forest!", 0.05)
+		print_slow("Welcome to the forest!", 0.05)
 	elif Player.hp <= 0:
 		if Player.gold <= 0 and check_healing() == False:
 			death()
@@ -27,7 +27,7 @@ def ForestIntro():
 def forest():
 	'''The menu for exploring the forest'''
 
-	ForestIntro()
+	forest_intro()
 	choice = " "
 	random.seed()
 
@@ -38,40 +38,40 @@ def forest():
 		print("")
 
 		if choice >= "1" and choice <= "4":
-			_movePlayer(choice)
+			_move_player(choice)
 		elif choice == "5":
 			print("Leaving forest")
 		else:
 			print("Wrong choice")
 
 
-def _movePlayer(choice):
+def _move_player(choice):
 	duplicate_item(choice)
 	randomPlace = random_spot(choice)
-	_DirectionsWent(choice)
+	_directions_went(choice)
 
 	if randomPlace == False:
 		Quests()
 
 		if QuestInfo.InQuest == False:
-			_randomEncounter()
+			_random_encounter()
 		else:
 			QuestInfo.InQuest = False
 
 
-def _randomEncounter():
+def _random_encounter():
 	rand = random.randrange(0, 2)
 
 	if rand == 0:
 		print("A group of trees\n")
 	elif rand == 1:
-		Print("You encountered a monster")
+		print_text("You encountered a monster")
 		fight()
 	else:
 		print("ERROR")
 
 
-def _DirectionsWent(choice):
+def _directions_went(choice):
 	'''Keeps track of the last 5 directions the player went
 
 	Arguments:

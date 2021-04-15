@@ -13,7 +13,7 @@ def pause():
     input()
 
 
-def Print(text, time=None):
+def print_text(text, time=None):
     print(text)
 
     if time is not None:
@@ -22,7 +22,7 @@ def Print(text, time=None):
         sleep(0.5)
 
 
-def PrintSlow(text, time=None):
+def print_slow(text, time=None):
     for c in text:
         print(c, end='')
         sys.stdout.flush()

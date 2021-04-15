@@ -4,24 +4,24 @@ from Battle.Levels import level_up
 from Battle.Drops import monster_drop
 from Battle.Death import death
 from Utilities.HelperUtilities import enum
-from Utilities.HelperUtilities import Print
+from Utilities.HelperUtilities import print_text
 import random
 
 EnemyOrPlayer = enum('PLAYER', 'ENEMY')
-ENEMYSTATS = Enemy()
+ENEMY_STATS = Enemy()
 
 
 def _instantiate_enemy_stats(enemy):
     """Initialize Enemy Stats"""
 
-    ENEMYSTATS.name = enemy.name
-    ENEMYSTATS.HP = enemy.HP
-    ENEMYSTATS.attack = enemy.attack
-    ENEMYSTATS.defense = enemy.defense
-    ENEMYSTATS.exp = enemy.exp
-    ENEMYSTATS.lvl = enemy.lvl
-    ENEMYSTATS.MaxHP = enemy.MaxHP
-    ENEMYSTATS.questFight = enemy.questFight
+    ENEMY_STATS.name = enemy.name
+    ENEMY_STATS.HP = enemy.HP
+    ENEMY_STATS.attack = enemy.attack
+    ENEMY_STATS.defense = enemy.defense
+    ENEMY_STATS.exp = enemy.exp
+    ENEMY_STATS.lvl = enemy.lvl
+    ENEMY_STATS.MaxHP = enemy.MaxHP
+    ENEMY_STATS.questFight = enemy.questFight
 
 
 def fight():
@@ -63,9 +63,9 @@ def battle(enemy):
 def _enemy_introduction():
     """Introduction for the start of battle"""
 
-    print("It's a " + ENEMYSTATS.name)
+    print("It's a " + ENEMY_STATS.name)
 
-    if ENEMYSTATS.questFight:
+    if ENEMY_STATS.questFight:
         QuestInfo.InQuest = True
 
 
@@ -73,9 +73,9 @@ def _get_damage(enemy_or_player):
     """Gets the damage for the player or enemy"""
 
     if enemy_or_player == EnemyOrPlayer.PLAYER:
-        damage = _decide_damage_calculation(Player.Strength, ENEMYSTATS.defense, enemy_or_player)
+        damage = _decide_damage_calculation(Player.Strength, ENEMY_STATS.defense, enemy_or_player)
     else:
-        damage = _decide_damage_calculation(ENEMYSTATS.attack, Player.Defense, enemy_or_player)
+        damage = _decide_damage_calculation(ENEMY_STATS.attack, Player.Defense, enemy_or_player)
 
     return 0 if damage < 0 else damage
 
@@ -87,24 +87,24 @@ def _decide_damage_calculation(attack, defense, enemy_or_player):
     random_defense = random.randrange(defense)
 
     if enemy_or_player == EnemyOrPlayer.PLAYER:
-        return random_attack - (random_defense + ENEMYSTATS.lvl)
+        return random_attack - (random_defense + ENEMY_STATS.lvl)
     else:
-        return (random_attack + ENEMYSTATS.lvl) - (random_defense + (Player.lvl * 2))
+        return (random_attack + ENEMY_STATS.lvl) - (random_defense + (Player.lvl * 2))
 
 
 def _battle_loop():
     """Main loop for the battle"""
 
-    while Player.hp > 0 and ENEMYSTATS.HP > 0:
-        Pdamage = _get_damage(EnemyOrPlayer.PLAYER)
-        Edamage = _get_damage(EnemyOrPlayer.ENEMY)
+    while Player.hp > 0 and ENEMY_STATS.HP > 0:
+        player_damage = _get_damage(EnemyOrPlayer.PLAYER)
+        enemy_damage = _get_damage(EnemyOrPlayer.ENEMY)
 
-        _players_turn(Pdamage)
+        _players_turn(player_damage)
 
-        if ENEMYSTATS.HP <= 0:
+        if ENEMY_STATS.HP <= 0:
             break
 
-        _enemies_turn(Edamage)
+        _enemies_turn(enemy_damage)
 
 
 def _lose():
@@ -113,7 +113,7 @@ def _lose():
     if Player.hp <= 0:
         Player.hp = 0
         print("YOU LOSE!!")
-        if ENEMYSTATS.questFight:
+        if ENEMY_STATS.questFight:
             QuestInfo.Win = False
 
 
@@ -121,32 +121,32 @@ def _win():
     """Winning state for player"""
 
     if Player.hp > 0:
-        Print("YOU WON!!!", 0.3)
-        exp = random.randrange(0, ENEMYSTATS.exp) + (ENEMYSTATS.lvl * 2)
+        print_text("YOU WON!!!", 0.3)
+        exp = random.randrange(0, ENEMY_STATS.exp) + (ENEMY_STATS.lvl * 2)
         Player.exp += exp
-        Print("You gained " + str(exp) + " exp", 0.3)
+        print_text("You gained " + str(exp) + " exp", 0.3)
         level_up()
-        Print("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp), 0.3)
-        monster_drop(ENEMYSTATS.lvl)
+        print_text("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp), 0.3)
+        monster_drop(ENEMY_STATS.lvl)
 
-        if not ENEMYSTATS.questFight:
-            if ENEMYSTATS.name in QuestInfo.MonstersKilled:
-                QuestInfo.MonstersKilled[ENEMYSTATS.name] += 1
+        if not ENEMY_STATS.questFight:
+            if ENEMY_STATS.name in QuestInfo.MonstersKilled:
+                QuestInfo.MonstersKilled[ENEMY_STATS.name] += 1
             else:
-                QuestInfo.MonstersKilled[ENEMYSTATS.name] = 1
+                QuestInfo.MonstersKilled[ENEMY_STATS.name] = 1
 
 
 def _players_turn(player_damage):
     """Players turn to attack"""
 
-    Print("You hit the " + ENEMYSTATS.name + " for " + str(player_damage) + " damage")
-    ENEMYSTATS.HP -= player_damage
-    Print(ENEMYSTATS.name + " now has " + str(ENEMYSTATS.HP) + " life left.")
+    print_text("You hit the " + ENEMY_STATS.name + " for " + str(player_damage) + " damage")
+    ENEMY_STATS.HP -= player_damage
+    print_text(ENEMY_STATS.name + " now has " + str(ENEMY_STATS.HP) + " life left.")
 
 
 def _enemies_turn(enemy_damage):
-    """Enemys turn to attack"""
+    """Enemies turn to attack"""
 
-    Print(ENEMYSTATS.name + " hit you for " + str(enemy_damage) + " damage")
+    print_text(ENEMY_STATS.name + " hit you for " + str(enemy_damage) + " damage")
     Player.hp -= enemy_damage
-    Print("You have " + str(Player.hp) + " life left.")
+    print_text("You have " + str(Player.hp) + " life left.")

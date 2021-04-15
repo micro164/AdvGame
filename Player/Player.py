@@ -1,24 +1,24 @@
 from Classes.Classes import Player
-from Player.Equipment import PrintEquip
-from Player.Equipment import EquipEquipment
+from Player.Equipment import print_equip
+from Player.Equipment import equip_equipment
 from Player.Inventory import print_inventory
 from Items.Items import use_item
-from Utilities.HelperUtilities import PrintSlow
-from Utilities.HelperUtilities import Print
+from Utilities.HelperUtilities import print_slow
+from Utilities.HelperUtilities import print_text
 
 def PlayerStats():
     '''Displays the players stats'''
 
-    PrintSlow("Name: " + Player.name)
-    PrintSlow("Level: " + str(Player.lvl))
-    PrintSlow("HP: " + str(Player.hp) + "/" + str(Player.MaxHP))
-    PrintSlow("EXP: " + str(Player.exp) + "/" + str(Player.MaxExp))
-    PrintSlow("Strength: " + str(Player.Strength))
-    PrintSlow("Defense: " + str(Player.Defense))
-    PrintSlow("Gold: " + str(Player.gold))
+    print_slow("Name: " + Player.name)
+    print_slow("Level: " + str(Player.lvl))
+    print_slow("HP: " + str(Player.hp) + "/" + str(Player.MaxHP))
+    print_slow("EXP: " + str(Player.exp) + "/" + str(Player.MaxExp))
+    print_slow("Strength: " + str(Player.Strength))
+    print_slow("Defense: " + str(Player.Defense))
+    print_slow("Gold: " + str(Player.gold))
 
-    PrintSlow("\nEquipment:")
-    PrintEquip()
+    print_slow("\nEquipment:")
+    print_equip()
 
 def DisplayPlayerInventory():
     '''Displays the players inventory'''
@@ -27,14 +27,14 @@ def DisplayPlayerInventory():
     while choice != '4':
         print_inventory()
 
-        Print("\n1. Equip a weapon or armor")
-        Print("2. Use an item")
-        Print("3. Exit")
+        print_text("\n1. Equip a weapon or armor")
+        print_text("2. Use an item")
+        print_text("3. Exit")
 
         choice = input()
 
         if choice == '1':
-            EquipEquipment()
+            equip_equipment()
         elif choice == '2':
             use_item()
         elif choice == '3':

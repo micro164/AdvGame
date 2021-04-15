@@ -2,7 +2,7 @@ from Classes.Classes import Item
 from Classes.Classes import Player
 from Utilities.Checks import equip_check
 from Items.ItemList import Items
-from Utilities.HelperUtilities import PrintSlow
+from Utilities.HelperUtilities import print_slow
 import copy
 
 
@@ -27,7 +27,7 @@ def print_inventory():
     """Prints the players inventory"""
 
     for key, value in list(Player.Inventory.items()):
-        PrintSlow(key + " X " + str(value[Item.count]), 0.05)
+        print_slow(key + " X " + str(value[Item.count]), 0.05)
 
 
 def inventory_check(item_name):

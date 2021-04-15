@@ -13,10 +13,9 @@ from Battle.Death import death_check
 from Main.Start import start
 from Forest.Forest import forest
 from Healing.Healing import healer
-from Store.Store import Store
+from Store.Store import store
 from Quit.Save import exit_and_save
 from Main.GameIntro import game_intro
-from BattleArena.BattleArena import player_vs_player
 
 
 def choices():
@@ -39,17 +38,15 @@ def choices():
         elif choice == "5":
             item_stats()
         elif choice == "6":
-            Store()
+            store()
         elif choice == "7":
-            player_vs_player()
-        elif choice == "8":
             stop = exit_and_save()
         else:
             print("Wrong Choice")
 
 
 def main():
-    '''Main Game Function'''
+    """Main Game Function"""
     start()
     game_intro()
     choices()

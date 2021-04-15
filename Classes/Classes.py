@@ -88,13 +88,13 @@ class Directions(Enum):
     DOWN = '4'
 
 
-class Features():
+class Features:
     """Features Class"""
     choiceList = []
     LastDirections = []
 
 
-class QuestInfo():
+class QuestInfo:
     """QuestInfo Class"""
     MonstersKilled = dict()
     QuestNumber = 0

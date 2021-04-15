@@ -5,11 +5,11 @@ from Items.Items import item_list
 from Classes.Classes import Player
 
 
-def monster_drop(Mlvl):
+def monster_drop(monster_lvl):
     """Determines what type of item a monster will drop
 
     Arguments:
-    Mlvl - The level of the monster
+    monster_lvl - The level of the monster
 
     """
 
@@ -27,7 +27,7 @@ def monster_drop(Mlvl):
         else:
             print("ERROR: could not drop weapon/armor")
     elif chance >= 0.8:
-        gold_gained = random.randrange(0, Mlvl * 10) + 10
+        gold_gained = random.randrange(0, monster_lvl * 10) + 10
         print("The monster dropped " + str(gold_gained) + " gold.\n")
         Player.gold += gold_gained
     elif chance <= 0.5:

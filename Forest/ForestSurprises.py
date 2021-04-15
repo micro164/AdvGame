@@ -31,7 +31,7 @@ def random_spot():
             rand_dir.append(str(random.randrange(1, 5)))
 
         if Features.LastDirections == rand_dir:
-            rand = random.randrange(0,3)
+            rand = random.randrange(0, 3)
 
             if rand == 0:
                 _found_item()

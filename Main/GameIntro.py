@@ -1,9 +1,9 @@
 from Player.Inventory import inventory_insert
 from Classes.Classes import Player
 from Utilities.Checks import name_check
-from Player.Equipment import EquipInsert
-from Utilities.HelperUtilities import Print
-from Utilities.HelperUtilities import PrintSlow
+from Player.Equipment import equip_insert
+from Utilities.HelperUtilities import print_text
+from Utilities.HelperUtilities import print_slow
 import uuid
 
 
@@ -11,14 +11,14 @@ def game_intro():
     """Introduction to the game"""
 
     if Player.Pclass == "":
-        PrintSlow("Welcome to TxtBasedAdv")
-        PrintSlow("Please enter a name: ", 0.05)
+        print_slow("Welcome to TxtBasedAdv")
+        print_slow("Please enter a name: ", 0.05)
         Player.name = input()
         name_check(Player.name)
-        PrintSlow("Hello " + Player.name)
+        print_slow("Hello " + Player.name)
 
-        PrintSlow("\nChoose your class", 0.05)
-        PrintSlow("1.Swordsman Class \n2.Wizard Class \n3.Rogue Class", 0.05)
+        print_slow("\nChoose your class", 0.05)
+        print_slow("1.Swordsman Class \n2.Wizard Class \n3.Rogue Class", 0.05)
         Player.uniqueId = uuid.uuid1().int
         choice = input()
 
@@ -42,8 +42,8 @@ def intro():
 
     inventory_insert('potion')
 
-    PrintSlow("Now you are ready to go on an adventure. You will be able to travel", 0.05)
-    PrintSlow("and collect awesome items and level up to your hearts content.", 0.05)
+    print_slow("Now you are ready to go on an adventure. You will be able to travel", 0.05)
+    print_slow("and collect awesome items and level up to your hearts content.", 0.05)
 
 
 def _assign_class(PlayerClass, strength, dfs, hp, mHp, weapon, armor):
@@ -60,14 +60,14 @@ def _assign_class(PlayerClass, strength, dfs, hp, mHp, weapon, armor):
 
     """
 
-    PrintSlow("\nWelcome to the " + PlayerClass + " class")
+    print_slow("\nWelcome to the " + PlayerClass + " class")
     Player.Pclass = PlayerClass
     Player.Strength = strength
     Player.Defense = dfs
     Player.hp = hp
     Player.MaxHP = mHp
-    EquipInsert(weapon)
-    Print("You have been given a " + weapon)
-    EquipInsert(armor)
-    Print("You have been given a " + armor + ".\n")
+    equip_insert(weapon)
+    print_text("You have been given a " + weapon)
+    equip_insert(armor)
+    print_text("You have been given a " + armor + ".\n")
     intro()
