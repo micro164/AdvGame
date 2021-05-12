@@ -3,7 +3,7 @@ from Classes.Classes import *
 from Battle.Levels import level_up
 from Battle.Drops import monster_drop
 from Battle.Death import death
-from Utilities.HelperUtilities import enum
+from Utilities.HelperUtilities import enum, print_slow
 from Utilities.HelperUtilities import print_text
 import random
 
@@ -53,6 +53,7 @@ def battle(enemy):
 
     _instantiate_enemy_stats(enemy)
     _enemy_introduction()
+    print("")
     _battle_loop()
     print("")
     _lose()
@@ -63,7 +64,7 @@ def battle(enemy):
 def _enemy_introduction():
     """Introduction for the start of battle"""
 
-    print("It's a " + ENEMY_STATS.name)
+    print_slow("It's a " + ENEMY_STATS.name, 0.05)
 
     if ENEMY_STATS.questFight:
         QuestInfo.InQuest = True
@@ -100,11 +101,13 @@ def _battle_loop():
         enemy_damage = _get_damage(EnemyOrPlayer.ENEMY)
 
         _players_turn(player_damage)
+        print("")
 
         if ENEMY_STATS.HP <= 0:
             break
 
         _enemies_turn(enemy_damage)
+        print("")
 
 
 def _lose():
@@ -121,12 +124,12 @@ def _win():
     """Winning state for player"""
 
     if Player.hp > 0:
-        print_text("YOU WON!!!", 0.3)
+        print_slow("YOU WON!!!", 0.05)
         exp = random.randrange(0, ENEMY_STATS.exp) + (ENEMY_STATS.lvl * 2)
         Player.exp += exp
-        print_text("You gained " + str(exp) + " exp", 0.3)
+        print_slow("You gained " + str(exp) + " exp", 0.05)
         level_up()
-        print_text("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp), 0.3)
+        print_slow("EXP: " + str(Player.MaxExp) + "/" + str(Player.exp), 0.05)
         monster_drop(ENEMY_STATS.lvl)
 
         if not ENEMY_STATS.questFight:
@@ -139,14 +142,14 @@ def _win():
 def _players_turn(player_damage):
     """Players turn to attack"""
 
-    print_text("You hit the " + ENEMY_STATS.name + " for " + str(player_damage) + " damage")
+    print_slow("You hit the " + ENEMY_STATS.name + " for " + str(player_damage) + " damage", 0.05)
     ENEMY_STATS.HP -= player_damage
-    print_text(ENEMY_STATS.name + " now has " + str(ENEMY_STATS.HP) + " life left.")
+    print_slow(ENEMY_STATS.name + " now has " + str(ENEMY_STATS.HP) + " life left.", 0.05)
 
 
 def _enemies_turn(enemy_damage):
     """Enemies turn to attack"""
 
-    print_text(ENEMY_STATS.name + " hit you for " + str(enemy_damage) + " damage")
+    print_slow(ENEMY_STATS.name + " hit you for " + str(enemy_damage) + " damage", 0.05)
     Player.hp -= enemy_damage
-    print_text("You have " + str(Player.hp) + " life left.")
+    print_slow("You have " + str(Player.hp) + " life left.", 0.05)

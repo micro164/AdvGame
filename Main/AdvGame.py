@@ -24,7 +24,7 @@ def choices():
     while not stop:
         death_check()
         print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Inventory")
-        print("5.Item Stats \n6.Store \n7.Battle Arena \n8.Exit")
+        print("5.Item Stats \n6.Store \n7.Exit")
         choice = input()
         print("")
         if choice == "1":
