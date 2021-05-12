@@ -16,6 +16,7 @@ from Healing.Healing import healer
 from Store.Store import store
 from Quit.Save import exit_and_save
 from Main.GameIntro import game_intro
+from Quests.Quests import quests
 
 
 def choices():
@@ -24,7 +25,7 @@ def choices():
     while not stop:
         death_check()
         print("\n1.Forest \n2.Healer \n3.Player Stats \n4.Inventory")
-        print("5.Item Stats \n6.Store \n7.Exit")
+        print("5.Item Stats \n6.Store \n7.Quests \n8.Exit")
         choice = input()
         print("")
         if choice == "1":
@@ -40,6 +41,8 @@ def choices():
         elif choice == "6":
             store()
         elif choice == "7":
+            quests()
+        elif choice == "8":
             stop = exit_and_save()
         else:
             print("Wrong Choice")
