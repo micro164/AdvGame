@@ -5,6 +5,7 @@ from Battle.Drops import monster_drop
 from Battle.Death import death
 from Utilities.HelperUtilities import enum, print_slow
 from Utilities.HelperUtilities import print_text
+from Items.Items import use_item
 import random
 
 EnemyOrPlayer = enum('PLAYER', 'ENEMY')
@@ -68,7 +69,6 @@ def _enemy_introduction():
 
     if ENEMY_STATS.questFight:
         QuestInfo.InQuest = True
-
 
 def _get_damage(enemy_or_player):
     """Gets the damage for the player or enemy"""
@@ -142,14 +142,24 @@ def _win():
 def _players_turn(player_damage):
     """Players turn to attack"""
 
-    print_slow("You hit the " + ENEMY_STATS.name + " for " + str(player_damage) + " damage", 0.05)
-    ENEMY_STATS.HP -= player_damage
-    print_slow(ENEMY_STATS.name + " now has " + str(ENEMY_STATS.HP) + " life left.", 0.05)
+    print("What action is to be performed?")
+    print("1. Attack")
+    print("2. Use Item")
+    battle_option = input()
+
+    if battle_option == "1" or battle_option == "Attack":
+       	 print_slow("You hit the " + ENEMY_STATS.name + " for " + str(player_damage) + " damage", 0.025)
+         ENEMY_STATS.HP -= player_damage
+         print_slow(ENEMY_STATS.name + " now has " + str(ENEMY_STATS.HP) + " life left.", 0.025)
+    elif battle_option == "2" or battle_option == "Use Item":
+         use_item()
+    else:
+         print("That is not a valid option")
 
 
 def _enemies_turn(enemy_damage):
     """Enemies turn to attack"""
 
-    print_slow(ENEMY_STATS.name + " hit you for " + str(enemy_damage) + " damage", 0.05)
+    print_slow(ENEMY_STATS.name + " hit you for " + str(enemy_damage) + " damage", 0.025)
     Player.hp -= enemy_damage
-    print_slow("You have " + str(Player.hp) + " life left.", 0.05)
+    print_slow("You have " + str(Player.hp) + " life left.", 0.025)

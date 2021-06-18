@@ -12,13 +12,13 @@ def game_intro():
 
     if Player.Pclass == "":
         print_slow("Welcome to TxtBasedAdv")
-        print_slow("Please enter a name: ", 0.05)
+        print_slow("Please enter a name: ", 0.025)
         Player.name = input()
         name_check(Player.name)
         print_slow("Hello " + Player.name)
 
-        print_slow("\nChoose your class", 0.05)
-        print_slow("1.Swordsman Class \n2.Wizard Class \n3.Rogue Class", 0.05)
+        print_slow("\nChoose your class", 0.025)
+        print_slow("1.Swordsman Class \n2.Wizard Class \n3.Rogue Class", 0.025)
         Player.uniqueId = uuid.uuid1().int
         choice = input()
 
@@ -42,8 +42,8 @@ def intro():
 
     inventory_insert('potion')
 
-    print_slow("Now you are ready to go on an adventure. You will be able to travel", 0.05)
-    print_slow("and collect awesome items and level up to your hearts content.", 0.05)
+    print_slow("Now you are ready to go on an adventure. You will be able to travel", 0.025)
+    print_slow("and collect awesome items and level up to your hearts content.", 0.025)
 
 
 def _assign_class(PlayerClass, strength, dfs, hp, mHp, weapon, armor):
