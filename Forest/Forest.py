@@ -60,14 +60,14 @@ def _move_player(choice):
 
 
 def _random_encounter():
-	rand = random.randrange(0, 3)
+	rand = random.randrange(0, 10)
 
-	if rand == 0:
+	if 0 <= rand <= 5:
 		print("A group of trees\n")
-	elif rand == 1:
+	elif 6 <= rand <= 8:
 		print_slow("You encountered a monster", 0.05)
 		fight()
-	elif rand == 2:
+	elif rand == 9:
 	    print_slow("You found an item on the ground", 0.05)
 	    random.seed()
 	    type = ["item", "weapon", "armor"]
@@ -84,7 +84,7 @@ def _random_encounter():
 
 	    inventory_insert(item[0])
 	else:
-		print("ERROR")
+		print("ERROR: Something went wrong with Forest")
 
 
 def _directions_went(choice):
