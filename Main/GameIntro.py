@@ -22,11 +22,11 @@ def game_intro():
         Player.uniqueId = uuid.uuid1().int
         choice = input()
 
-        if choice == "1":
+        if choice == "1" or choice.lower() == "swordsman":
             _assign_class("swordsman", 10, 10, 100, 100, 'sword', 'bronze armor')
-        elif choice == "2":
+        elif choice == "2" or choice.lower() == "wizard":
             _assign_class("wizard", 5, 3, 50, 50, 'wand', 'cloth armor')
-        elif choice == "3":
+        elif choice == "3" or choice.lower() == "rogue":
             _assign_class("rogue", 7, 5, 70, 70, 'dagger', 'hard cloth armor')
         else:
             print("Wrong choice")

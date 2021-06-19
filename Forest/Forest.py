@@ -6,6 +6,8 @@ from Forest.ForestSurprises import *
 from Utilities.Checks import check_healing
 from Utilities.HelperUtilities import print_slow
 from Utilities.HelperUtilities import print_text
+from Items.Items import item_list
+from Player.Inventory import inventory_insert
 
 
 def forest_intro():
@@ -58,13 +60,29 @@ def _move_player(choice):
 
 
 def _random_encounter():
-	rand = random.randrange(0, 2)
+	rand = random.randrange(0, 3)
 
 	if rand == 0:
 		print("A group of trees\n")
 	elif rand == 1:
 		print_slow("You encountered a monster", 0.05)
 		fight()
+	elif rand == 2:
+	    print_slow("You found an item on the ground", 0.05)
+	    random.seed()
+	    type = ["item", "weapon", "armor"]
+	    choosenType = random.choice(type)
+	    list_of_items = item_list(type)
+	    item = []
+
+	    if not list_of_items:
+	        item = random.choice(list(item_list('item').items()))
+	    else:
+	        item = random.choice(list(list_of_items.items()))
+
+	    print(item[0] + "\n")
+
+	    inventory_insert(item[0])
 	else:
 		print("ERROR")
 

@@ -32,6 +32,8 @@ def use_item():
     check_item = inventory_check(item_name)
     if bool(check_item):
         _check_type(item_name, amount)
+    else:
+        print("No item of that name is in your inventory")
 
 
 def _check_type(item_name, amount):

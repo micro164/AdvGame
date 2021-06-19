@@ -78,7 +78,7 @@ def _get_damage(enemy_or_player):
     else:
         damage = _decide_damage_calculation(ENEMY_STATS.attack, Player.Defense, enemy_or_player)
 
-    return 0 if damage < 0 else damage
+    return 1 if damage <= 0 else damage
 
 
 def _decide_damage_calculation(attack, defense, enemy_or_player):
@@ -146,12 +146,13 @@ def _players_turn(player_damage):
     print("1. Attack")
     print("2. Use Item")
     battle_option = input()
+    print("")
 
-    if battle_option == "1" or battle_option == "Attack":
+    if battle_option == "1" or battle_option.lower() == "attack":
        	 print_slow("You hit the " + ENEMY_STATS.name + " for " + str(player_damage) + " damage", 0.025)
          ENEMY_STATS.HP -= player_damage
          print_slow(ENEMY_STATS.name + " now has " + str(ENEMY_STATS.HP) + " life left.", 0.025)
-    elif battle_option == "2" or battle_option == "Use Item":
+    elif battle_option == "2" or battle_option.lower() == "use item":
          use_item()
     else:
          print("That is not a valid option")

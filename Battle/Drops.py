@@ -51,6 +51,7 @@ def drop(item_type):
     print("The monster dropped a " + key[0] + ". It has been put in your inventory.\n")
 
 
+#TODO: Make sure to combine the drop and forest drop into one function
 def quest_drop(item_type):
     """Determines what quest reward will be
 
