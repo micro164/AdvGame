@@ -207,6 +207,7 @@ def _calculate_augment_price(value):
 
 
 def _check_augment_gold(price, type_of_item, value):
+    Player.gold = 1000
     if Player.gold >= price:
         Player.gold = Player.gold - price
         if type_of_item == 'weapon':
@@ -218,14 +219,15 @@ def _check_augment_gold(price, type_of_item, value):
 
 
 def _augment_weapon(value):
-    Player.Strength = Player.Strength - value[Item.attack]
-    value[Item.attack] = value[Item.attack] + value[Item.lvl]
-    Player.Strength = Player.Strength + value[Item.attack]
-    print("Your weapon now has " + str(value[Item.attack]) + " attack\n")
+	_augment(Player.Strength, value[Item.attack], value[Item.lvl], "weapon", "attack")
 
 
 def _augment_armor(value):
-    Player.Defense = Player.Defense - value[Item.defense]
-    value[Item.defense] = value[Item.defense] + value[Item.lvl]
-    Player.Defense = Player.Defense + value[Item.defense]
-    print("Your armor now has " + str(value[Item.defense]) + " defense\n")
+	_augment(Player.Defense, value[Item.defense], value[Item.lvl], "armor", "defense")
+
+
+def _augment(player_value, item_value, item_lvl_value, item_name, value_name):
+	player_value = player_value - item_value
+	item_value = item_value + item_lvl_value
+	player_value = player_value + item_value
+	print("Your " + item_name + " now has " + str(item_value) + " " + value_name)

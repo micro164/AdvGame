@@ -59,6 +59,7 @@ def _move_player(choice):
 			QuestInfo.InQuest = False
 
 
+#TODO: Use a try/except instead of an else
 def _random_encounter():
 	rand = random.randrange(0, 10)
 
