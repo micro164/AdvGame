@@ -207,7 +207,6 @@ def _calculate_augment_price(value):
 
 
 def _check_augment_gold(price, type_of_item, value):
-    Player.gold = 1000
     if Player.gold >= price:
         Player.gold = Player.gold - price
         if type_of_item == 'weapon':
