@@ -8,3 +8,4 @@ def augment(player_value, item_value, item_lvl_value, item_name, value_name):
 	item_value = item_value + item_lvl_value
 	player_value = player_value + item_value
 	print("Your " + item_name + " now has " + str(item_value) + " " + value_name)
+	return player_value

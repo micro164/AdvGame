@@ -211,9 +211,9 @@ def _check_augment_gold(price, type_of_item, value):
     if Player.gold >= price:
         Player.gold = Player.gold - price
         if type_of_item == 'weapon':
-            augment(Player.Strength, value[Item.attack], value[Item.lvl], "weapon", "attack")
+            Player.Strength = augment(Player.Strength, value[Item.attack], value[Item.lvl], "weapon", "attack")
         if type_of_item == 'armor':
-            augment(Player.Defense, value[Item.defense], value[Item.lvl], "armor", "defense")
+            Player.Defense = augment(Player.Defense, value[Item.defense], value[Item.lvl], "armor", "defense")
     else:
         print("Not enough gold.\n")
 
